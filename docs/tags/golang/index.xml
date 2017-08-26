@@ -8,7 +8,7 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Sun, 16 Jul 2017 12:05:59 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 26 Aug 2017 12:19:12 +0200</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
@@ -16,7 +16,7 @@
     <item>
       <title>Monads for Go Programmers</title>
       <link>https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/</link>
-      <pubDate>Sun, 16 Jul 2017 12:05:59 +0200</pubDate>
+      <pubDate>Sat, 26 Aug 2017 12:19:12 +0200</pubDate>
       <author>awalterschulze@gmail.com (Walter Schulze)</author>
       <guid>https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/</guid>
       <description>Why? Monads are all about function composition and hiding the tedious part of it.
