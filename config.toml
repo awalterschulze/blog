@@ -1,4 +1,4 @@
-baseURL = "http://awalterschulze.github.io/blog/"
+baseURL = "https://awalterschulze.github.io/blog/"
 languageCode = "en-us"
 title = "Adenoid Adventures"
 theme = "beautifulhugo" 
