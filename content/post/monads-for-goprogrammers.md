@@ -1,7 +1,6 @@
 ---
 title: "Monads for Go Programmers"
 date: 2017-07-16T12:05:59+02:00
-draft: true
 tags: ["monads", "golang"]
 ---
 
