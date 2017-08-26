@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Adenoid Adventures</title>
-    <link>https://awalterschulze.github.io/blog/</link>
-    <description>Recent content on Adenoid Adventures</description>
+    <title>Golang on Adenoid Adventures</title>
+    <link>https://awalterschulze.github.io/blog/tags/golang/</link>
+    <description>Recent content in Golang on Adenoid Adventures</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
     <lastBuildDate>Sun, 16 Jul 2017 12:05:59 +0200</lastBuildDate>
     
-	<atom:link href="https://awalterschulze.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://awalterschulze.github.io/blog/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
