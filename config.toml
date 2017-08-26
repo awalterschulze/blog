@@ -1,0 +1,20 @@
+baseURL = "http://awalterschulze.github.io/blog/"
+languageCode = "en-us"
+title = "Adenoid Adventures"
+theme = "beautifulhugo" 
+publishDir = "docs"
+
+[Params]
+  subtitle = "Walter Schulze's blog about Programming"
+  logo = "avatar.png"
+  favicon = "favicon.ico"
+  dateFormat = "2006 January 2"
+  commit = false
+  rss = true
+  comments = false
+
+[Author]
+  name = "Walter Schulze"
+  email = "awalterschulze@gmail.com"
+  github = "awalterschulze"
+  linkedin = "schulzewalter"
