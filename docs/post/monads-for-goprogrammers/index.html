@@ -331,7 +331,7 @@ So lets rather explain the reason for the abstraction of a <code>monad</code>.
 The reason is to compose functions that return these embellished types.</p>
 
 <p>Lets start with plain function composition, without embellished types.
-In this example, we want to compose two functions <code>f</code> and <code>g</code> and return a function that takes the input that is expected by <code>f</code> and return the output from <code>g</code>:</p>
+In this example, we want to compose two functions <code>f</code> and <code>g</code> and return a function that takes the input that is expected by <code>f</code> and returns the output from <code>g</code>:</p>
 
 <pre><code class="language-go">func compose(f func(A) B, g func(B) C) func(A) C {
     return func(a A) c {
@@ -382,13 +382,13 @@ I mean now that we have <code>mb</code>, what do we do?</p>
 <pre><code class="language-go">type fmap = func(func(A) B, M&lt;A&gt;) M&lt;B&gt;
 </code></pre>
 
-<p>The function <code>g</code> that we want to <code>fmap</code> with does not return a simple type like <code>c</code> it returns <code>M&lt;c&gt;</code>.
+<p>The function <code>g</code> that we want to <code>fmap</code> with does not return a simple type like <code>C</code> it returns <code>M&lt;C&gt;</code>.
 Luckily this is not a problem for <code>fmap</code>, but it changes the type signature a bit:</p>
 
 <pre><code class="language-go">type fmap = func(func(B) M&lt;C&gt;, M&lt;B&gt;) M&lt;M&lt;C&gt;&gt;
 </code></pre>
 
-<p>So now we have a value <code>mmc</code> of type <code>M&lt;M&lt;c&gt;&gt;</code>:</p>
+<p>So now we have a value <code>mmc</code> of type <code>M&lt;M&lt;C&gt;&gt;</code>:</p>
 
 <pre><code class="language-go">func compose(f func(A) M&lt;B&gt;, g func(B) M&lt;C&gt;) func(A) M&lt;C&gt; {
     return func(a A) M&lt;C&gt; {

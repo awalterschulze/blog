@@ -164,7 +164,7 @@ So lets rather explain the reason for the abstraction of a `monad`.
 The reason is to compose functions that return these embellished types.
 
 Lets start with plain function composition, without embellished types.
-In this example, we want to compose two functions `f` and `g` and return a function that takes the input that is expected by `f` and return the output from `g`:
+In this example, we want to compose two functions `f` and `g` and return a function that takes the input that is expected by `f` and returns the output from `g`:
 
 ```go
 func compose(f func(A) B, g func(B) C) func(A) C {
@@ -219,14 +219,14 @@ But ... if we know that our embellishment `M` is also a `functor`, then we can `
 type fmap = func(func(A) B, M<A>) M<B>
 ```
 
-The function `g` that we want to `fmap` with does not return a simple type like `c` it returns `M<c>`.
+The function `g` that we want to `fmap` with does not return a simple type like `C` it returns `M<C>`.
 Luckily this is not a problem for `fmap`, but it changes the type signature a bit:
 
 ```go
 type fmap = func(func(B) M<C>, M<B>) M<M<C>>
 ```
 
-So now we have a value `mmc` of type `M<M<c>>`:
+So now we have a value `mmc` of type `M<M<C>>`:
 
 ```go
 func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
