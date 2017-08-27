@@ -656,3 +656,6 @@ If you want to try `monads` and other functional programming concepts in Go, the
 
 > If you really want to transition to functional programming, I would recommend [Elm](http://elm-lang.org/).  Its a statically typed functional programming language for the front-end.  It is as easy to learn as is Go to learn for an imperative language.  I did this [guide](https://guide.elm-lang.org/) in a day and I was able to start being productive that evening.  The creator went out of his way to make it an easy to learn language by even removing the need to understand monads.  I have personally found `Elm` a joy to use in the front-end in conjunction with Go in back-end.  If you start feeling bored in Go and Elm, don't worry there is much more to learn, Haskell is waiting for you.
 
+Thank you:
+
+  - [Johan Brandhorst](https://jbrandhorst.com/) for proof reading and pushing me to write a blog.
