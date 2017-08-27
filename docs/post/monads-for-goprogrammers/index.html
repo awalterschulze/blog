@@ -439,7 +439,7 @@ We just need to define <code>join</code>.</p>
 <li>channels, which will result in a concurrency pipeline.</li>
 </ul>
 
-<h3 id="list-comprehension">List Comprehension</h3>
+<h3 id="list-comprehensions">List Comprehensions</h3>
 
 <p>Join on a slice is the simplest and probably the easiest to start with.
 The <code>join</code> function simply concatenates all the slices.</p>
@@ -453,40 +453,86 @@ The <code>join</code> function simply concatenates all the slices.</p>
 }
 </code></pre>
 
-<p>This means we can define compose on functions that return slices.</p>
+<p>Lets look at why we need <code>join</code> again, but focusing specifically on slices.
+Here is our compose function again, but this time defined specifically for slices.</p>
 
-<pre><code class="language-go">type compose = func(func(A) []B, func(B) []C) func(A) []C
+<pre><code class="language-go">func compose(f func(A) []B, g func(B) []C) func(A) []C {
+    return func(a A) []C {
+        bs := f(a)
+        css := fmap(g, bs)
+        cs := join(css)
+        return cs
+    }
+}
 </code></pre>
 
-<p>And that makes a slice our first <code>monad</code>.
-Here is an example:</p>
+<p>If we pass <code>a</code> to <code>f</code> we get <code>bs</code> which is of type <code>[]B</code>.</p>
 
-<pre><code class="language-go">func upto(n int) []int { 
-    nums := make([]int, n)
+<p>We can now <code>fmap</code> over <code>[]B</code> with <code>g</code>, which will give us a value of type <code>[][]C</code> and not <code>[]C</code>:</p>
+
+<pre><code class="language-go">func fmap(g func(B) []C, bs []B) [][]C {
+    css := make([][]C, len(bs))
+    for i, b := range bs {
+        css[i] = g(b)
+    }
+    return css
+}
+</code></pre>
+
+<p>And that is why we need <code>join</code>.
+We need to go from <code>css</code> to <code>cs</code> or from <code>[][]C</code> to <code>[]C</code>.</p>
+
+<p>Lets take a look at a more concrete example:</p>
+
+<p>If we substitute our types:</p>
+
+<ul>
+<li><code>A</code> for type <code>int</code>,</li>
+<li><code>B</code> for type <code>int64</code> and</li>
+<li><code>C</code> for type <code>string</code>.</li>
+</ul>
+
+<p>Then our functions become:</p>
+
+<pre><code class="language-go">func compose(f func(int) []int64, g func(int64) []string) func(int) []string
+</code></pre>
+
+<pre><code class="language-go">func fmap(g func(int64) []string, bs []int64) [][]string
+</code></pre>
+
+<pre><code class="language-go">func join(css [][]string) []string
+</code></pre>
+
+<p>And then we can use them in our example:</p>
+
+<pre><code class="language-go">func upto(n int) []int64 { 
+    nums := make([]int64, n)
     for i := range nums {
-        nums[i] = i+1
+        nums[i] = int64(i+1)
     }
     return nums
 }
 
-func pair(x int) []int {
-    return []int{x, -1*x}
+func pair(x int64) []string {
+    return []int{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
 }
 
 c := compose(upto, pair)
 c(3)
-// 1,-1,2,-2,3,-3
+// &quot;1&quot;,&quot;-1&quot;,&quot;2&quot;,&quot;-2&quot;,&quot;3&quot;,&quot;-3&quot;
 </code></pre>
 
-<p>This is exactly how list comprehensions work in Haskell:</p>
+<p>This makes a slice our first <code>monad</code>.</p>
 
-<pre><code class="language-haskell">[ y | x &lt;- [1..4], y &lt;- pair x ]
+<p>Interestingly this is exactly how list comprehensions work in Haskell:</p>
+
+<pre><code class="language-haskell">[ y | x &lt;- [1..3], y &lt;- [show x, show (-1 * x)] ]
 </code></pre>
 
-<p>And in Python:</p>
+<p>But might know them from Python:</p>
 
 <pre><code class="language-python">def pair (x):
-  return [x, -1*x]
+  return [str(x), str(-1*x)]
 
 [y for x in range(1,4) for y in pair(x) ]
 </code></pre>
@@ -656,7 +702,7 @@ for _, size := range sizes {
 
 <p>Technically our compose function defined in the previous section, is called the <code>Kleisli Arrow</code>.</p>
 
-<pre><code class="language-go">type kleisliArrow = func(func(A) M&lt;B&gt;, func(B) M&lt;C&gt;) func(A) M&lt;C&gt; {
+<pre><code class="language-go">type kleisliArrow = func(func(A) M&lt;B&gt;, func(B) M&lt;C&gt;) func(A) M&lt;C&gt;
 </code></pre>
 
 <p>When people talk about <code>monads</code> they rarely mention the <code>Kleisli Arrow</code>, which was the key for me to understanding <code>monads</code>.

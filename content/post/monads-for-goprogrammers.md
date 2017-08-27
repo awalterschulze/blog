@@ -279,7 +279,7 @@ We will now define `join` for:
   - errors, which will result in monadic error handling and
   - channels, which will result in a concurrency pipeline.
 
-### List Comprehension
+### List Comprehensions
 
 Join on a slice is the simplest and probably the easiest to start with.
 The `join` function simply concatenates all the slices.
@@ -294,44 +294,90 @@ func join(ss [][]T) []T {
 }
 ```
 
-This means we can define compose on functions that return slices.
+Lets look at why we need `join` again, but focusing specifically on slices.
+Here is our compose function again, but this time defined specifically for slices.
 
 ```go
-type compose = func(func(A) []B, func(B) []C) func(A) []C
+func compose(f func(A) []B, g func(B) []C) func(A) []C {
+    return func(a A) []C {
+        bs := f(a)
+        css := fmap(g, bs)
+        cs := join(css)
+        return cs
+    }
+}
 ```
 
-And that makes a slice our first `monad`.
-Here is an example:
+If we pass `a` to `f` we get `bs` which is of type `[]B`.
+
+We can now `fmap` over `[]B` with `g`, which will give us a value of type `[][]C` and not `[]C`:
 
 ```go
-func upto(n int) []int { 
-    nums := make([]int, n)
+func fmap(g func(B) []C, bs []B) [][]C {
+    css := make([][]C, len(bs))
+    for i, b := range bs {
+        css[i] = g(b)
+    }
+    return css
+}
+```
+
+And that is why we need `join`.
+We need to go from `css` to `cs` or from `[][]C` to `[]C`.
+
+Lets take a look at a more concrete example:
+
+If we substitute our types:
+
+  - `A` for type `int`,
+  - `B` for type `int64` and 
+  - `C` for type `string`.
+
+Then our functions become:
+
+```go
+func compose(f func(int) []int64, g func(int64) []string) func(int) []string
+```
+```go
+func fmap(g func(int64) []string, bs []int64) [][]string
+```
+```go
+func join(css [][]string) []string
+```
+
+And then we can use them in our example:
+
+```go
+func upto(n int) []int64 { 
+    nums := make([]int64, n)
     for i := range nums {
-        nums[i] = i+1
+        nums[i] = int64(i+1)
     }
     return nums
 }
 
-func pair(x int) []int {
-    return []int{x, -1*x}
+func pair(x int64) []string {
+    return []int{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
 }
 
 c := compose(upto, pair)
 c(3)
-// 1,-1,2,-2,3,-3
+// "1","-1","2","-2","3","-3"
 ```
 
-This is exactly how list comprehensions work in Haskell:
+This makes a slice our first `monad`.
+
+Interestingly this is exactly how list comprehensions work in Haskell:
 
 ```haskell
-[ y | x <- [1..4], y <- pair x ]
+[ y | x <- [1..3], y <- [show x, show (-1 * x)] ]
 ```
 
-And in Python:
+But might know them from Python:
 
 ```python
 def pair (x):
-  return [x, -1*x]
+  return [str(x), str(-1*x)]
 
 [y for x in range(1,4) for y in pair(x) ]
 ```
@@ -510,7 +556,7 @@ This was a very hand wavy explanation of `monads` and there are many things I in
 Technically our compose function defined in the previous section, is called the `Kleisli Arrow`.
 
 ```go
-type kleisliArrow = func(func(A) M<B>, func(B) M<C>) func(A) M<C> {
+type kleisliArrow = func(func(A) M<B>, func(B) M<C>) func(A) M<C>
 ```
 
 When people talk about `monads` they rarely mention the `Kleisli Arrow`, which was the key for me to understanding `monads`.
