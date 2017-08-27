@@ -8,20 +8,20 @@ tags: ["monads", "golang"]
 
 Monads are all about function composition and hiding the tedious part of it.
 
-After 7 years of being a Go programmer, the amount of times I have had to type `if err != nil` can become quite tedious.
-Everytime I type `if err != nil` I thank the Gophers for a readable language with great tooling,but at the same time I curse them for making me feel like I'm Bart Simpson in detention.
+After 7 years of being a Go programmer, typing `if err != nil` can become quite tedious.
+Everytime I type `if err != nil` I thank the Gophers for a readable language with great tooling, but at the same time I curse them for making me feel like I'm Bart Simpson in detention.
 
 ![Missing image of Bart Simpson writing if err != nil on the detention chalkboard](http://awalterschulze.github.io/blog/monads-for-goprogrammers/bartiferr.png "if err != nil")
 
 [I suspect I am not the only one](https://anvaka.github.io/common-words/#?lang=go), but 
 ```go
 if err != nil {
-    log.Printf("This should still be interesting for a go programmer " +
-        "considering to use a functional language, despite %v.", err)
+    log.Printf("This should still be interesting to a Go programmer " +
+        "considering using a functional language, despite %v.", err)
 }
 ```
 
-Monads are not just used to hide some error handling, but can also be used for list comprehension and concurrency, to name but a few.
+Monads are not just used to hide some error handling, but can also be used for list comprehensions and concurrency, to name but a few examples.
 
 ## Don't read this
 
@@ -50,24 +50,24 @@ Examples include:
   - A tree: `type Node<T> struct { Value T; Children: []Node<T> }` is a container whose items are structured into a tree;
   - A channel with parametric type T: `<-chan T` is a container, like a pipe which contains water;
   - A pointer: `*T` is a container that may be empty or contain one item;
-  - A function: `func(a) T` is a container, like a lock box, that first needs a key, before you can see the item;
-  - A tuple: `(T, error)` is a container that possibly contains one item with a possible error in the container as well.
+  - A function: `func(A) T` is a container, like a lock box, that first needs a key, before you can see the item;
+  - Multiple return values: `func() (T, error)` is a container that possibly contains one item with a possible error in the container as well.  From here on we will refer to `(T, error)` as a tuple.
 
-> Non go programmers: Go does not have algebriac data types or union types.  This means that instead of a function returning a value `or` an error, we go programmers return a value `and` an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. Oh we have fun.
+> Non Go programmers: Go does not have algebraic data types or union types.  This means that instead of a function returning a value `or` an error, we Go programmers return a value `and` an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. Oh we have fun.
 
-> The most popular way to have union types in go would be have an interface (abstract class) and then have a type switch (a very naive form of pattern matching) on the interface type.
+> The most popular way to have union types in Go would be to have an interface (abstract class) and then have a type switch (a very naive form of pattern matching) on the interface type.
 
 The other requirement for a container to be a `functor` is that we need an implementation of the `fmap` function for that container type.
 The `fmap` function applies a function to each item in the container without modifying the container or structure in any way.
 
-```text
-func fmap(f func(a) b, aContainerOfa Container<a>) Container<b>
+```go
+func fmap(f func(A) B, aContainerOfA Container<A>) Container<B>
 ```
 
 The classic example, which you might recognize from Hadoop's mapreduce, Python, Ruby or almost any other language you can think of, is the `map` function for a slice:
 
 ```go
-func fmap(f func(a) b, as []a) []b {
+func fmap(f func(A) B, as []A) []B {
     bs := make([]b, len(as))
     for i, a := range as {
         bs[i] = f(a)
@@ -78,11 +78,11 @@ func fmap(f func(a) b, as []a) []b {
 
 We can also implement `fmap` for a tree:
 
-```text
-func fmap(f func(a) b, atree Node<a>) Node<b> {
-    btree := Node<b>{
+```go
+func fmap(f func(A) B, atree Node<A>) Node<B> {
+    btree := Node<B>{
         Value: f(atree.Value),
-        Children: make([]Node<b>, len(atree.Children)),
+        Children: make([]Node<B>, len(atree.Children)),
     }
     for i, c := range atree.Children {
         btree.Children[i] = fmap(f, c)
@@ -110,7 +110,7 @@ func fmap(f func(A) B, in <-chan A) <-chan B {
 Or a pointer:
 
 ```go
-func fmap(f func(a) b, a *a) *b {
+func fmap(f func(A) B, a *A) *B {
     if a == nil {
         return nil
     }
@@ -122,8 +122,8 @@ func fmap(f func(a) b, a *a) *b {
 Or a function:
 
 ```go
-func fmap(f func(a) b, g func(c) a) func(c) b {
-    return func(c c) b {
+func fmap(f func(A) B, g func(C) A) func(C) B {
+    return func(c C) B {
         a := g(c)
         return f(a)
     }
@@ -133,8 +133,8 @@ func fmap(f func(a) b, g func(c) a) func(c) b {
 Or a function that returns an error:
 
 ```go
-func fmap(f func(a) b, g func() (*a, error)) func() (*b, error) {
-    return func() (*b, error) {
+func fmap(f func(A) B, g func() (*A, error)) func() (*B, error) {
+    return func() (*B, error) {
         a, err := g()
         if err != nil {
             return nil, err
@@ -150,8 +150,10 @@ All of these containers with their respective `fmap` implementations are example
 ## Function Composition
 
 Now that we understand that a `functor` is just:
-  - an abstract name for a container and
-  - that we can apply a function to the items inside the container
+
+   - an abstract name for a container and
+   - that we can apply a function to the items inside the container
+
 , we can get to the whole point: the abstract concept of a `monad`.
 
 A `monad` is simply an embellished type.
@@ -165,8 +167,8 @@ Lets start with plain function composition, without embellished types.
 In this example, we want to compose two functions `f` and `g` and return a function that takes the input that is expected by `f` and return the output from `g`:
 
 ```go
-func compose(f func(a) b, g func(b) c) func(a) c {
-    return func(a a) c {
+func compose(f func(A) B, g func(B) C) func(A) C {
+    return func(a A) c {
         b := f(a)
         c := g(b)
         return c
@@ -179,8 +181,8 @@ Obviously, this will only work if the output type of `f` matches the input type 
 Another version of this would be composing functions that return errors.
 
 ```go
-func compose(f func(*a) (*b, error), g func(*b) (*c, error)) func(*a) (*c, error) {
-    return func(a *a) (*c, error) {
+func compose(f func(*A) (*B, error), g func(*B) (*C, error)) func(*A) (*C, error) {
+    return func(a *A) (*C, error) {
         b, err := f(a)
         if err != nil {
             return nil, err
@@ -193,9 +195,9 @@ func compose(f func(*a) (*b, error), g func(*b) (*c, error)) func(*a) (*c, error
 
 Now we can try to abstract this error as an embellishment `M` and see what we are left with:
 
-```text
-func compose(f func(a) M<b>, g func(b) M<c>) func(a) M<c> {
-    return func(a a) M<c> {
+```go
+func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
+    return func(a A) M<C> {
         mb := f(a)
         // ...
         return mc
@@ -213,22 +215,22 @@ When we knew it was an error we could check it, but now that its abstracted away
 
 But ... if we know that our embellishment `M` is also a `functor`, then we can `fmap` over `M`:
 
-```text
-type fmap = func(func(a) b, M<a>) M<b>
+```go
+type fmap = func(func(A) B, M<A>) M<B>
 ```
 
 The function `g` that we want to `fmap` with does not return a simple type like `c` it returns `M<c>`.
 Luckily this is not a problem for `fmap`, but it changes the type signature a bit:
 
-```text
-type fmap = func(func(b) M<c>, M<b>) M<M<c>>
+```go
+type fmap = func(func(B) M<C>, M<B>) M<M<C>>
 ```
 
 So now we have a value `mmc` of type `M<M<c>>`:
 
-```text
-func compose(f func(a) M<b>, g func(b) M<c>) func(a) M<c> {
-    return func(a a) M<c> {
+```go
+func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
+    return func(a A) M<C> {
         mb := f(a)
         mmc := fmap(g, mb)
         // ...
@@ -237,20 +239,20 @@ func compose(f func(a) M<b>, g func(b) M<c>) func(a) M<c> {
 }
 ```
 
-We need a way to go from `M<M<c>>` to `M<c>`.
+We need a way to go from `M<M<C>>` to `M<C>`.
 
 We need our embellishment `M` to not just be a `functor`, but to also have another property.
 This extra property is a function called `join` and is defined for each `monad`, just like `fmap` was defined for each `functor`.
 
-```text
-type join = func(M<M<c>>) M<c>
+```go
+type join = func(M<M<C>>) M<C>
 ```
 
 Given join, we can now write:
 
-```text
-func compose(f func(a) M<b>, g func(b) M<c>) func(a) M<c> {
-    return func(a a) M<c> {
+```go
+func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
+    return func(a A) M<C> {
         mb := f(a)
         mmc := fmap(g, mb)
         mc := join(mmc)
@@ -267,18 +269,19 @@ These two functions are required to be defined for a type, for that type to be a
 Monads are `functors`, so we don't need to define `fmap` for them again.
 We just need to define `join`.
 
-```text
-type join = func(M<M<c>>) M<c>
+```go
+type join = func(M<M<C>>) M<C>
 ```
 
 We will now define `join` for:
+
   - lists, which will result in list comprehensions,
   - errors, which will result in monadic error handling and
   - channels, which will result in a concurrency pipeline.
 
 ### List Comprehension
 
-Join on a slice is the simplest probably the easiest to start with.
+Join on a slice is the simplest and probably the easiest to start with.
 The `join` function simply concatenates all the slices.
 
 ```go
@@ -294,7 +297,7 @@ func join(ss [][]T) []T {
 This means we can define compose on functions that return slices.
 
 ```go
-type compose = func(func(a) []b, func(b) []c) func(a) []c
+type compose = func(func(A) []B, func(B) []C) func(A) []C
 ```
 
 And that makes a slice our first `monad`.
@@ -336,42 +339,42 @@ def pair (x):
 ### Monadic Error Handling
 
 We can also define `join` on functions which return a value and an error.
-For this we first need to take a step back to the `fmap` function again, because of some idiosyncrasies in go.
+For this we first need to take a step back to the `fmap` function again, because of some idiosyncrasies in Go.
 
 ```go
-type fmap = func(f func(b) c, g func(a) (b, error)) func(a) (c, error)
+type fmap = func(f func(B) C, g func(A) (B, error)) func(A) (C, error)
 ```
 
 We know our compose function is going to call `fmap` with a function `f` that also returns an error.
 This will result in our `fmap` signature looking something like this:
 
 ```go
-type fmap = func(f func(b) (c, error), g func(a) (b, error)) func(a) ((c, error), error)
+type fmap = func(f func(A) (C, error), g func(A) (B, error)) func(A) ((C, error), error)
 ```
 
-Unfortunately tuples are not first class citizens in go, so we can't write:
+Unfortunately tuples are not first class citizens in Go, so we can't write:
 
 ```go
-((c, error), error)
+((C, error), error)
 ```
 
 There are a few ways to work around this problem.
 I prefer using a function, since a function that returns a tuple is still a first class citizen:
 
 ```go
-(func() (c, error), error)
+(func() (C, error), error)
 ```
 
 Now we can define our `fmap` for functions which returns a value and an error, using our work around:
 
 ```go
-func fmap(f func(b) (c, error), g func(a) (b, error)) func(a) (func() (c, error), error) {
-    return func(a a) (func() (c, error), error) {
+func fmap(f func(B) (C, error), g func(A) (B, error)) func(A) (func() (C, error), error) {
+    return func(a A) (func() (C, error), error) {
         b, err := g(a)
         if err != nil {
             return nil, err
         }
-        return func() (c, error) {
+        return func() (C, error) {
             return f(b)
         }
     }
@@ -382,7 +385,7 @@ Which brings us back to our main point, our `join` function on `(func() (c, erro
 Its pretty simple and simply does one of the error checks for us.
 
 ```go
-func join(f func() (c, error), err error) (c, error) {
+func join(f func() (C, error), err error) (C, error) {
     if err != nil {
         return nil, err
     }
@@ -423,13 +426,12 @@ func join(in <-chan <-chan T) <-chan T {
 		wait := sync.WaitGroup{}
 		for c := range in {
 			wait.Add(1)
-			res := c
-			go func() {
-				for r := range res {
-					out <- r
+			go func(inner <-chan T) {
+				for t := range inner {
+					out <- t
 				}
 				wait.Done()
-			}()
+			}(c)
 		}
 		wait.Wait()
 		close(out)
@@ -445,6 +447,8 @@ This inner go routines will be used to listen to incoming events on a single cha
 Then we wait for all the channels to be closed and close the `out` channel.
 
 In short we are reading all `T`s from `in` and pushing them all to the `out` channel.
+
+> Non Go programmers: I have to pass `c` as a parameter to the inner go routine, because `c` is a single variable that takes on the value of each element in the channel.  That means that if we just used it, inside the closure instead of creating a copy of the value by passing it as a parameter, we would probably only be reading from the newest channel.  [This is a common mistake made by go programmers](https://golang.org/doc/faq#closures_and_goroutines).
 
 This means we can define a compose function on functions that return channels.
 
@@ -501,19 +505,19 @@ for _, size := range sizes {
 
 ## Less Hand waving
 
-This was a very hand wavy explanation of `monads` and there are many things I intentionally left out, to keep things simpler, but there is one thing that I would like to cover.
+This was a very hand wavy explanation of `monads` and there are many things I intentionally left out, to keep things simpler, but there is one more thing that I would like to cover.
 
-Technically our compose function defined in the previous section, is called the `Kleisli` arrow.
+Technically our compose function defined in the previous section, is called the `Kleisli Arrow`.
 
-```text
-type kleisliArrow = func(func(a) M<b>, func(b) M<c>) func(a) M<c> {
+```go
+type kleisliArrow = func(func(A) M<B>, func(B) M<C>) func(A) M<C> {
 ```
 
-When people talk about `monads` they rarely mention the `Kleisli` arrow, which was the key for me to understanding `monads`.
+When people talk about `monads` they rarely mention the `Kleisli Arrow`, which was the key for me to understanding `monads`.
 If you are lucky they explain it using `fmap` and `join`, but if you are unlucky, like me, they explain it using the bind function.
 
-```text
-type bind = func(M<b>, func(b) M<c>) M<c>
+```go
+type bind = func(M<B>, func(B) M<C>) M<C>
 ```
 
 Why?
@@ -522,9 +526,9 @@ Because this is the `mappend` or `>>=` function in Haskell that you need to impl
 
 Lets repeat our implementation of the compose function here:
 
-```text
-func compose(f func(a) M<b>, g func(b) M<c>) func(a) M<c> {
-    return func(a a) M<c> {
+```go
+func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
+    return func(a A) M<C> {
         mb := f(a)
         mmc := fmap(g, mb)
         mc := join(mmc)
@@ -535,9 +539,9 @@ func compose(f func(a) M<b>, g func(b) M<c>) func(a) M<c> {
 
 If the bind function was implemented then we could simply call it instead of `fmap` and `join`.
 
-```text
-func compose(f func(a) M<b>, g func(b) M<c>) func(a) M<c> {
-    return func(a a) M<c> {
+```go
+func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
+    return func(a A) M<C> {
         mb := f(a)
         mc := bind(mb, g)
         return mc
@@ -550,14 +554,14 @@ Which means that `bind(mb, g)` = `join(fmap(g, mb))`.
 The `bind` function for lists would be `concatMap` or `flatMap` depending on the language.
 
 ```go
-func concatMap(as []a, func(a) []b) []b
+func concatMap([]A, func(A) []B) []B
 ```
 
 ## Squinting
 
-I found that go started to blur the lines for me between `bind` and `Kleisli`.
+I found that Go started to blur the lines for me between `bind` and the `Kleisli Arrow`.
 Go returns an error in a tuple, but a tuple is not a first class citizen.
-For example this code will not compile:
+For example this code will not compile, because you cannot pass `f`'s results to `g`, in an in-line way:
 
 ```go
 func f() (int, error) {
@@ -577,7 +581,6 @@ func main() {
 }
 ```
 
-, because you cannot pass `f`'s results to `g`, in an in-line way.
 You have to write it out:
 
 ```go
@@ -611,35 +614,35 @@ func main() {
 
 But that means that our bind function:
 
-```text
-type bind = func(M<b>, func(b) M<c>) M<c>
+```go
+type bind = func(M<B>, func(B) M<C>) M<C>
 ```
 
 as defined for errors:
 
 ```go
-type bind = func(b, error, func(b) (c, error)) (c, error)
+type bind = func(b B, error, g func(B) (C, error)) (C, error)
 ```
 
 will not be fun to use, unless we squash that tuple into a function:
 
 ```go
-type bind = func(func() (b, error), func(b) (c, error)) (c, error)
+type bind = func(f func() (B, error), g func(B) (C, error)) (C, error)
 ```
 
-It we squint we can see our returning tuple as a function as well:
+If we squint we can see our returning tuple as a function as well:
 
 ```go
-type bind = func(f func() (b, error), g func(b) (c, error)) func() (c, error)
+type bind = func(f func() (B, error), g func(B) (C, error)) func() (C, error)
 ```
 
 And if we squint again, then we can see that this is our compose function, where `f` just takes zero parameters:
 
 ```go
-type compose = func(f func(a) (b, error), g func(b) (c, error)) func(a) (c, error)
+type compose = func(f func(A) (B, error), g func(B) (C, error)) func(A) (C, error)
 ```
 
-Ta da, we have our `Kleisli` arrow, by just squinting a few times.
+Ta da, we have our `Kleisli Arrow`, by just squinting a few times.
 
 ## Conclusion
 
@@ -647,7 +650,7 @@ Monads hide some of the repeated logic of composing functions with embellished t
 
 ![Missing image of Bart Simpson on his skateboard](http://awalterschulze.github.io/blog/monads-for-goprogrammers/bartskate.jpg "separation of church and skate")
 
-If you want to try `monads` and other functional programming concepts in go, then you can do it using my code generator, [GoDerive](https://github.com/awalterschulze/goderive).
+If you want to try `monads` and other functional programming concepts in Go, then you can do it using my code generator, [GoDerive](https://github.com/awalterschulze/goderive).
 
 > Warning:  One of the key concepts of functional programming is immutability.  This not only makes programs easier to reason about, but also allows for compiler optimizations.  To simulate this immutability, in Go, you will tend to copy lots of structures that will lead to non optimal performance.  The reason functional programming languages gets away with this is exactly because they can rely on the immutability and always point to the old values, instead of copying them again.
 
