@@ -568,7 +568,7 @@ type bind = func(M<B>, func(B) M<C>) M<C>
 
 Why?
 
-Because this is the `mappend` or `>>=` function in Haskell that you need to implement for your type to be consider of the `Monad` type class.
+Because `bind` is the function in Haskell that you need to implement for your type if you want it to be considered a `Monad`.
 
 Lets repeat our implementation of the compose function here:
 
@@ -583,7 +583,7 @@ func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
 }
 ```
 
-If the bind function was implemented then we could simply call it instead of `fmap` and `join`.
+If the `bind` function was implemented then we could simply call it, instead of `fmap` and `join`.
 
 ```go
 func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
@@ -667,7 +667,7 @@ type bind = func(M<B>, func(B) M<C>) M<C>
 as defined for errors:
 
 ```go
-type bind = func(b B, error, g func(B) (C, error)) (C, error)
+type bind = func(b B, err error, g func(B) (C, error)) (C, error)
 ```
 
 will not be fun to use, unless we squash that tuple into a function:
@@ -689,6 +689,10 @@ type compose = func(f func(A) (B, error), g func(B) (C, error)) func(A) (C, erro
 ```
 
 Ta da, we have our `Kleisli Arrow`, by just squinting a few times.
+
+```go
+type compose = func(f func(A) M<B>, g func(B) M<C>) func(A) M<C>
+```
 
 ## Conclusion
 

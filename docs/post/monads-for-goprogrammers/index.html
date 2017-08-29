@@ -713,7 +713,7 @@ If you are lucky they explain it using <code>fmap</code> and <code>join</code>, 
 
 <p>Why?</p>
 
-<p>Because this is the <code>mappend</code> or <code>&gt;&gt;=</code> function in Haskell that you need to implement for your type to be consider of the <code>Monad</code> type class.</p>
+<p>Because <code>bind</code> is the function in Haskell that you need to implement for your type if you want it to be considered a <code>Monad</code>.</p>
 
 <p>Lets repeat our implementation of the compose function here:</p>
 
@@ -727,7 +727,7 @@ If you are lucky they explain it using <code>fmap</code> and <code>join</code>, 
 }
 </code></pre>
 
-<p>If the bind function was implemented then we could simply call it instead of <code>fmap</code> and <code>join</code>.</p>
+<p>If the <code>bind</code> function was implemented then we could simply call it, instead of <code>fmap</code> and <code>join</code>.</p>
 
 <pre><code class="language-go">func compose(f func(A) M&lt;B&gt;, g func(B) M&lt;C&gt;) func(A) M&lt;C&gt; {
     return func(a A) M&lt;C&gt; {
@@ -804,7 +804,7 @@ func main() {
 
 <p>as defined for errors:</p>
 
-<pre><code class="language-go">type bind = func(b B, error, g func(B) (C, error)) (C, error)
+<pre><code class="language-go">type bind = func(b B, err error, g func(B) (C, error)) (C, error)
 </code></pre>
 
 <p>will not be fun to use, unless we squash that tuple into a function:</p>
@@ -823,6 +823,9 @@ func main() {
 </code></pre>
 
 <p>Ta da, we have our <code>Kleisli Arrow</code>, by just squinting a few times.</p>
+
+<pre><code class="language-go">type compose = func(f func(A) M&lt;B&gt;, g func(B) M&lt;C&gt;) func(A) M&lt;C&gt;
+</code></pre>
 
 <h2 id="conclusion">Conclusion</h2>
 
