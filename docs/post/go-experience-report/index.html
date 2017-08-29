@@ -269,7 +269,7 @@ If I only generate a function, then I don&rsquo;t have to make this decision.  A
 <p>The <code>deriveEqual</code> function did not have any input types, so the Go language could not infer its type, which meant that <code>deriveCurry</code> could not infer its input type.
 I went into the <code>go/types</code> library to try and find out how this is done for <code>append</code> and other generic/builtin functions and thats when I came upon the spec, <a href="https://github.com/awalterschulze/goderive/issues/10">which meant that I couldn&rsquo;t solve this.</a></p>
 
-<p>This made me think of how I laughed at <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a> and now higher order functions can only be defined by the language maintainers.  APL has higher order functions that are represented by graphical symbols, for example:</p>
+<p>This reminded me of <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a>, which has higher order functions that are represented by graphical symbols, for example:</p>
 
 <ul>
 <li>ceiling ⌈</li>
@@ -279,6 +279,8 @@ I went into the <code>go/types</code> library to try and find out how this is do
 <p>which means that you can order special keyboards with which to program in <code>APL</code>.</p>
 
 <p><img src="http://awalterschulze.github.io/blog/go-experience-report/us_rc.jpg" alt="Missing image of an APL keyboard" title="Have languages come a long way?" /></p>
+
+<p>I remember how I laughed at <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a>, because higher order functions can only be defined by the language maintainers.</p>
 
 <p>Now I have to laugh at the language I love and how, even with a code generator, we can&rsquo;t really have generics, because of this limitation.
 Only the language maintainers can define generic functions.</p>

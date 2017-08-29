@@ -99,7 +99,7 @@ deriveCurry(deriveEqual)(this)
 The `deriveEqual` function did not have any input types, so the Go language could not infer its type, which meant that `deriveCurry` could not infer its input type.
 I went into the `go/types` library to try and find out how this is done for `append` and other generic/builtin functions and thats when I came upon the spec, [which meant that I couldn't solve this.](https://github.com/awalterschulze/goderive/issues/10)
 
-This made me think of how I laughed at [APL](https://en.wikipedia.org/wiki/APL_(programming_language)) and now higher order functions can only be defined by the language maintainers.  APL has higher order functions that are represented by graphical symbols, for example:
+This reminded me of [APL](https://en.wikipedia.org/wiki/APL_(programming_language)), which has higher order functions that are represented by graphical symbols, for example:
 
   - ceiling ⌈
   - log ⍟
@@ -107,6 +107,8 @@ This made me think of how I laughed at [APL](https://en.wikipedia.org/wiki/APL_(
 which means that you can order special keyboards with which to program in `APL`.
 
 ![Missing image of an APL keyboard](http://awalterschulze.github.io/blog/go-experience-report/us_rc.jpg "Have languages come a long way?")
+
+I remember how I laughed at [APL](https://en.wikipedia.org/wiki/APL_(programming_language)), because higher order functions can only be defined by the language maintainers.
 
 Now I have to laugh at the language I love and how, even with a code generator, we can't really have generics, because of this limitation.
 Only the language maintainers can define generic functions.
