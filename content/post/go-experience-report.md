@@ -106,7 +106,7 @@ This made me think of how I laughed at [APL](https://en.wikipedia.org/wiki/APL_(
 
 which means that you can order special keyboards with which to program in `APL`.
 
-![Missing image of an APL keyboard](http://awalterschulze.github.io/blog/go-experience-report/us-rc.jpg "Have languages come a long way?")
+![Missing image of an APL keyboard](http://awalterschulze.github.io/blog/go-experience-report/us_rc.jpg "Have languages come a long way?")
 
 Now I have to laugh at the language I love and how, even with a code generator, we can't really have generics, because of this limitation.
 Only the language maintainers can define generic functions.
