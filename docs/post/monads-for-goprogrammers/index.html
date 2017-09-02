@@ -346,7 +346,8 @@ In this example, we want to compose two functions <code>f</code> and <code>g</co
 
 <p>Another version of this would be composing functions that return errors.</p>
 
-<pre><code class="language-go">func compose(f func(*A) (*B, error), g func(*B) (*C, error)) func(*A) (*C, error) {
+<pre><code class="language-go">func compose(f func(*A) (*B, error), g func(*B) (*C, error)) 
+    func(*A) (*C, error) {
     return func(a *A) (*C, error) {
         b, err := f(a)
         if err != nil {
@@ -494,7 +495,8 @@ We need to go from <code>css</code> to <code>cs</code> or from <code>[][]C</code
 
 <p>Then our functions become:</p>
 
-<pre><code class="language-go">func compose(f func(int) []int64, g func(int64) []string) func(int) []string
+<pre><code class="language-go">func compose(f func(int) []int64, g func(int64) []string) 
+    func(int) []string
 </code></pre>
 
 <pre><code class="language-go">func fmap(g func(int64) []string, bs []int64) [][]string
@@ -548,7 +550,8 @@ For this we first need to take a step back to the <code>fmap</code> function aga
 <p>We know our compose function is going to call <code>fmap</code> with a function <code>f</code> that also returns an error.
 This will result in our <code>fmap</code> signature looking something like this:</p>
 
-<pre><code class="language-go">type fmap = func(f func(A) (C, error), g func(A) (B, error)) func(A) ((C, error), error)
+<pre><code class="language-go">type fmap = func(f func(A) (C, error), g func(A) (B, error)) 
+    func(A) ((C, error), error)
 </code></pre>
 
 <p>Unfortunately tuples are not first class citizens in Go, so we can&rsquo;t write:</p>
@@ -564,7 +567,8 @@ I prefer using a function, since a function that returns a tuple is still a firs
 
 <p>Now we can define our <code>fmap</code> for functions which returns a value and an error, using our work around:</p>
 
-<pre><code class="language-go">func fmap(f func(B) (C, error), g func(A) (B, error)) func(A) (func() (C, error), error) {
+<pre><code class="language-go">func fmap(f func(B) (C, error), g func(A) (B, error)) 
+    func(A) (func() (C, error), error) {
     return func(a A) (func() (C, error), error) {
         b, err := g(a)
         if err != nil {
@@ -604,6 +608,80 @@ getnum(`&quot;1&quot;`)
 </code></pre>
 
 <p>This results in us having to do less error checking, since the <code>monad</code> does it for us in the background using the <code>join</code> function.</p>
+
+<p>Here is another <a href="https://speakerdeck.com/rebeccaskinner/monadic-error-handling-in-go?slide=77">example</a>, where I feel like Bart Simpson:</p>
+
+<pre><code class="language-go">func upgradeUser(endpoint, username string) error {
+    getEndpoint := fmt.Sprintf(&quot;%s/oldusers/%s&quot;, endpoint, username)
+    postEndpoint := fmt.Sprintf(&quot;%s/newusers/%s&quot;, endpoint, username)
+
+    req, err := http.Get(genEndpoint)
+    if err != nil {
+        return err
+    }
+    data, err := ioutil.ReadAll(req.Body)
+    if err != nil {
+        return err
+    }
+    olduser, err := user.NewFromJson(data)
+    if err != nil {
+        return err
+    }
+    newuser, err := user.NewUserFromUser(olduser),
+    if err != nil {
+        return err
+    }
+    buf, err := json.Marshal(newuser)
+    if err != nil {
+        return err
+    }
+    resp, err := http.Post(
+        postEndpoint, 
+        &quot;application/json&quot;, 
+        bytes.NewBuffer(buf,
+    )
+    if err != nil {
+        return err
+    }
+    if resp.StatusCode != http.StatusOK {
+        return fmt.Errorf(&quot;non ok status code: %d&quot;, resp.StatusCode)
+    }
+    return nil
+}
+</code></pre>
+
+<p>Technically <code>compose</code> could take more than two functions as parameters.
+That means that we could chain all the above functions together in one call and rewrite the above example:</p>
+
+<pre><code class="language-go">func upgradeUser(endpoint, username string) error {
+    getEndpoint := fmt.Sprintf(&quot;%s/oldusers/%s&quot;, endpoint, username)
+    postEndpoint := fmt.Sprintf(&quot;%s/newusers/%s&quot;, endpoint, username)
+
+    resp, err := compose(
+        http.Get(getEndpoint),
+        func(req *http.Request) ([]byte, error) { 
+            return ioutil.ReadAll(req.Body) 
+        },
+        user.NewFromJson,
+        user.NewUserFromUser,
+        json.Marshal,
+        func(buf []byte) (*http.Response, error) {
+            return http.Post(
+                postEndpoint,
+                &quot;application/json&quot;, 
+                bytes.NewBuffer(buf),
+            )
+        },
+    )
+    if err != nil {
+        return err
+    }
+    if resp.StatusCode != http.StatusOK {
+        return fmt.Errorf(&quot;non ok status code: %d&quot;, resp.StatusCode)
+    }
+    return nil
+}
+</code></pre>
 
 <p>There are many other <code>monads</code> out there.
 Think of any two functions that you want to compose that return the same type of embellishment.

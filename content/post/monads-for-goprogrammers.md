@@ -181,7 +181,8 @@ Obviously, this will only work if the output type of `f` matches the input type 
 Another version of this would be composing functions that return errors.
 
 ```go
-func compose(f func(*A) (*B, error), g func(*B) (*C, error)) func(*A) (*C, error) {
+func compose(f func(*A) (*B, error), g func(*B) (*C, error)) 
+    func(*A) (*C, error) {
     return func(a *A) (*C, error) {
         b, err := f(a)
         if err != nil {
@@ -336,7 +337,8 @@ If we substitute our types:
 Then our functions become:
 
 ```go
-func compose(f func(int) []int64, g func(int64) []string) func(int) []string
+func compose(f func(int) []int64, g func(int64) []string) 
+    func(int) []string
 ```
 ```go
 func fmap(g func(int64) []string, bs []int64) [][]string
@@ -395,7 +397,8 @@ We know our compose function is going to call `fmap` with a function `f` that al
 This will result in our `fmap` signature looking something like this:
 
 ```go
-type fmap = func(f func(A) (C, error), g func(A) (B, error)) func(A) ((C, error), error)
+type fmap = func(f func(A) (C, error), g func(A) (B, error)) 
+    func(A) ((C, error), error)
 ```
 
 Unfortunately tuples are not first class citizens in Go, so we can't write:
@@ -414,7 +417,8 @@ I prefer using a function, since a function that returns a tuple is still a firs
 Now we can define our `fmap` for functions which returns a value and an error, using our work around:
 
 ```go
-func fmap(f func(B) (C, error), g func(A) (B, error)) func(A) (func() (C, error), error) {
+func fmap(f func(B) (C, error), g func(A) (B, error)) 
+    func(A) (func() (C, error), error) {
     return func(a A) (func() (C, error), error) {
         b, err := g(a)
         if err != nil {
@@ -456,6 +460,82 @@ getnum(`"1"`)
 ```
 
 This results in us having to do less error checking, since the `monad` does it for us in the background using the `join` function.
+
+Here is another [example](https://speakerdeck.com/rebeccaskinner/monadic-error-handling-in-go?slide=77), where I feel like Bart Simpson:
+
+```go
+func upgradeUser(endpoint, username string) error {
+    getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
+    postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
+
+    req, err := http.Get(genEndpoint)
+    if err != nil {
+        return err
+    }
+    data, err := ioutil.ReadAll(req.Body)
+    if err != nil {
+        return err
+    }
+    olduser, err := user.NewFromJson(data)
+    if err != nil {
+        return err
+    }
+    newuser, err := user.NewUserFromUser(olduser),
+    if err != nil {
+        return err
+    }
+    buf, err := json.Marshal(newuser)
+    if err != nil {
+        return err
+    }
+    resp, err := http.Post(
+        postEndpoint, 
+        "application/json", 
+        bytes.NewBuffer(buf,
+    )
+    if err != nil {
+        return err
+    }
+    if resp.StatusCode != http.StatusOK {
+        return fmt.Errorf("non ok status code: %d", resp.StatusCode)
+    }
+    return nil
+}
+```
+
+Technically `compose` could take more than two functions as parameters.
+That means that we could chain all the above functions together in one call and rewrite the above example:
+
+```go
+func upgradeUser(endpoint, username string) error {
+    getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
+    postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
+
+    resp, err := compose(
+        http.Get(getEndpoint),
+        func(req *http.Request) ([]byte, error) { 
+            return ioutil.ReadAll(req.Body) 
+        },
+        user.NewFromJson,
+        user.NewUserFromUser,
+        json.Marshal,
+        func(buf []byte) (*http.Response, error) {
+            return http.Post(
+                postEndpoint,
+                "application/json", 
+                bytes.NewBuffer(buf),
+            )
+        },
+    )
+    if err != nil {
+        return err
+    }
+    if resp.StatusCode != http.StatusOK {
+        return fmt.Errorf("non ok status code: %d", resp.StatusCode)
+    }
+    return nil
+}
+```
 
 There are many other `monads` out there.
 Think of any two functions that you want to compose that return the same type of embellishment.
