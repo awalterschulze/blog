@@ -16,3 +16,14 @@ More and more and more and more and more text More and more and more and more an
 
 More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
 
+```go
+func fmap(f func(A) B, a *A) *B {
+    if a == nil {
+        return nil
+    }
+    b := f(*a)
+    return &b
+}
+```
+
+More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
