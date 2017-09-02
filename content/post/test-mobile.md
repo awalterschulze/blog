@@ -15,3 +15,13 @@ More and more and more and more and more text More and more and more and more an
 ![Missing image of Bart Simpson writing if err != nil on the detention chalkboard](http://awalterschulze.github.io/blog/monads-for-goprogrammers/bartiferr.png "if err != nil")
 
 More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
+
+[I suspect I am not the only one](https://anvaka.github.io/common-words/#?lang=go), but 
+```go
+if err != nil {
+    log.Printf("This should still be interesting to a Go programmer " +
+        "considering using a functional language, despite %v.", err)
+}
+```
+
+More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
