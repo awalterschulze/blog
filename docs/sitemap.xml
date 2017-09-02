@@ -13,6 +13,11 @@
   </url>
   
   <url>
+    <loc>https://awalterschulze.github.io/blog/post/test-mobile/</loc>
+    <lastmod>1970-01-01T12:19:12+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://awalterschulze.github.io/blog/</loc>
     <lastmod>2017-08-26T12:19:12+02:00</lastmod>
     <priority>0</priority>
@@ -20,6 +25,12 @@
   
   <url>
     <loc>https://awalterschulze.github.io/blog/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/draft/</loc>
+    <lastmod>1970-01-01T12:19:12+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -55,7 +66,7 @@
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/</loc>
-    <lastmod>2017-08-26T12:19:12+02:00</lastmod>
+    <lastmod>1970-01-01T12:19:12+02:00</lastmod>
     <priority>0</priority>
   </url>
   
