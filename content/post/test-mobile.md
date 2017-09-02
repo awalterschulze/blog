@@ -12,4 +12,6 @@ More and more and more and more and more text
 
 More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
 
+![Missing image of Bart Simpson writing if err != nil on the detention chalkboard](http://awalterschulze.github.io/blog/monads-for-goprogrammers/bartiferr.png "if err != nil")
+
 More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
