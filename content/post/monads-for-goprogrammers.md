@@ -709,4 +709,4 @@ If you want to try `monads` and other functional programming concepts in Go, the
 Thank you:
 
   - [Johan Brandhorst](https://jbrandhorst.com/) for proof reading and pushing me to write a blog.
-  - [Ryan Lemmer](https://github.com/uroboros) for proof reading.
+  - [Ryan Lemmer](https://github.com/uroboros) for proof reading and the line of "side effects".
