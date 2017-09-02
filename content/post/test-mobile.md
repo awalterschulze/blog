@@ -16,12 +16,3 @@ More and more and more and more and more text More and more and more and more an
 
 More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
 
-[I suspect I am not the only one](https://anvaka.github.io/common-words/#?lang=go), but 
-```go
-if err != nil {
-    log.Printf("This should still be interesting to a Go programmer " +
-        "considering using a functional language, despite %v.", err)
-}
-```
-
-More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text More and more and more and more and more text
