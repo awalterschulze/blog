@@ -10,11 +10,11 @@ I have written many code generators for go, these include:
 
   - [gogoprotobuf](https://github.com/gogo/protobuf) - Protocol Buffers for Go with Gadgets
   - [goderive](https://github.com/awalterschulze/goderive) - Derives functions from their input parameters
-  - [gocc](https://github.com/goccmack/gocc) - Parser / Scanner Generator (To be fair, I am only helping to maintain this one)
-  - [a project](https://github.com/katydid/katydid/blob/master/gen/gen.go) [specific one](https://github.com/katydid/katydid/blob/master/relapse/funcs/funcs-gen/main.go) and
+  - [gocc](https://github.com/goccmack/gocc) - Parser / Scanner Generator ( only a maintainer, not a creator )
+  - [a](https://github.com/katydid/katydid/blob/master/gen/gen.go) [few](https://github.com/katydid/katydid/blob/master/parser/parser-gen/main.go) [project](https://github.com/katydid/katydid/blob/master/parser/debug/debug-gen/main.go) [specific](https://github.com/katydid/katydid/blob/master/relapse/compose/compose-gen/main.go) [ones](https://github.com/katydid/katydid/blob/master/relapse/funcs/funcs-gen/main.go) and
   - some proprietary ones
 
-Code generation is a hobby, a job (sometimes) and a pursuit for me.
+Code generation is my hammer and Go is my nail.
 
 I would like to talk about my experience developing `goderive` and explain what I would like in Go 2 as a developer of code generators.
 
