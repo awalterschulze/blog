@@ -635,18 +635,12 @@ getnum(`&quot;1&quot;`)
     if err != nil {
         return err
     }
-    resp, err := http.Post(
+    _, err = http.Post(
         postEndpoint, 
         &quot;application/json&quot;, 
         bytes.NewBuffer(buf,
     )
-    if err != nil {
-        return err
-    }
-    if resp.StatusCode != http.StatusOK {
-        return fmt.Errorf(&quot;non ok status code: %d&quot;, resp.StatusCode)
-    }
-    return nil
+    return err
 }
 </code></pre>
 
@@ -657,7 +651,7 @@ That means that we could chain all the above functions together in one call and 
     getEndpoint := fmt.Sprintf(&quot;%s/oldusers/%s&quot;, endpoint, username)
     postEndpoint := fmt.Sprintf(&quot;%s/newusers/%s&quot;, endpoint, username)
 
-    resp, err := compose(
+    _, err := compose(
         http.Get(getEndpoint),
         func(req *http.Request) ([]byte, error) { 
             return ioutil.ReadAll(req.Body) 
@@ -673,13 +667,7 @@ That means that we could chain all the above functions together in one call and 
             )
         },
     )
-    if err != nil {
-        return err
-    }
-    if resp.StatusCode != http.StatusOK {
-        return fmt.Errorf(&quot;non ok status code: %d&quot;, resp.StatusCode)
-    }
-    return nil
+    return err
 }
 </code></pre>
 

@@ -488,18 +488,12 @@ func upgradeUser(endpoint, username string) error {
     if err != nil {
         return err
     }
-    resp, err := http.Post(
+    _, err = http.Post(
         postEndpoint, 
         "application/json", 
         bytes.NewBuffer(buf,
     )
-    if err != nil {
-        return err
-    }
-    if resp.StatusCode != http.StatusOK {
-        return fmt.Errorf("non ok status code: %d", resp.StatusCode)
-    }
-    return nil
+    return err
 }
 ```
 
@@ -511,7 +505,7 @@ func upgradeUser(endpoint, username string) error {
     getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
     postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
 
-    resp, err := compose(
+    _, err := compose(
         http.Get(getEndpoint),
         func(req *http.Request) ([]byte, error) { 
             return ioutil.ReadAll(req.Body) 
@@ -527,13 +521,7 @@ func upgradeUser(endpoint, username string) error {
             )
         },
     )
-    if err != nil {
-        return err
-    }
-    if resp.StatusCode != http.StatusOK {
-        return fmt.Errorf("non ok status code: %d", resp.StatusCode)
-    }
-    return nil
+    return err
 }
 ```
 
