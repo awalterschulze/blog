@@ -210,17 +210,17 @@ rather than reading this post.</p>
 A <code>functor</code> is a superclass of a <code>monad</code>, which means that all <code>monads</code> are <code>functors</code> as well.
 I will use <code>functors</code> in my explanation of <code>monads</code>, so please don&rsquo;t gloss over this section.</p>
 
-<p>We can think of a <code>functor</code> as a container, which contains one parametric type.</p>
+<p>We can think of a <code>functor</code> as a container, which contains one type of item.</p>
 
 <p>Examples include:</p>
 
 <ul>
-<li>A slice with parametric type T: <code>[]T</code> is a container where the items are ordered into a list.</li>
+<li>A slice with items of type T: <code>[]T</code> is a container where the items are ordered into a list.</li>
 <li>A tree: <code>type Node&lt;T&gt; struct { Value T; Children: []Node&lt;T&gt; }</code> is a container whose items are structured into a tree;</li>
-<li>A channel with parametric type T: <code>&lt;-chan T</code> is a container, like a pipe which contains water;</li>
+<li>A channel: <code>&lt;-chan T</code> is a container, like a pipe which contains water;</li>
 <li>A pointer: <code>*T</code> is a container that may be empty or contain one item;</li>
 <li>A function: <code>func(A) T</code> is a container, like a lock box, that first needs a key, before you can see the item;</li>
-<li>Multiple return values: <code>func() (T, error)</code> is a container that possibly contains one item with a possible error in the container as well.  From here on we will refer to <code>(T, error)</code> as a tuple.</li>
+<li>Multiple return values: <code>func() (T, error)</code> is a container that possibly contains one item, while we can see the error as part of the container.  From here on we will refer to <code>(T, error)</code> as a tuple.</li>
 </ul>
 
 <blockquote>
@@ -324,9 +324,9 @@ The <code>fmap</code> function applies a function to each item in the container 
 <p>, we can get to the whole point: the abstract concept of a <code>monad</code>.</p>
 
 <p>A <code>monad</code> is simply an embellished type.
-Hmmm &hellip; ok that does not help to explain it, its too abstract.
+Hmmm &hellip; ok that does not help to explain it, it is too abstract.
 And that is typically the problem with trying to explain what a <code>monad</code> is.
-Its like trying to explain what &ldquo;side effects&rdquo; are, its just too broad.
+Its like trying to explain what &ldquo;side effects&rdquo; are, it is just too broad.
 So lets rather explain the reason for the abstraction of a <code>monad</code>.
 The reason is to compose functions that return these embellished types.</p>
 
@@ -373,10 +373,10 @@ In this example, we want to compose two functions <code>f</code> and <code>g</co
 <p>We have to return a function that takes an <code>a</code> as an input parameter, so we start by declaring the return function.
 Now that we have an <code>a</code>, we can call <code>f</code> and get and a value <code>mb</code> of type <code>M&lt;b&gt;</code>, but now what?</p>
 
-<p>We fall short, because its too abstract.
+<p>We fall short, because it is too abstract.
 I mean now that we have <code>mb</code>, what do we do?</p>
 
-<p>When we knew it was an error we could check it, but now that its abstracted away, we can&rsquo;t.</p>
+<p>When we knew it was an error we could check it, but now that it is abstracted away, we can&rsquo;t.</p>
 
 <p>But &hellip; if we know that our embellishment <code>M</code> is also a <code>functor</code>, then we can <code>fmap</code> over <code>M</code>:</p>
 
@@ -699,7 +699,7 @@ Lets do one more example.</p>
 }
 </code></pre>
 
-<p>Here have a channel <code>in</code> that will feed us more channels of type <code>T</code>.
+<p>Here we have a channel <code>in</code> that will feed us more channels of type <code>T</code>.
 We first create our <code>out</code> channel and start up a go routine which we are going to use to feed the channel with and then return the <code>out</code> channel.
 Inside the go routine we start up a new go routine for each incoming channel that we are reading from <code>in</code>.
 This inner go routines will be used to listen to incoming events on a single channel and send all of these events to the <code>out</code> channel.
@@ -912,6 +912,7 @@ func main() {
 <ul>
 <li><a href="https://jbrandhorst.com/">Johan Brandhorst</a> for proof reading and pushing me to write a blog.</li>
 <li><a href="https://github.com/uroboros">Ryan Lemmer</a> for proof reading and the line on &ldquo;side effects&rdquo;.</li>
+<li><a href="https://www.linkedin.com/in/anton-hendriks-1b549514/">Anton Hendriks</a> for proof reading.</li>
 </ul>
 
       </article>

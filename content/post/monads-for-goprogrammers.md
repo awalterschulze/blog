@@ -42,16 +42,16 @@ Before I can explain `monads`, I first need to explain `functors`.
 A `functor` is a superclass of a `monad`, which means that all `monads` are `functors` as well.
 I will use `functors` in my explanation of `monads`, so please don't gloss over this section.
 
-We can think of a `functor` as a container, which contains one parametric type.
+We can think of a `functor` as a container, which contains one type of item.
 
 Examples include:
 
-  - A slice with parametric type T: `[]T` is a container where the items are ordered into a list.
+  - A slice with items of type T: `[]T` is a container where the items are ordered into a list.
   - A tree: `type Node<T> struct { Value T; Children: []Node<T> }` is a container whose items are structured into a tree;
-  - A channel with parametric type T: `<-chan T` is a container, like a pipe which contains water;
+  - A channel: `<-chan T` is a container, like a pipe which contains water;
   - A pointer: `*T` is a container that may be empty or contain one item;
   - A function: `func(A) T` is a container, like a lock box, that first needs a key, before you can see the item;
-  - Multiple return values: `func() (T, error)` is a container that possibly contains one item with a possible error in the container as well.  From here on we will refer to `(T, error)` as a tuple.
+  - Multiple return values: `func() (T, error)` is a container that possibly contains one item, while we can see the error as part of the container.  From here on we will refer to `(T, error)` as a tuple.
 
 > Non Go programmers: Go does not have algebraic data types or union types.  This means that instead of a function returning a value `or` an error, we Go programmers return a value `and` an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. Oh we have fun.
 
@@ -157,9 +157,9 @@ Now that we understand that a `functor` is just:
 , we can get to the whole point: the abstract concept of a `monad`.
 
 A `monad` is simply an embellished type.
-Hmmm ... ok that does not help to explain it, its too abstract.
+Hmmm ... ok that does not help to explain it, it is too abstract.
 And that is typically the problem with trying to explain what a `monad` is.
-Its like trying to explain what "side effects" are, its just too broad.
+Its like trying to explain what "side effects" are, it is just too broad.
 So lets rather explain the reason for the abstraction of a `monad`.
 The reason is to compose functions that return these embellished types.
 
@@ -209,10 +209,10 @@ func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
 We have to return a function that takes an `a` as an input parameter, so we start by declaring the return function.
 Now that we have an `a`, we can call `f` and get and a value `mb` of type `M<b>`, but now what?
 
-We fall short, because its too abstract.
+We fall short, because it is too abstract.
 I mean now that we have `mb`, what do we do?
 
-When we knew it was an error we could check it, but now that its abstracted away, we can't.
+When we knew it was an error we could check it, but now that it is abstracted away, we can't.
 
 But ... if we know that our embellishment `M` is also a `functor`, then we can `fmap` over `M`:
 
@@ -554,7 +554,7 @@ func join(in <-chan <-chan T) <-chan T {
 }
 ```
 
-Here have a channel `in` that will feed us more channels of type `T`.
+Here we have a channel `in` that will feed us more channels of type `T`.
 We first create our `out` channel and start up a go routine which we are going to use to feed the channel with and then return the `out` channel.
 Inside the go routine we start up a new go routine for each incoming channel that we are reading from `in`.
 This inner go routines will be used to listen to incoming events on a single channel and send all of these events to the `out` channel.
@@ -778,3 +778,4 @@ Thank you:
 
   - [Johan Brandhorst](https://jbrandhorst.com/) for proof reading and pushing me to write a blog.
   - [Ryan Lemmer](https://github.com/uroboros) for proof reading and the line on "side effects".
+  - [Anton Hendriks](https://www.linkedin.com/in/anton-hendriks-1b549514/) for proof reading.
