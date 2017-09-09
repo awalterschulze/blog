@@ -422,7 +422,7 @@ This extra property is a function called <code>join</code> and is defined for ea
 </code></pre>
 
 <p>This means we can compose two functions that return embellished types, if the embellishment defines <code>fmap</code> and <code>join</code>.
-These two functions are required to be defined for a type, for that type to be a <code>monad</code>.</p>
+For a type to be a <code>monad</code>, these two functions need to be defined for it.</p>
 
 <h2 id="join">Join</h2>
 
@@ -672,7 +672,7 @@ That means that we could chain all the above functions together in one call and 
 </code></pre>
 
 <p>There are many other <code>monads</code> out there.
-Think of any two functions that you want to compose that return the same type of embellishment.
+Think of any two functions that return the same type of embellishment and that you would like to compose.
 Lets do one more example.</p>
 
 <h3 id="concurrent-pipelines">Concurrent Pipelines</h3>
@@ -700,10 +700,10 @@ Lets do one more example.</p>
 </code></pre>
 
 <p>Here we have a channel <code>in</code> that will feed us more channels of type <code>T</code>.
-We first create our <code>out</code> channel and start up a go routine which we are going to use to feed the channel with and then return the <code>out</code> channel.
-Inside the go routine we start up a new go routine for each incoming channel that we are reading from <code>in</code>.
-This inner go routines will be used to listen to incoming events on a single channel and send all of these events to the <code>out</code> channel.
-Then we wait for all the channels to be closed and close the <code>out</code> channel.</p>
+We first create the <code>out</code> channel, start a go routine, which will be used to feed it, and then return it.
+Inside the go routine we start a new go routine for each of the channels read from <code>in</code>.
+These go routines send their incoming events to <code>out</code>, merging the multiple inputs into one stream.
+Finally, we use a wait group to make sure we close the <code>out</code> channel once all input is received.</p>
 
 <p>In short we are reading all <code>T</code>s from <code>in</code> and pushing them all to the <code>out</code> channel.</p>
 

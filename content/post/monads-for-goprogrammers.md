@@ -263,7 +263,7 @@ func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
 ```
 
 This means we can compose two functions that return embellished types, if the embellishment defines `fmap` and `join`.
-These two functions are required to be defined for a type, for that type to be a `monad`.
+For a type to be a `monad`, these two functions need to be defined for it.
 
 ## Join
 
@@ -526,7 +526,7 @@ func upgradeUser(endpoint, username string) error {
 ```
 
 There are many other `monads` out there.
-Think of any two functions that you want to compose that return the same type of embellishment.
+Think of any two functions that return the same type of embellishment and that you would like to compose.
 Lets do one more example.
 
 ### Concurrent Pipelines
@@ -555,10 +555,10 @@ func join(in <-chan <-chan T) <-chan T {
 ```
 
 Here we have a channel `in` that will feed us more channels of type `T`.
-We first create our `out` channel and start up a go routine which we are going to use to feed the channel with and then return the `out` channel.
-Inside the go routine we start up a new go routine for each incoming channel that we are reading from `in`.
-This inner go routines will be used to listen to incoming events on a single channel and send all of these events to the `out` channel.
-Then we wait for all the channels to be closed and close the `out` channel.
+We first create the `out` channel, start a go routine, which will be used to feed it, and then return it.
+Inside the go routine we start a new go routine for each of the channels read from `in`.
+These go routines send their incoming events to `out`, merging the multiple inputs into one stream.
+Finally, we use a wait group to make sure we close the `out` channel once all input is received.
 
 In short we are reading all `T`s from `in` and pushing them all to the `out` channel.
 
