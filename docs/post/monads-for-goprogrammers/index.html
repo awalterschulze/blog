@@ -652,21 +652,21 @@ That means that we could chain all the above functions together in one call and 
     postEndpoint := fmt.Sprintf(&quot;%s/newusers/%s&quot;, endpoint, username)
 
     _, err := compose(
-        http.Get(getEndpoint),
-        func(req *http.Request) ([]byte, error) { 
-            return ioutil.ReadAll(req.Body) 
-        },
-        user.NewFromJson,
-        user.NewUserFromUser,
-        json.Marshal,
-        func(buf []byte) (*http.Response, error) {
-            return http.Post(
-                postEndpoint,
-                &quot;application/json&quot;, 
-                bytes.NewBuffer(buf),
-            )
-        },
-    )
+		http.Get,
+		func(req *http.Response) ([]byte, error) {
+			return ioutil.ReadAll(req.Body)
+		},
+		newUserFromJson,
+		newUserFromUser,
+		json.Marshal,
+		func(buf []byte) (*http.Response, error) {
+			return http.Post(
+				postEndpoint,
+				&quot;application/json&quot;,
+				bytes.NewBuffer(buf),
+			)
+		},
+	)(getEndpoint)
     return err
 }
 </code></pre>
