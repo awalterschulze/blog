@@ -779,3 +779,4 @@ Thank you:
   - [Johan Brandhorst](https://jbrandhorst.com/) for proof reading and pushing me to write a blog.
   - [Ryan Lemmer](https://github.com/uroboros) for proof reading and the line on "side effects".
   - [Anton Hendriks](https://www.linkedin.com/in/anton-hendriks-1b549514/) for proof reading.
+  - [Brink van der Merwe](http://www.cs.sun.ac.za/~abvdm/) for proof reading.
