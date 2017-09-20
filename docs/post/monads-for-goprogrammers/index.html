@@ -379,8 +379,8 @@ In this example, we want to compose two functions <code>f</code> and <code>g</co
 }
 </code></pre>
 
-<p>We have to return a function that takes an <code>a</code> as an input parameter, so we start by declaring the return function.
-Now that we have an <code>a</code>, we can call <code>f</code> and get and a value <code>mb</code> of type <code>M&lt;b&gt;</code>, but now what?</p>
+<p>We have to return a function that takes an <code>A</code> as an input parameter, so we start by declaring the return function.
+Now that we have an <code>A</code>, we can call <code>f</code> and get and a value <code>mb</code> of type <code>M&lt;b&gt;</code>, but now what?</p>
 
 <p>We fall short, because it is too abstract.
 I mean now that we have <code>mb</code>, what do we do?</p>
@@ -431,7 +431,7 @@ This extra property is a function called <code>join</code> and is defined for ea
 </code></pre>
 
 <p>This means we can compose two functions that return embellished types, if the embellishment defines <code>fmap</code> and <code>join</code>.
-For a type to be a <code>monad</code>, these two functions need to be defined for it.</p>
+In other words, for a type to be a <code>monad</code>, these two functions need to be defined for it.</p>
 
 <h2 id="join">Join</h2>
 
@@ -463,8 +463,8 @@ The <code>join</code> function simply concatenates all the slices.</p>
 }
 </code></pre>
 
-<p>Lets look at why we need <code>join</code> again, but focusing specifically on slices.
-Here is our compose function again, but this time defined specifically for slices.</p>
+<p>Lets look at why we need <code>join</code> again, but this time focusing specifically on slices.
+Here is our compose function for slices:</p>
 
 <pre><code class="language-go">func compose(f func(A) []B, g func(B) []C) func(A) []C {
     return func(a A) []C {
@@ -514,7 +514,7 @@ We need to go from <code>css</code> to <code>cs</code> or from <code>[][]C</code
 <pre><code class="language-go">func join(css [][]string) []string
 </code></pre>
 
-<p>And then we can use them in our example:</p>
+<p>Now we can use them in an example:</p>
 
 <pre><code class="language-go">func upto(n int) []int64 { 
     nums := make([]int64, n)
@@ -525,7 +525,7 @@ We need to go from <code>css</code> to <code>cs</code> or from <code>[][]C</code
 }
 
 func pair(x int64) []string {
-    return []int{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
+    return []string{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
 }
 
 c := compose(upto, pair)
@@ -540,7 +540,7 @@ c(3)
 <pre><code class="language-haskell">[ y | x &lt;- [1..3], y &lt;- [show x, show (-1 * x)] ]
 </code></pre>
 
-<p>But might know them from Python:</p>
+<p>But you might recognize it better from Python:</p>
 
 <pre><code class="language-python">def pair (x):
   return [str(x), str(-1*x)]
@@ -553,13 +553,15 @@ c(3)
 <p>We can also define <code>join</code> on functions which return a value and an error.
 For this we first need to take a step back to the <code>fmap</code> function again, because of some idiosyncrasies in Go.</p>
 
+<p>Here is our <code>fmap</code> function again for a function that returns a value and an error:</p>
+
 <pre><code class="language-go">type fmap = func(f func(B) C, g func(A) (B, error)) func(A) (C, error)
 </code></pre>
 
 <p>We know our compose function is going to call <code>fmap</code> with a function <code>f</code> that also returns an error.
 This will result in our <code>fmap</code> signature looking something like this:</p>
 
-<pre><code class="language-go">type fmap = func(f func(A) (C, error), g func(A) (B, error)) 
+<pre><code class="language-go">type fmap = func(f func(B) (C, error), g func(A) (B, error)) 
     func(A) ((C, error), error)
 </code></pre>
 
@@ -569,15 +571,17 @@ This will result in our <code>fmap</code> signature looking something like this:
 </code></pre>
 
 <p>There are a few ways to work around this problem.
-I prefer using a function, since a function that returns a tuple is still a first class citizen:</p>
+I prefer using a function, since functions, that return a tuple, are still first class citizens:</p>
 
 <pre><code class="language-go">(func() (C, error), error)
 </code></pre>
 
 <p>Now we can define our <code>fmap</code> for functions which returns a value and an error, using our work around:</p>
 
-<pre><code class="language-go">func fmap(f func(B) (C, error), g func(A) (B, error)) 
-    func(A) (func() (C, error), error) {
+<pre><code class="language-go">func fmap(
+    f func(B) (C, error), 
+    g func(A) (B, error),
+) func(A) (func() (C, error), error) {
     return func(a A) (func() (C, error), error) {
         b, err := g(a)
         if err != nil {

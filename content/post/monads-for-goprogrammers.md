@@ -208,8 +208,8 @@ func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
 }
 ```
 
-We have to return a function that takes an `a` as an input parameter, so we start by declaring the return function.
-Now that we have an `a`, we can call `f` and get and a value `mb` of type `M<b>`, but now what?
+We have to return a function that takes an `A` as an input parameter, so we start by declaring the return function.
+Now that we have an `A`, we can call `f` and get and a value `mb` of type `M<b>`, but now what?
 
 We fall short, because it is too abstract.
 I mean now that we have `mb`, what do we do?
@@ -265,7 +265,7 @@ func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
 ```
 
 This means we can compose two functions that return embellished types, if the embellishment defines `fmap` and `join`.
-For a type to be a `monad`, these two functions need to be defined for it.
+In other words, for a type to be a `monad`, these two functions need to be defined for it.
 
 ## Join
 
@@ -297,8 +297,8 @@ func join(ss [][]T) []T {
 }
 ```
 
-Lets look at why we need `join` again, but focusing specifically on slices.
-Here is our compose function again, but this time defined specifically for slices.
+Lets look at why we need `join` again, but this time focusing specifically on slices.
+Here is our compose function for slices:
 
 ```go
 func compose(f func(A) []B, g func(B) []C) func(A) []C {
@@ -349,7 +349,7 @@ func fmap(g func(int64) []string, bs []int64) [][]string
 func join(css [][]string) []string
 ```
 
-And then we can use them in our example:
+Now we can use them in an example:
 
 ```go
 func upto(n int) []int64 { 
@@ -361,7 +361,7 @@ func upto(n int) []int64 {
 }
 
 func pair(x int64) []string {
-    return []int{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
+    return []string{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
 }
 
 c := compose(upto, pair)
@@ -377,7 +377,7 @@ Interestingly this is exactly how list comprehensions work in Haskell:
 [ y | x <- [1..3], y <- [show x, show (-1 * x)] ]
 ```
 
-But might know them from Python:
+But you might recognize it better from Python:
 
 ```python
 def pair (x):
@@ -391,6 +391,8 @@ def pair (x):
 We can also define `join` on functions which return a value and an error.
 For this we first need to take a step back to the `fmap` function again, because of some idiosyncrasies in Go.
 
+Here is our `fmap` function again for a function that returns a value and an error:
+
 ```go
 type fmap = func(f func(B) C, g func(A) (B, error)) func(A) (C, error)
 ```
@@ -399,7 +401,7 @@ We know our compose function is going to call `fmap` with a function `f` that al
 This will result in our `fmap` signature looking something like this:
 
 ```go
-type fmap = func(f func(A) (C, error), g func(A) (B, error)) 
+type fmap = func(f func(B) (C, error), g func(A) (B, error)) 
     func(A) ((C, error), error)
 ```
 
@@ -410,7 +412,7 @@ Unfortunately tuples are not first class citizens in Go, so we can't write:
 ```
 
 There are a few ways to work around this problem.
-I prefer using a function, since a function that returns a tuple is still a first class citizen:
+I prefer using a function, since functions, that return a tuple, are still first class citizens:
 
 ```go
 (func() (C, error), error)
@@ -419,8 +421,10 @@ I prefer using a function, since a function that returns a tuple is still a firs
 Now we can define our `fmap` for functions which returns a value and an error, using our work around:
 
 ```go
-func fmap(f func(B) (C, error), g func(A) (B, error)) 
-    func(A) (func() (C, error), error) {
+func fmap(
+    f func(B) (C, error), 
+    g func(A) (B, error),
+) func(A) (func() (C, error), error) {
     return func(a A) (func() (C, error), error) {
         b, err := g(a)
         if err != nil {
