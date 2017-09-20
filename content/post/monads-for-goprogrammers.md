@@ -785,9 +785,9 @@ type compose = func(f func(A) M<B>, g func(B) M<C>) func(A) M<C>
 
 ## Conclusion
 
-Monads hide some of the repeated logic of composing functions with embellished types, so that you don't have to feel like Bart Simpson in detention, but rather like Bart Simpson on his skateboard.
+Monads hide some of the repeated logic of composing functions with embellished types, so that you don't have to feel like Bart Simpson in detention, but rather like Bart Simpson on his skateboard, bowling a cricket ball, while it is his turn to bat.
 
-![Missing image of Bart Simpson on his skateboard](https://awalterschulze.github.io/blog/monads-for-goprogrammers/bartskate.jpg "separation of church and skate")
+![Missing image of Bart Simpson on his skateboard](https://awalterschulze.github.io/blog/monads-for-goprogrammers/bart_childhood_drawing.jpg "Lets just say, I've been a fan for a while.")
 
 If you want to try `monads` and other functional programming concepts in Go, then you can do it using my code generator, [GoDerive](https://github.com/awalterschulze/goderive).
 
