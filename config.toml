@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "Adenoid Adventures"
 theme = "beautifulhugo" 
 publishDir = "docs"
+googleAnalytics = "UA-106798280-1"
 
 [Params]
   subtitle = "Walter Schulze's blog about Programming"
