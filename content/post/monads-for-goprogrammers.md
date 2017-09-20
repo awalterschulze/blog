@@ -16,8 +16,8 @@ Everytime I type `if err != nil` I thank the Gophers for a readable language wit
 [I suspect I am not the only one](https://anvaka.github.io/common-words/#?lang=go), but 
 ```go
 if err != nil {
-    log.Printf("This should still be interesting to a Go programmer " +
-        "considering using a functional language, despite %v.", err)
+	log.Printf("This should still be interesting to a Go programmer " +
+		"considering using a functional language, despite %v.", err)
 }
 ```
 
@@ -68,11 +68,11 @@ The classic example, which you might recognize from Hadoop's mapreduce, Python, 
 
 ```go
 func fmap(f func(A) B, as []A) []B {
-    bs := make([]b, len(as))
-    for i, a := range as {
-        bs[i] = f(a)
-    }
-    return bs
+	bs := make([]b, len(as))
+	for i, a := range as {
+		bs[i] = f(a)
+	}
+	return bs
 }
 ```
 
@@ -80,14 +80,14 @@ We can also implement `fmap` for a tree:
 
 ```go
 func fmap(f func(A) B, atree Node<A>) Node<B> {
-    btree := Node<B>{
-        Value: f(atree.Value),
-        Children: make([]Node<B>, len(atree.Children)),
-    }
-    for i, c := range atree.Children {
-        btree.Children[i] = fmap(f, c)
-    }
-    return btree
+	btree := Node<B>{
+		Value: f(atree.Value),
+		Children: make([]Node<B>, len(atree.Children)),
+	}
+	for i, c := range atree.Children {
+		btree.Children[i] = fmap(f, c)
+	}
+	return btree
 }
 ```
 
@@ -111,11 +111,11 @@ Or a pointer:
 
 ```go
 func fmap(f func(A) B, a *A) *B {
-    if a == nil {
-        return nil
-    }
-    b := f(*a)
-    return &b
+	if a == nil {
+		return nil
+	}
+	b := f(*a)
+	return &b
 }
 ```
 
@@ -123,10 +123,10 @@ Or a function:
 
 ```go
 func fmap(f func(A) B, g func(C) A) func(C) B {
-    return func(c C) B {
-        a := g(c)
-        return f(a)
-    }
+	return func(c C) B {
+		a := g(c)
+		return f(a)
+	}
 }
 ```
 
@@ -134,14 +134,14 @@ Or a function that returns an error:
 
 ```go
 func fmap(f func(A) B, g func() (*A, error)) func() (*B, error) {
-    return func() (*B, error) {
-        a, err := g()
-        if err != nil {
-            return nil, err
-        }
-        b := f(*a)
-        return &b, nil
-    }
+	return func() (*B, error) {
+		a, err := g()
+		if err != nil {
+			return nil, err
+		}
+		b := f(*a)
+		return &b, nil
+	}
 }
 ```
 
@@ -168,11 +168,11 @@ In this example, we want to compose two functions `f` and `g` and return a funct
 
 ```go
 func compose(f func(A) B, g func(B) C) func(A) C {
-    return func(a A) C {
-        b := f(a)
-        c := g(b)
-        return c
-    }
+	return func(a A) C {
+		b := f(a)
+		c := g(b)
+		return c
+	}
 }
 ```
 
@@ -182,17 +182,17 @@ Another version of this would be composing functions that return errors.
 
 ```go
 func compose(
-    f func(*A) (*B, error), 
-    g func(*B) (*C, error),
+	f func(*A) (*B, error), 
+	g func(*B) (*C, error),
 ) func(*A) (*C, error) {
-    return func(a *A) (*C, error) {
-        b, err := f(a)
-        if err != nil {
-            return nil, err
-        }
-        c, err := g(b)
-        return c, err
-    }
+	return func(a *A) (*C, error) {
+		b, err := f(a)
+		if err != nil {
+			return nil, err
+		}
+		c, err := g(b)
+		return c, err
+	}
 }
 ```
 
@@ -200,11 +200,11 @@ Now we can try to abstract this error as an embellishment `M` and see what we ar
 
 ```go
 func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
-    return func(a A) M<C> {
-        mb := f(a)
-        // ...
-        return mc
-    }
+	return func(a A) M<C> {
+		mb := f(a)
+		// ...
+		return mc
+	}
 }
 ```
 
@@ -233,12 +233,12 @@ So now we have a value `mmc` of type `M<M<C>>`:
 
 ```go
 func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
-    return func(a A) M<C> {
-        mb := f(a)
-        mmc := fmap(g, mb)
-        // ...
-        return mc
-    }
+	return func(a A) M<C> {
+		mb := f(a)
+		mmc := fmap(g, mb)
+		// ...
+		return mc
+	}
 }
 ```
 
@@ -255,12 +255,12 @@ Given join, we can now write:
 
 ```go
 func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
-    return func(a A) M<C> {
-        mb := f(a)
-        mmc := fmap(g, mb)
-        mc := join(mmc)
-        return mc
-    }
+	return func(a A) M<C> {
+		mb := f(a)
+		mmc := fmap(g, mb)
+		mc := join(mmc)
+		return mc
+	}
 }
 ```
 
@@ -289,11 +289,11 @@ The `join` function simply concatenates all the slices.
 
 ```go
 func join(ss [][]T) []T {
-    s := []T{}
-    for i := range ss {
-        s = append(s, ss[i]...)
-    }
-    return s
+	s := []T{}
+	for i := range ss {
+		s = append(s, ss[i]...)
+	}
+	return s
 }
 ```
 
@@ -302,12 +302,12 @@ Here is our compose function for slices:
 
 ```go
 func compose(f func(A) []B, g func(B) []C) func(A) []C {
-    return func(a A) []C {
-        bs := f(a)
-        css := fmap(g, bs)
-        cs := join(css)
-        return cs
-    }
+	return func(a A) []C {
+		bs := f(a)
+		css := fmap(g, bs)
+		cs := join(css)
+		return cs
+	}
 }
 ```
 
@@ -317,11 +317,11 @@ We can now `fmap` over `[]B` with `g`, which will give us a value of type `[][]C
 
 ```go
 func fmap(g func(B) []C, bs []B) [][]C {
-    css := make([][]C, len(bs))
-    for i, b := range bs {
-        css[i] = g(b)
-    }
-    return css
+	css := make([][]C, len(bs))
+	for i, b := range bs {
+		css[i] = g(b)
+	}
+	return css
 }
 ```
 
@@ -340,7 +340,7 @@ Then our functions become:
 
 ```go
 func compose(f func(int) []int64, g func(int64) []string) 
-    func(int) []string
+	func(int) []string
 ```
 ```go
 func fmap(g func(int64) []string, bs []int64) [][]string
@@ -353,15 +353,15 @@ Now we can use them in an example:
 
 ```go
 func upto(n int) []int64 { 
-    nums := make([]int64, n)
-    for i := range nums {
-        nums[i] = int64(i+1)
-    }
-    return nums
+	nums := make([]int64, n)
+	for i := range nums {
+		nums[i] = int64(i+1)
+	}
+	return nums
 }
 
 func pair(x int64) []string {
-    return []string{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
+	return []string{strconv.FormatInt(x, 10), strconv.FormatInt(-1*x, 10)}
 }
 
 c := compose(upto, pair)
@@ -402,7 +402,7 @@ This will result in our `fmap` signature looking something like this:
 
 ```go
 type fmap = func(f func(B) (C, error), g func(A) (B, error)) 
-    func(A) ((C, error), error)
+	func(A) ((C, error), error)
 ```
 
 Unfortunately tuples are not first class citizens in Go, so we can't write:
@@ -422,30 +422,31 @@ Now we can define our `fmap` for functions which returns a value and an error, u
 
 ```go
 func fmap(
-    f func(B) (C, error), 
-    g func(A) (B, error),
+	f func(B) (C, error), 
+	g func(A) (B, error),
 ) func(A) (func() (C, error), error) {
-    return func(a A) (func() (C, error), error) {
-        b, err := g(a)
-        if err != nil {
-            return nil, err
-        }
-        return func() (C, error) {
-            return f(b)
-        }
-    }
+	return func(a A) (func() (C, error), error) {
+		b, err := g(a)
+		if err != nil {
+			return nil, err
+		}
+		c, err := f(b)
+		return func() (C, error) {
+			return c, err
+		}, nil
+	}
 }
 ```
 
-Which brings us back to our main point, our `join` function on `(func() (c, error), error)`.
+Which brings us back to our main point, our `join` function on `(func() (C, error), error)`.
 Its pretty simple and simply does one of the error checks for us.
 
 ```go
 func join(f func() (C, error), err error) (C, error) {
-    if err != nil {
-        return nil, err
-    }
-    return f()
+	if err != nil {
+		return nil, err
+	}
+	return f()
 }
 ```
 
@@ -453,13 +454,13 @@ We can now use our compose function, since we have defined `join` and `fmap`:
 
 ```go
 func unmarshal(data []byte) (s string, err error) {
-    err = json.Unmarshal(data, &s)
-    return
+	err = json.Unmarshal(data, &s)
+	return
 }
 
 getnum := compose(
-    unmarshal, 
-    strconv.Atoi,
+	unmarshal, 
+	strconv.Atoi,
 )
 getnum(`"1"`)
 // 1, nil
@@ -471,35 +472,35 @@ Here is another [example](https://speakerdeck.com/rebeccaskinner/monadic-error-h
 
 ```go
 func upgradeUser(endpoint, username string) error {
-    getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
-    postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
+	getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
+	postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
 
-    req, err := http.Get(genEndpoint)
-    if err != nil {
-        return err
-    }
-    data, err := ioutil.ReadAll(req.Body)
-    if err != nil {
-        return err
-    }
-    olduser, err := user.NewFromJson(data)
-    if err != nil {
-        return err
-    }
-    newuser, err := user.NewUserFromUser(olduser),
-    if err != nil {
-        return err
-    }
-    buf, err := json.Marshal(newuser)
-    if err != nil {
-        return err
-    }
-    _, err = http.Post(
-        postEndpoint, 
-        "application/json", 
-        bytes.NewBuffer(buf,
-    )
-    return err
+	req, err := http.Get(genEndpoint)
+	if err != nil {
+		return err
+	}
+	data, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		return err
+	}
+	olduser, err := user.NewFromJson(data)
+	if err != nil {
+		return err
+	}
+	newuser, err := user.NewUserFromUser(olduser),
+	if err != nil {
+		return err
+	}
+	buf, err := json.Marshal(newuser)
+	if err != nil {
+		return err
+	}
+	_, err = http.Post(
+		postEndpoint, 
+		"application/json", 
+		bytes.NewBuffer(buf),
+	)
+	return err
 }
 ```
 
@@ -508,10 +509,10 @@ That means that we could chain all the above functions together in one call and 
 
 ```go
 func upgradeUser(endpoint, username string) error {
-    getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
-    postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
+	getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
+	postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
 
-    _, err := compose(
+	_, err := compose(
 		http.Get,
 		func(req *http.Response) ([]byte, error) {
 			return ioutil.ReadAll(req.Body)
@@ -527,7 +528,7 @@ func upgradeUser(endpoint, username string) error {
 			)
 		},
 	)(getEndpoint)
-    return err
+	return err
 }
 ```
 
@@ -575,8 +576,8 @@ This means we can define a compose function on functions that return channels.
 ```go
 func compose(f func(A) <-chan B, g func(B) <-chan C) func(A) <-chan C {
 	return func(a A) <-chan C {
-		b := f(a)
-		return join(fmap(g, b))
+		chanOfB := f(a)
+		return join(fmap(g, chanOfB))
 	}
 }
 ```
@@ -596,7 +597,15 @@ func toChan(lines []string) <-chan string {
 }
 
 func wordsize(line string) <-chan int {
-    removePunc := strings.NewReplacer(",", "", "'", "", "!", "", ".", "", "(", "", ")", "", ":", "")
+	removePunc := strings.NewReplacer(
+		",", "", 
+		"'", "",
+		"!", "", 
+		".", "", 
+		"(", "", 
+		")", "", 
+		":", "",
+	)
 	c := make(chan int)
 	go func() {
 		words := strings.Split(line, " ")
@@ -609,20 +618,20 @@ func wordsize(line string) <-chan int {
 }
 
 sizes := compose(
-    toChan([]string{
-        "Bart: Eat my monads!",
-        "Monads: I don't think that's a very good idea.",
-        "Lisa: If anyone wants monads, I'll be in my room.",
-        "Homer: Mmm monads",
-        "Maggie: (Pacifier Suck)",
-    }), 
-    wordsize,
+	toChan([]string{
+		"Bart: Eat my monads!",
+		"Monads: I don't think that's a very good idea.",
+		"Lisa: If anyone wants monads, I'll be in my room.",
+		"Homer: Mmm monads",
+		"Maggie: (Pacifier Suck)",
+	}), 
+	wordsize,
 )
 total := 0
 for _, size := range sizes {
-    if size == 6 {
-        total += 1
-    }
+	if size == 6 {
+		total += 1
+	}
 }
 // total == 6
 ```
@@ -652,12 +661,12 @@ Lets repeat our implementation of the compose function here:
 
 ```go
 func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
-    return func(a A) M<C> {
-        mb := f(a)
-        mmc := fmap(g, mb)
-        mc := join(mmc)
-        return mc
-    }
+	return func(a A) M<C> {
+		mb := f(a)
+		mmc := fmap(g, mb)
+		mc := join(mmc)
+		return mc
+	}
 }
 ```
 
@@ -665,11 +674,11 @@ If the `bind` function was implemented then we could simply call it, instead of 
 
 ```go
 func compose(f func(A) M<B>, g func(B) M<C>) func(A) M<C> {
-    return func(a A) M<C> {
-        mb := f(a)
-        mc := bind(mb, g)
-        return mc
-    }
+	return func(a A) M<C> {
+		mb := f(a)
+		mc := bind(mb, g)
+		return mc
+	}
 }
 ```
 
@@ -685,23 +694,23 @@ func concatMap([]A, func(A) []B) []B
 
 I found that Go started to blur the lines for me between `bind` and the `Kleisli Arrow`.
 Go returns an error in a tuple, but a tuple is not a first class citizen.
-For example this code will not compile, because you cannot pass `f`'s results to `g`, in an in-line way:
+For example, this code will not compile, because you cannot pass `f`'s results to `g`, in an in-line way:
 
 ```go
 func f() (int, error) {
-    return 1, nil
+	return 1, nil
 }
 
 func g(i int, err error, j int) int {
-    if err != nil {
-        return 0
-    }
-    return i + j
+	if err != nil {
+		return 0
+	}
+	return i + j
 }
 
 func main() {
-    i := g(f(), 1)
-    println(i)
+	i := g(f(), 1)
+	println(i)
 }
 ```
 
@@ -709,9 +718,9 @@ You have to write it out:
 
 ```go
 func main() {
-    i, err := f()
-    j := g(i, err, 1)
-    println(j)
+	i, err := f()
+	j := g(i, err, 1)
+	println(j)
 }
 ```
 
@@ -719,20 +728,20 @@ Or you have to make `g` take a function as input, since functions are first clas
 
 ```go
 func f() (int, error) {
-    return 1, nil
+	return 1, nil
 }
 
 func g(ff func() (int, error), j int) int {
-    i, err := ff()
-    if err != nil {
-        return 0
-    }
-    return i + j
+	i, err := ff()
+	if err != nil {
+		return 0
+	}
+	return i + j
 }
 
 func main() {
-    i := g(f, 1)
-    println(i)
+	i := g(f, 1)
+	println(i)
 }
 ```
 
@@ -782,11 +791,11 @@ If you want to try `monads` and other functional programming concepts in Go, the
 
 > Warning:  One of the key concepts of functional programming is immutability.  This not only makes programs easier to reason about, but also allows for compiler optimizations.  To simulate this immutability, in Go, you will tend to copy lots of structures that will lead to non optimal performance.  The reason functional programming languages gets away with this is exactly because they can rely on the immutability and always point to the old values, instead of copying them again.
 
-> If you really want to transition to functional programming, I would recommend [Elm](http://elm-lang.org/).  Its a statically typed functional programming language for the front-end.  It is as easy to learn as is Go to learn for an imperative language.  I did this [guide](https://guide.elm-lang.org/) in a day and I was able to start being productive that evening.  The creator went out of his way to make it an easy to learn language by even removing the need to understand monads.  I have personally found `Elm` a joy to use in the front-end in conjunction with Go in back-end.  If you start feeling bored in Go and Elm, don't worry there is much more to learn, Haskell is waiting for you.
+> If you really want to transition to functional programming, I would recommend [Elm](http://elm-lang.org/).  Its a statically typed functional programming language for the front-end.  It is as easy to learn for a functional language, as Go is to learn for an imperative language.  I did this [guide](https://guide.elm-lang.org/) in a day and I was able to start being productive that evening.  The creator went out of his way to make it an easy to learn language by even removing the need to understand monads.  I have personally found `Elm` a joy to use in the front-end in conjunction with Go in back-end.  If you start feeling bored in Go and Elm, don't worry there is much more to learn, Haskell is waiting for you.
 
 Thank you:
 
   - [Johan Brandhorst](https://jbrandhorst.com/) for proof reading and pushing me to write a blog.
   - [Ryan Lemmer](https://github.com/uroboros) for proof reading and the line on "side effects".
-  - [Anton Hendriks](https://www.linkedin.com/in/anton-hendriks-1b549514/) for proof reading.
+  - [Anton Hendriks](https://www.linkedin.com/in/anton-hendriks-1b549514/) for proof reading and many simplifications.
   - [Brink van der Merwe](http://www.cs.sun.ac.za/~abvdm/) for proof reading.
