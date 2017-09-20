@@ -1,6 +1,6 @@
 ---
 title: "Monads for Go Programmers"
-date: 2017-08-26T12:19:12+02:00
+date: 2017-09-20T12:19:12+02:00
 tags: ["monads", "golang", "generator"]
 ---
 
@@ -51,7 +51,7 @@ Examples include:
   - A channel: `<-chan T` is a container, like a pipe which contains water;
   - A pointer: `*T` is a container that may be empty or contain one item;
   - A function: `func(A) T` is a container, like a lock box, that first needs a key, before you can see the item;
-  - Multiple return values: `func() (T, error)` is a container that possibly contains one item, while we can see the error as part of the container.  From here on we will refer to `(T, error)` as a tuple.
+  - Multiple return values: `func() (T, error)` is a container that possibly contains one item. We can see the error as part of the container.  From here on we will refer to `(T, error)` as a tuple.
 
 > Non Go programmers: Go does not have algebraic data types or union types.  This means that instead of a function returning a value `or` an error, we Go programmers return a value `and` an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. Oh we have fun.
 
@@ -168,7 +168,7 @@ In this example, we want to compose two functions `f` and `g` and return a funct
 
 ```go
 func compose(f func(A) B, g func(B) C) func(A) C {
-    return func(a A) c {
+    return func(a A) C {
         b := f(a)
         c := g(b)
         return c
@@ -181,8 +181,10 @@ Obviously, this will only work if the output type of `f` matches the input type 
 Another version of this would be composing functions that return errors.
 
 ```go
-func compose(f func(*A) (*B, error), g func(*B) (*C, error)) 
-    func(*A) (*C, error) {
+func compose(
+    f func(*A) (*B, error), 
+    g func(*B) (*C, error),
+) func(*A) (*C, error) {
     return func(a *A) (*C, error) {
         b, err := f(a)
         if err != nil {

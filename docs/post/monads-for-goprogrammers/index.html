@@ -158,7 +158,7 @@ ga('send', 'pageview');
                 
                 
                   <span class="post-meta">
-  Posted on 2017 August 26
+  Posted on 2017 September 20
   
 </span>
 
@@ -227,7 +227,7 @@ I will use <code>functors</code> in my explanation of <code>monads</code>, so pl
 <li>A channel: <code>&lt;-chan T</code> is a container, like a pipe which contains water;</li>
 <li>A pointer: <code>*T</code> is a container that may be empty or contain one item;</li>
 <li>A function: <code>func(A) T</code> is a container, like a lock box, that first needs a key, before you can see the item;</li>
-<li>Multiple return values: <code>func() (T, error)</code> is a container that possibly contains one item, while we can see the error as part of the container.  From here on we will refer to <code>(T, error)</code> as a tuple.</li>
+<li>Multiple return values: <code>func() (T, error)</code> is a container that possibly contains one item. We can see the error as part of the container.  From here on we will refer to <code>(T, error)</code> as a tuple.</li>
 </ul>
 
 <blockquote>
@@ -341,7 +341,7 @@ The reason is to compose functions that return these embellished types.</p>
 In this example, we want to compose two functions <code>f</code> and <code>g</code> and return a function that takes the input that is expected by <code>f</code> and returns the output from <code>g</code>:</p>
 
 <pre><code class="language-go">func compose(f func(A) B, g func(B) C) func(A) C {
-    return func(a A) c {
+    return func(a A) C {
         b := f(a)
         c := g(b)
         return c
@@ -353,8 +353,10 @@ In this example, we want to compose two functions <code>f</code> and <code>g</co
 
 <p>Another version of this would be composing functions that return errors.</p>
 
-<pre><code class="language-go">func compose(f func(*A) (*B, error), g func(*B) (*C, error)) 
-    func(*A) (*C, error) {
+<pre><code class="language-go">func compose(
+    f func(*A) (*B, error), 
+    g func(*B) (*C, error),
+) func(*A) (*C, error) {
     return func(a *A) (*C, error) {
         b, err := f(a)
         if err != nil {
