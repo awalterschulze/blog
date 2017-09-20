@@ -11,7 +11,7 @@ Monads are all about function composition and hiding the tedious part of it.
 After 7 years of being a Go programmer, typing `if err != nil` can become quite tedious.
 Everytime I type `if err != nil` I thank the Gophers for a readable language with great tooling, but at the same time I curse them for making me feel like I'm Bart Simpson in detention.
 
-![Missing image of Bart Simpson writing if err != nil on the detention chalkboard](http://awalterschulze.github.io/blog/monads-for-goprogrammers/bartiferr.png "if err != nil")
+![Missing image of Bart Simpson writing if err != nil on the detention chalkboard](https://awalterschulze.github.io/blog/monads-for-goprogrammers/bartiferr.png "if err != nil")
 
 [I suspect I am not the only one](https://anvaka.github.io/common-words/#?lang=go), but 
 ```go
@@ -770,7 +770,7 @@ type compose = func(f func(A) M<B>, g func(B) M<C>) func(A) M<C>
 
 Monads hide some of the repeated logic of composing functions with embellished types, so that you don't have to feel like Bart Simpson in detention, but rather like Bart Simpson on his skateboard.
 
-![Missing image of Bart Simpson on his skateboard](http://awalterschulze.github.io/blog/monads-for-goprogrammers/bartskate.jpg "separation of church and skate")
+![Missing image of Bart Simpson on his skateboard](https://awalterschulze.github.io/blog/monads-for-goprogrammers/bartskate.jpg "separation of church and skate")
 
 If you want to try `monads` and other functional programming concepts in Go, then you can do it using my code generator, [GoDerive](https://github.com/awalterschulze/goderive).
 
