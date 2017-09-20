@@ -590,11 +590,12 @@ func toChan(lines []string) <-chan string {
 }
 
 func wordsize(line string) <-chan int {
+    removePunc := strings.NewReplacer(",", "", "'", "", "!", "", ".", "", "(", "", ")", "", ":", "")
 	c := make(chan int)
 	go func() {
 		words := strings.Split(line, " ")
 		for _, word := range words {
-			c <- len(word)
+			c <- len(removePunc.Replace(word))
 		}
 		close(c)
 	}()
@@ -603,18 +604,21 @@ func wordsize(line string) <-chan int {
 
 sizes := compose(
     toChan([]string{
-        "my name is judge",
-        "welcome judy welcome judy",
-        "welcome hello welcome judy",
-        "welcome goodbye welcome judy",
+        "Bart: Eat my monads!",
+        "Monads: I don't think that's a very good idea.",
+        "Lisa: If anyone wants monads, I'll be in my room.",
+        "Homer: Mmm monads",
+        "Maggie: (Pacifier Suck)",
     }), 
     wordsize,
 )
 total := 0
 for _, size := range sizes {
-    total += size
+    if size == 6 {
+        total += 1
+    }
 }
-// total == 83
+// total == 6
 ```
 
 ## Less Hand waving

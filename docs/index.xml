@@ -24,16 +24,5 @@ After 7 years of being a Go programmer, typing if err != nil can become quite te
 I suspect I am not the only one, but</description>
     </item>
     
-    <item>
-      <title>Go Experience Report: from a code generator developer [DRAFT]</title>
-      <link>https://awalterschulze.github.io/blog/post/go-experience-report/</link>
-      <pubDate>Sun, 01 Jan 2017 12:19:12 +0200</pubDate>
-      <author>awalterschulze@gmail.com (Walter Schulze)</author>
-      <guid>https://awalterschulze.github.io/blog/post/go-experience-report/</guid>
-      <description>Introduction I have written many code generators for go, these include:
- gogoprotobuf - Protocol Buffers for Go with Gadgets goderive - Derives functions from their input parameters gocc - Parser / Scanner Generator ( only a maintainer, not a creator ) a few project specific ones and some proprietary ones  Code generation is my hammer and Go is my nail.
-I would like to talk about my experience developing goderive and explain what I would like in Go 2 as a developer of code generators.</description>
-    </item>
-    
   </channel>
 </rss>

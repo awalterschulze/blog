@@ -735,11 +735,12 @@ Finally, we use a wait group to make sure we close the <code>out</code> channel 
 }
 
 func wordsize(line string) &lt;-chan int {
+    removePunc := strings.NewReplacer(&quot;,&quot;, &quot;&quot;, &quot;'&quot;, &quot;&quot;, &quot;!&quot;, &quot;&quot;, &quot;.&quot;, &quot;&quot;, &quot;(&quot;, &quot;&quot;, &quot;)&quot;, &quot;&quot;, &quot;:&quot;, &quot;&quot;)
 	c := make(chan int)
 	go func() {
 		words := strings.Split(line, &quot; &quot;)
 		for _, word := range words {
-			c &lt;- len(word)
+			c &lt;- len(removePunc.Replace(word))
 		}
 		close(c)
 	}()
@@ -748,18 +749,21 @@ func wordsize(line string) &lt;-chan int {
 
 sizes := compose(
     toChan([]string{
-        &quot;my name is judge&quot;,
-        &quot;welcome judy welcome judy&quot;,
-        &quot;welcome hello welcome judy&quot;,
-        &quot;welcome goodbye welcome judy&quot;,
+        &quot;Bart: Eat my monads!&quot;,
+        &quot;Monads: I don't think that's a very good idea.&quot;,
+        &quot;Lisa: If anyone wants monads, I'll be in my room.&quot;,
+        &quot;Homer: Mmm monads&quot;,
+        &quot;Maggie: (Pacifier Suck)&quot;,
     }), 
     wordsize,
 )
 total := 0
 for _, size := range sizes {
-    total += size
+    if size == 6 {
+        total += 1
+    }
 }
-// total == 83
+// total == 6
 </code></pre>
 
 <h2 id="less-hand-waving">Less Hand waving</h2>
@@ -919,10 +923,6 @@ func main() {
       </article>
 
       <ul class="pager blog-pager">
-        
-          <li class="previous">
-            <a href="https://awalterschulze.github.io/blog/post/go-experience-report/" data-toggle="tooltip" data-placement="top" title="Go Experience Report: from a code generator developer [DRAFT]">&larr; Previous Post</a>
-          </li>
         
         
       </ul>
