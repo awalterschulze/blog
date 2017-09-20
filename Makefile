@@ -2,7 +2,7 @@ servedrafts:
 	hugo server -w --buildDrafts
 
 generate:
-	hugo
+	hugo --cleanDestinationDir
 
 serve:
 	hugo server -w
