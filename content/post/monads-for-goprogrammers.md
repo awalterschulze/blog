@@ -477,11 +477,11 @@ func upgradeUser(endpoint, username string) error {
     getEndpoint := fmt.Sprintf("%s/oldusers/%s", endpoint, username)
     postEndpoint := fmt.Sprintf("%s/newusers/%s", endpoint, username)
 
-    req, err := http.Get(genEndpoint)
+    resp, err := http.Get(genEndpoint)
     if err != nil {
         return err
     }
-    data, err := ioutil.ReadAll(req.Body)
+    data, err := ioutil.ReadAll(resp.Body)
     if err != nil {
         return err
     }
@@ -516,8 +516,8 @@ func upgradeUser(endpoint, username string) error {
 
     _, err := compose(
         http.Get,
-        func(req *http.Response) ([]byte, error) {
-            return ioutil.ReadAll(req.Body)
+        func(resp *http.Response) ([]byte, error) {
+            return ioutil.ReadAll(resp.Body)
         },
         newUserFromJson,
         newUserFromUser,

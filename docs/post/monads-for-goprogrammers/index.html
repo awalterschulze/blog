@@ -631,11 +631,11 @@ getnum(`&quot;1&quot;`)
     getEndpoint := fmt.Sprintf(&quot;%s/oldusers/%s&quot;, endpoint, username)
     postEndpoint := fmt.Sprintf(&quot;%s/newusers/%s&quot;, endpoint, username)
 
-    req, err := http.Get(genEndpoint)
+    resp, err := http.Get(genEndpoint)
     if err != nil {
         return err
     }
-    data, err := ioutil.ReadAll(req.Body)
+    data, err := ioutil.ReadAll(resp.Body)
     if err != nil {
         return err
     }
@@ -669,8 +669,8 @@ That means that we could chain all the above functions together in one call and 
 
     _, err := compose(
         http.Get,
-        func(req *http.Response) ([]byte, error) {
-            return ioutil.ReadAll(req.Body)
+        func(resp *http.Response) ([]byte, error) {
+            return ioutil.ReadAll(resp.Body)
         },
         newUserFromJson,
         newUserFromUser,
