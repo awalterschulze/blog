@@ -51,7 +51,7 @@ Only 3.5% of functions actually use multiple return parameters.
 
 The tool does not count functions that return a value `and` an error as a proper use of multiple return parameters.
 
-This is because I think we should rather have sum, union or algebriac data types for this use case.
+This is because I think we should rather have sum types for this use case.
 
 I believe that most of the time we return:
 
@@ -59,6 +59,11 @@ I believe that most of the time we return:
   - a nil or zero value `and` a non nil error
 
 , which means that we would rather return a value `or` an error, than a value `and` an error.
+For example:
+
+```go
+func Atoi(s string) (int | error)
+```
 
 ## Tuples are not first class citizens
 
@@ -101,6 +106,16 @@ func main() {
 ```
 
 I also ran into this usecase while building [monadic error handling](https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/) for Go.
+
+## What are sum types
+
+A sum type is also called a tagged union, oneof or sealed trait.
+It is a way to represent a disjoint union of types in a single type.
+Say for example we have the sum type `(int | bool)`.
+This sum type will be able to represent all possible `int` values `plus` all possible `bool` values.
+
+The advantage of sum types are that the compiler is able to tell whether you handle all the disjoint types.
+This means that checking an error can be enforced by the compiler and that a type switch can be less error prone and allow the compiler to make sure that you handle all cases.
 
 ## We need sum types
 
@@ -193,6 +208,15 @@ default:
   panic(fmt.Sprintf("ast.Walk: unexpected node type %T", n))
 }
 ```
+
+## Everyone else has it
+
+Sum types is not a new language feature, but [a very old one](https://en.wikipedia.org/wiki/Tagged_union#Timeline_of_language_support).
+Algol 68 first introduced united modes (sum types) in the 1960s.
+This has been adopted by Pascal, Ada, Modula-2 as variant records.
+Later Haskell, ML and now Scala, Rust, Swift, F#, Protobufs and even C++ have adopted sum types.
+Even Java has [announced plans](https://www.youtube.com/watch?v=qul2B8iPC-o&amp=&index=6) to also add sum types.
+I do not know why we were forced to write error prone code when a solution has existed, but I hope it can be fixed.
 
 ## Conclusion
 
