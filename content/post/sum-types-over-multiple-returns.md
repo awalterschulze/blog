@@ -8,12 +8,7 @@ In this Go Experience Report I am going to make a case for sum types over multip
 
 ## Analysis of multiple return parameters
 
-I wrote [a little tool which does some analysis of Go source code](https://github.com/awalterschulze/goanalysis).
-
-Thank you to the [go/types](https://golang.org/pkg/go/types/) library.
-
-The tool simply counts the number of times multiple return parameters are used.
-I ran this tool over the standard library and these are the results:
+I wrote [a little tool which does some analysis of Go source code](https://github.com/awalterschulze/goanalysis).  Thank you to the [go/types](https://golang.org/pkg/go/types/) library.  The tool simply counts the number of times multiple return parameters are used.  I ran this tool over the standard library and these are the results:
 
 ```
 $ goanalysis std
@@ -45,11 +40,7 @@ These results show us two things:
 
 Only 3.5% of functions actually use multiple return parameters.
 
-The tool does not count functions that return a value `and` an error as a proper use of multiple return parameters.
-
-This is because I think we should rather have sum types for this use case.
-
-I believe that most of the time we return:
+The tool does not count functions that return a value `and` an error as a proper use of multiple return parameters. This is because I think we should rather have sum types for this use case. I believe that most of the time we return:
 
   - a value `and` a nil error, or
   - a nil or zero value `and` a non nil error
@@ -63,10 +54,7 @@ func Atoi(s string) (int | error)
 
 ## Tuples are not first class citizens
 
-In the `go/types` library I found that multiple return parameters are actually called [Tuples](https://golang.org/pkg/go/types/#Tuple), 
-but these Tuples are not first class citizens.
-
-For example nested tuples are currently not supported:
+In the `go/types` library I found that multiple return parameters are actually called [Tuples](https://golang.org/pkg/go/types/#Tuple), but these Tuples are not first class citizens. For example nested tuples are currently not supported:
 
 ```go
 func() ((string, error), error)
@@ -79,9 +67,7 @@ I worked around this by using a function:
 func() (func() (string, error), error)
 ```
 
-, which is not ideal, since a function implies some computation.
-
-We currently also cannot directly pass multiple return parameters to a function:
+, which is not ideal, since a function implies some computation. We currently also cannot directly pass multiple return parameters to a function:
 
 ```go
 func f() (int, error) {
@@ -141,11 +127,14 @@ func Nullable(refs ast.RefLookup, p *ast.Pattern) bool {
     } else if p.LeafNode != nil {
         return false
     } else if p.Concat != nil {
-        return Nullable(refs, p.Concat.GetLeftPattern()) && Nullable(refs, p.Concat.GetRightPattern())
+        return Nullable(refs, p.Concat.GetLeftPattern()) && 
+            Nullable(refs, p.Concat.GetRightPattern())
     } else if p.Or != nil {
-        return Nullable(refs, p.Or.GetLeftPattern()) || Nullable(refs, p.Or.GetRightPattern())
+        return Nullable(refs, p.Or.GetLeftPattern()) || 
+            Nullable(refs, p.Or.GetRightPattern())
     } else if p.And != nil {
-        return Nullable(refs, p.And.GetLeftPattern()) && Nullable(refs, p.And.GetRightPattern())
+        return Nullable(refs, p.And.GetLeftPattern()) && 
+            Nullable(refs, p.And.GetRightPattern())
     ...
 ```
 
