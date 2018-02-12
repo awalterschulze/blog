@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Adenoid Adventures</title>
-    <link>https://awalterschulze.github.io/blog/</link>
-    <description>Recent content on Adenoid Adventures</description>
+    <title>Sum Types on Adenoid Adventures</title>
+    <link>https://awalterschulze.github.io/blog/tags/sum-types/</link>
+    <description>Recent content in Sum Types on Adenoid Adventures</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
     <lastBuildDate>Mon, 25 Sep 2017 13:32:51 +0200</lastBuildDate>
     
-	<atom:link href="https://awalterschulze.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://awalterschulze.github.io/blog/tags/sum-types/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -24,17 +24,6 @@ Analysis of multiple return parameters I wrote a little tool which does some ana
 https://github.com/awalterschulze/goanalysis
 Thank you to the go/types library.
 The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:</description>
-    </item>
-    
-    <item>
-      <title>Monads for Go Programmers</title>
-      <link>https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/</link>
-      <pubDate>Wed, 20 Sep 2017 12:19:12 +0200</pubDate>
-      <author>awalterschulze@gmail.com (Walter Schulze)</author>
-      <guid>https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/</guid>
-      <description>Why? Monads are all about function composition and hiding the tedious part of it.
-After 7 years of being a Go programmer, typing if err != nil can become quite tedious. Everytime I type if err != nil I thank the Gophers for a readable language with great tooling, but at the same time I curse them for making me feel like I&amp;rsquo;m Bart Simpson in detention.
-I suspect I am not the only one, but</description>
     </item>
     
   </channel>

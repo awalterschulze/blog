@@ -8,10 +8,23 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Wed, 20 Sep 2017 12:19:12 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 25 Sep 2017 13:32:51 +0200</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>For Sum Types: Golang&#39;s multiple return parameters are overrated</title>
+      <link>https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/</link>
+      <pubDate>Mon, 25 Sep 2017 13:32:51 +0200</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/</guid>
+      <description>For Sum Types: Golang&amp;rsquo;s multiple return parameters are overrated In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
+Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source code:
+https://github.com/awalterschulze/goanalysis
+Thank you to the go/types library.
+The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:</description>
+    </item>
     
     <item>
       <title>Monads for Go Programmers</title>

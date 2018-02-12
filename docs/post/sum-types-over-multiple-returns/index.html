@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>For Sum Types: Golang&#39;s multiple return parameters are overrated</title>
+  <meta property="og:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
+  <meta name="twitter:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
+  <meta name="description" content="For Sum Types: Golang&rsquo;s multiple return parameters are overrated In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
+Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source code:
+https://github.com/awalterschulze/goanalysis
+Thank you to the go/types library.
+The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:">
+  <meta property="og:description" content="For Sum Types: Golang&rsquo;s multiple return parameters are overrated In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
+Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source code:
+https://github.com/awalterschulze/goanalysis
+Thank you to the go/types library.
+The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:">
+  <meta name="twitter:description" content="For Sum Types: Golang&rsquo;s multiple return parameters are overrated In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
+Analysis of multiple return …">
+  <meta name="author" content="Walter Schulze"/>
+  <link href='https://awalterschulze.github.io/blog/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+  <meta name="twitter:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Adenoid Adventures" />
+
+  <meta name="generator" content="Hugo 0.25.1" />
+  <link rel="canonical" href="https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/" />
+  <link rel="alternate" href="https://awalterschulze.github.io/blog/index.xml" type="application/rss+xml" title="Adenoid Adventures">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/highlight.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" integrity="sha256-akwTLZec/XAFvgYgVH1T5/369lhA2Efr22xzCNl1nHs=" crossorigin="anonymous" />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-106798280-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="Adenoid Adventures" href="https://awalterschulze.github.io/blog/">
+            <img class="avatar-img" src="https://awalterschulze.github.io/blog/avatar.png" alt="Adenoid Adventures" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              <h1>For Sum Types: Golang&#39;s multiple return parameters are overrated</h1>
+                
+                
+                  <span class="post-meta">
+  Posted on 2017 September 25
+  
+</span>
+
+
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h1 id="for-sum-types-golang-s-multiple-return-parameters-are-overrated">For Sum Types: Golang&rsquo;s multiple return parameters are overrated</h1>
+
+<p>In this Go Experience Report I am going to make a case for sum types over multiple return parameters.</p>
+
+<h2 id="analysis-of-multiple-return-parameters">Analysis of multiple return parameters</h2>
+
+<p>I wrote a little tool which does some analysis of Go source code:</p>
+
+<p><a href="https://github.com/awalterschulze/goanalysis">https://github.com/awalterschulze/goanalysis</a></p>
+
+<p>Thank you to the <code>go/types</code> library.</p>
+
+<p>The tool simply counts the number of times multiple return parameters are used.
+I ran this tool over the standard library and these are the results:</p>
+
+<pre><code>$ goanalysis std
+
+functions with N return arguments:
+-----------------------------
+returns | number of functions
+      0 | 8693
+      1 | 7743
+      2 | 1975
+      3 | 205
+      4 | 25
+      5 | 4
+      6 | 1
+      7 | 1
+-----------------------------
+
+total number of functions: 18647
+total number of functions with multiple return parameters: 2211
+number of functions with 2 return arguments, where the second argument is an error: 1562
+
+percentage of functions where multiple return parameters are really what we want: 3.480453
+</code></pre>
+
+<p>These results show us two things:</p>
+
+<ul>
+<li>most functions return zero or one argument.</li>
+<li>most functions with multiple return parameters return a value <code>and</code> an error.</li>
+</ul>
+
+<p>Only 3.5% of functions actually use multiple return parameters.</p>
+
+<p>The tool does not count functions that return a value <code>and</code> an error as a proper use of multiple return parameters.</p>
+
+<p>This is because I think we should rather have sum types for this use case.</p>
+
+<p>I believe that most of the time we return:</p>
+
+<ul>
+<li>a value <code>and</code> a nil error, or</li>
+<li>a nil or zero value <code>and</code> a non nil error</li>
+</ul>
+
+<p>, which means that we would rather return a value <code>or</code> an error, than a value <code>and</code> an error.
+For example:</p>
+
+<pre><code class="language-go">func Atoi(s string) (int | error)
+</code></pre>
+
+<h2 id="tuples-are-not-first-class-citizens">Tuples are not first class citizens</h2>
+
+<p>In the <code>go/types</code> library I found that multiple return parameters are actually called <a href="https://golang.org/pkg/go/types/#Tuple">Tuples</a>,
+but these Tuples are not first class citizens.</p>
+
+<p>For example nested tuples are currently not supported:</p>
+
+<pre><code class="language-go">func() ((string, error), error)
+</code></pre>
+
+<p>I ran into this while building monadic error handling in <a href="https://github.com/awalterschulze/goderive">goderive</a>.
+I worked around this by using a function:</p>
+
+<pre><code class="language-go">func() (func() (string, error), error)
+</code></pre>
+
+<p>, which is not ideal, since a function implies some computation.</p>
+
+<p>We currently also cannot directly pass multiple return parameters to a function:</p>
+
+<pre><code class="language-go">func f() (int, error) {
+    return 1, nil
+}
+
+func g(i int, err error, j int) int {
+    if err != nil {
+        return 0
+    }
+    return i + j
+}
+
+func main() {
+    i := g(f(), 1)
+    println(i)
+}
+</code></pre>
+
+<p>I also ran into this usecase while building <a href="https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/">monadic error handling</a> for Go.</p>
+
+<h2 id="what-are-sum-types">What are sum types</h2>
+
+<p>A sum type is also called a tagged union, oneof or sealed trait.
+It is a way to represent a disjoint union of types in a single type.
+Say for example we have the sum type <code>(int | bool)</code>.
+This sum type will be able to represent all possible <code>int</code> values <code>plus</code> all possible <code>bool</code> values.</p>
+
+<p>The advantage of sum types are that the compiler is able to tell whether you handle all the disjoint types.
+This means that checking an error can be enforced by the compiler and that a type switch can be less error prone and allow the compiler to make sure that you handle all cases.</p>
+
+<h2 id="we-need-sum-types">We need sum types</h2>
+
+<p>Firstly, we need sum types to return a value <code>or</code> an error, instead of a value <code>and</code> an error from functions, but we need sum types for other reasons as well.</p>
+
+<p>In, my validation language, <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/ast/relapse.pb.go#L143-L157">Relapse&rsquo;s Abstract Syntax Tree</a>, each Pattern can be one of several Patterns:</p>
+
+<pre><code class="language-go">type Pattern struct {
+	Empty      *Empty
+	TreeNode   *TreeNode
+	LeafNode   *LeafNode
+	Concat     *Concat
+	Or         *Or
+	And        *And
+...
+</code></pre>
+
+<p>Here I simulate a sum type with a struct which has several fields (a product type) where only one field should be non nil.  This is not ideal in terms of type safety.  For instance when writing a function that processes a pattern, I have to do a nil check for each field:</p>
+
+<pre><code class="language-go">func Nullable(refs ast.RefLookup, p *ast.Pattern) bool {
+    if p.Empty != nil {
+        return true
+    } else if p.TreeNode != nil {
+        return false
+    } else if p.LeafNode != nil {
+        return false
+    } else if p.Concat != nil {
+        return Nullable(refs, p.Concat.GetLeftPattern()) &amp;&amp; Nullable(refs, p.Concat.GetRightPattern())
+    } else if p.Or != nil {
+        return Nullable(refs, p.Or.GetLeftPattern()) || Nullable(refs, p.Or.GetRightPattern())
+    } else if p.And != nil {
+        return Nullable(refs, p.And.GetLeftPattern()) &amp;&amp; Nullable(refs, p.And.GetRightPattern())
+    ...
+</code></pre>
+
+<p>This is fine, but when I add a new pattern the compiler is not going to tell me that I forgot to update one of these functions.</p>
+
+<p>I opted for <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/interp/nullable.go#L24">another implementation, using a type switch</a>, but it only works because each field is of a unique type and I still have the runtime time type check problem.</p>
+
+<p>This pushes Go to be a strong dynamically typed language, rather a strong statically typed language, which I would prefer to use.</p>
+
+<p>The use of an interface as a way to simulate a sum type can also be found in a <a href="https://github.com/golang/protobuf/blob/157d9c53be5810dd5a0fac4a467f7d5f400042ea/proto/testdata/test.pb.go#L2142">Protocol buffers library for Go</a> where they have to implement <code>oneof</code>.</p>
+
+<p>From this proto message:</p>
+
+<pre><code class="language-proto">message MyMessage {
+  oneof BoolOrInt {
+    bool BoolValue = 1;
+    int32 Int32Value = 2;
+  }
+}
+</code></pre>
+
+<p>The following go code is generated:</p>
+
+<pre><code class="language-go">type MyMessage struct {
+	BoolOrInt isMyMessage_BoolOrInt
+}
+
+type isMyMessage_BoolOrInt interface {
+	isMyMessage_BoolOrInt()
+}
+
+type MyMessage_BoolValue struct {
+	BoolValue bool
+}
+type MyMessage_Int32Value struct {
+	Int32Value int32
+}
+
+func (*MyMessage_BoolValue) isMyMessage_BoolOrInt()        {}
+func (*MyMessage_Int32Value) isMyMessage_BoolOrInt()       {}
+</code></pre>
+
+<p>This implementation is far from ideal, in my and others&rsquo; opinion.
+In an alternative Protocol buffer library for Go, <a href="https://github.com/gogo/protobuf/issues/168">developers cannot even agree</a> on what they would really like to have as a <code>oneof</code> implementation in Go, because Go does not lend itself to sum types.</p>
+
+<p>A need for sum types can also be found in the <a href="https://golang.org/pkg/go/ast/#Spec">go/ast</a> library, where Spec is documented to be one of the following types:
+  - <code>*ImportSpec</code>,
+  - <code>*ValueSpec</code> or
+  - <code>*TypeSpec</code>
+which is something that could have been enforced by the compiler, instead of mere documentation.</p>
+
+<p>Another such an instance is the <a href="https://golang.org/src/go/ast/walk.go?s=1311:1342#L41">Walk function</a>, which ends with classic runtime error, where a compile error would have been more appropriate:</p>
+
+<pre><code class="language-go">default:
+  panic(fmt.Sprintf(&quot;ast.Walk: unexpected node type %T&quot;, n))
+}
+</code></pre>
+
+<h2 id="everyone-else-has-it">Everyone else has it</h2>
+
+<p>Sum types is not a new language feature, but <a href="https://en.wikipedia.org/wiki/Tagged_union#Timeline_of_language_support">a very old one</a>.
+Algol 68 first introduced united modes (sum types) in the 1960s.
+This has been adopted by Pascal, Ada, Modula-2 as variant records.
+Later Haskell, ML and now Scala, Rust, Swift, F#, Protobufs and even C++ have adopted sum types.
+Even Java has <a href="https://www.youtube.com/watch?v=qul2B8iPC-o&amp;amp=&amp;index=6">announced plans</a> to also add sum types.
+I do not know why we were forced to write error prone code when a solution has existed, but I hope it can be fixed.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In Conclusion, I have shown that multiple return parameters are overrated, since:</p>
+
+<ul>
+<li>it is rarely used for the right reason and</li>
+<li>it is not even a first class citizen.</li>
+</ul>
+
+<p>I have also demonstrated several use cases for sum types:</p>
+
+<ul>
+<li>proper error handling</li>
+<li>in the implementation of languages, and</li>
+<li>protocol buffers
+<br /></li>
+</ul>
+
+<p>, but I know there are <code>MANY</code> more.</p>
+
+<p>I think a Go without multiple return parameters and with first class sum types would make for a better language.</p>
+
+      </article>
+
+      <ul class="pager blog-pager">
+        
+          <li class="previous">
+            <a href="https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/" data-toggle="tooltip" data-placement="top" title="Monads for Go Programmers">&larr; Previous Post</a>
+          </li>
+        
+        
+      </ul>
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:awalterschulze@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/awalterschulze" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/schulzewalter" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="https://awalterschulze.github.io/blog/index.xml" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          Walter Schulze
+          &nbsp;&bull;&nbsp;
+          2017
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.25.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://awalterschulze.github.io/blog/js/main.js"></script>
+<script src="https://awalterschulze.github.io/blog/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js" integrity="sha256-WxYLWg8NFyyEq+Zs9pVsDQmlFpJt+733DecPx5+hrQw=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js" integrity="sha256-LVuWfOU0rWFMCJNl1xb3K2HSWfxtK4IPbqEerP1P83M=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/protobuf.min.js" integrity="sha256-Le3u1m9hxZl5N1mYD82YrFSvjbzappFUesMsvgCFXTE=" crossorigin="anonymous"></script>
+
+<script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
+<script src="https://awalterschulze.github.io/blog/js/load-photoswipe.js"></script>
+
+
+
+  </body>
+</html>
+
