@@ -53,7 +53,7 @@ Examples include:
   - A function: `func(A) T` is a container, like a lock box, that first needs a key, before you can see the item;
   - Multiple return values: `func() (T, error)` is a container that possibly contains one item. We can see the error as part of the container.  From here on we will refer to `(T, error)` as a tuple.
 
-> Non Go programmers: Go does not have algebraic data types or union types.  This means that instead of a function returning a value `or` an error, we Go programmers return a value `and` an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. Oh we have fun.
+> Non Go programmers: Go does not have algebraic data types or union types.  This means that instead of a function returning a value `or` an error, we Go programmers return a value `and` an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. [Oh we have fun]((https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/).
 
 > The most popular way to have union types in Go would be to have an interface (abstract class) and then have a type switch (a very naive form of pattern matching) on the interface type.
 

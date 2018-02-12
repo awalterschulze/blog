@@ -231,7 +231,7 @@ I will use <code>functors</code> in my explanation of <code>monads</code>, so pl
 </ul>
 
 <blockquote>
-<p>Non Go programmers: Go does not have algebraic data types or union types.  This means that instead of a function returning a value <code>or</code> an error, we Go programmers return a value <code>and</code> an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. Oh we have fun.</p>
+<p>Non Go programmers: Go does not have algebraic data types or union types.  This means that instead of a function returning a value <code>or</code> an error, we Go programmers return a value <code>and</code> an error, where one of them is typically nil.  Sometimes we break the convention and return a value and an error, where both are not nil, just to try and confuse one another. [Oh we have fun]((<a href="https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/">https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/</a>).</p>
 
 <p>The most popular way to have union types in Go would be to have an interface (abstract class) and then have a type switch (a very naive form of pattern matching) on the interface type.</p>
 </blockquote>

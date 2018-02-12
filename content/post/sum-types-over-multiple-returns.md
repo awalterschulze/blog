@@ -4,8 +4,6 @@ date: 2017-09-25T13:32:51+02:00
 tags: ["algebraic data types", "golang", "sum types", "tuples"]
 ---
 
-# For Sum Types: Golang's multiple return parameters are overrated
-
 In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
 
 ## Analysis of multiple return parameters
