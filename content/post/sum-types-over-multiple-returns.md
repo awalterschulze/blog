@@ -8,11 +8,9 @@ In this Go Experience Report I am going to make a case for sum types over multip
 
 ## Analysis of multiple return parameters
 
-I wrote a little tool which does some analysis of Go source code:
+I wrote [a little tool which does some analysis of Go source code](https://github.com/awalterschulze/goanalysis).
 
-https://github.com/awalterschulze/goanalysis
-
-Thank you to the `go/types` library.
+Thank you to the [go/types](https://golang.org/pkg/go/types/) library.
 
 The tool simply counts the number of times multiple return parameters are used.
 I ran this tool over the standard library and these are the results:
