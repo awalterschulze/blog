@@ -246,3 +246,7 @@ I have also demonstrated several use cases for sum types:
 , but I know there are `MANY` more, including avoiding null pointer exceptions.
 
 I think a Go without multiple return parameters and with first class sum types would make for a better language.
+
+Thank you:
+
+  - [Yigal Duppen](https://github.com/publysher) for proof reading.
