@@ -10,3 +10,6 @@ serve:
 newpost:
 	echo "hugo new post/<postname>.md"
 
+update:
+	brew upgrade hugo
+	git submodule update --recursive --remote
