@@ -249,4 +249,5 @@ I think a Go without multiple return parameters and with first class sum types w
 
 Thank you:
 
+  - [Gustav Paul](https://github.com/gpaul) for proof reading and making me believe this was blog post worthy.
   - [Yigal Duppen](https://github.com/publysher) for proof reading.
