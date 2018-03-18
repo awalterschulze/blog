@@ -190,9 +190,9 @@ Everytime I type <code>if err != nil</code> I thank the Gophers for a readable l
 <p><img src="https://awalterschulze.github.io/blog/monads-for-goprogrammers/bartiferr.png" alt="Missing image of Bart Simpson writing if err != nil on the detention chalkboard" title="error detention" /></p>
 
 <p><a href="https://anvaka.github.io/common-words/#?lang=go">I suspect I am not the only one</a>, but</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-    log.Printf(<span style="color:#4070a0">&#34;This should still be interesting to a Go programmer &#34;</span> <span style="color:#666">+</span>
-        <span style="color:#4070a0">&#34;considering using a functional language, despite %v.&#34;</span>, err)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+    log.Printf(<span style="color:#d20;background-color:#fff0f0">&#34;This should still be interesting to a Go programmer &#34;</span> +
+        <span style="color:#d20;background-color:#fff0f0">&#34;considering using a functional language, despite %v.&#34;</span>, err)
 }</code></pre></div>
 <p>Monads are not just used to hide some error handling, but can also be used for list comprehensions and concurrency, to name but a few examples.</p>
 
@@ -236,62 +236,62 @@ I will use <code>functors</code> in my explanation of <code>monads</code>, so pl
 
 <p>The other requirement for a container to be a <code>functor</code> is that we need an implementation of the <code>fmap</code> function for that container type.
 The <code>fmap</code> function applies a function to each item in the container without modifying the container or structure in any way.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(f <span style="color:#007020;font-weight:bold">func</span>(A) B, aContainerOfA Container&lt;A&gt;) Container&lt;B&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(f <span style="color:#080;font-weight:bold">func</span>(A) B, aContainerOfA Container&lt;A&gt;) Container&lt;B&gt;</code></pre></div>
 <p>The classic example, which you might recognize from Hadoop&rsquo;s mapreduce, Python, Ruby or almost any other language you can think of, is the <code>map</code> function for a slice:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(f <span style="color:#007020;font-weight:bold">func</span>(A) B, as []A) []B {
-    bs <span style="color:#666">:=</span> <span style="color:#007020">make</span>([]b, <span style="color:#007020">len</span>(as))
-    <span style="color:#007020;font-weight:bold">for</span> i, a <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> as {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(f <span style="color:#080;font-weight:bold">func</span>(A) B, as []A) []B {
+    bs := <span style="color:#038">make</span>([]b, <span style="color:#038">len</span>(as))
+    <span style="color:#080;font-weight:bold">for</span> i, a := <span style="color:#080;font-weight:bold">range</span> as {
         bs[i] = f(a)
     }
-    <span style="color:#007020;font-weight:bold">return</span> bs
+    <span style="color:#080;font-weight:bold">return</span> bs
 }</code></pre></div>
 <p>We can also implement <code>fmap</code> for a tree:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(f <span style="color:#007020;font-weight:bold">func</span>(A) B, atree Node&lt;A&gt;) Node&lt;B&gt; {
-    btree <span style="color:#666">:=</span> Node&lt;B&gt;{
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(f <span style="color:#080;font-weight:bold">func</span>(A) B, atree Node&lt;A&gt;) Node&lt;B&gt; {
+    btree := Node&lt;B&gt;{
         Value: f(atree.Value),
-        Children: <span style="color:#007020">make</span>([]Node&lt;B&gt;, <span style="color:#007020">len</span>(atree.Children)),
+        Children: <span style="color:#038">make</span>([]Node&lt;B&gt;, <span style="color:#038">len</span>(atree.Children)),
     }
-    <span style="color:#007020;font-weight:bold">for</span> i, c <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> atree.Children {
+    <span style="color:#080;font-weight:bold">for</span> i, c := <span style="color:#080;font-weight:bold">range</span> atree.Children {
         btree.Children[i] = fmap(f, c)
     }
-    <span style="color:#007020;font-weight:bold">return</span> btree
+    <span style="color:#080;font-weight:bold">return</span> btree
 }</code></pre></div>
 <p>Or a channel:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(f <span style="color:#007020;font-weight:bold">func</span>(A) B, in <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> A) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> B {
-    out <span style="color:#666">:=</span> <span style="color:#007020">make</span>(<span style="color:#007020;font-weight:bold">chan</span> B, <span style="color:#007020">cap</span>(in))
-    <span style="color:#007020;font-weight:bold">go</span> <span style="color:#007020;font-weight:bold">func</span>() {
-        <span style="color:#007020;font-weight:bold">for</span> a <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> in {
-            b <span style="color:#666">:=</span> f(a)
-            out <span style="color:#666">&lt;-</span> b
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(f <span style="color:#080;font-weight:bold">func</span>(A) B, in &lt;-<span style="color:#080;font-weight:bold">chan</span> A) &lt;-<span style="color:#080;font-weight:bold">chan</span> B {
+    out := <span style="color:#038">make</span>(<span style="color:#080;font-weight:bold">chan</span> B, <span style="color:#038">cap</span>(in))
+    <span style="color:#080;font-weight:bold">go</span> <span style="color:#080;font-weight:bold">func</span>() {
+        <span style="color:#080;font-weight:bold">for</span> a := <span style="color:#080;font-weight:bold">range</span> in {
+            b := f(a)
+            out &lt;- b
         }
-        <span style="color:#007020">close</span>(out)
+        <span style="color:#038">close</span>(out)
     }()
-    <span style="color:#007020;font-weight:bold">return</span> out
+    <span style="color:#080;font-weight:bold">return</span> out
 }</code></pre></div>
 <p>Or a pointer:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(f <span style="color:#007020;font-weight:bold">func</span>(A) B, a <span style="color:#666">*</span>A) <span style="color:#666">*</span>B {
-    <span style="color:#007020;font-weight:bold">if</span> a <span style="color:#666">==</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(f <span style="color:#080;font-weight:bold">func</span>(A) B, a *A) *B {
+    <span style="color:#080;font-weight:bold">if</span> a == <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">nil</span>
     }
-    b <span style="color:#666">:=</span> f(<span style="color:#666">*</span>a)
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>b
+    b := f(*a)
+    <span style="color:#080;font-weight:bold">return</span> &amp;b
 }</code></pre></div>
 <p>Or a function:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(f <span style="color:#007020;font-weight:bold">func</span>(A) B, g <span style="color:#007020;font-weight:bold">func</span>(C) A) <span style="color:#007020;font-weight:bold">func</span>(C) B {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(c C) B {
-        a <span style="color:#666">:=</span> g(c)
-        <span style="color:#007020;font-weight:bold">return</span> f(a)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(f <span style="color:#080;font-weight:bold">func</span>(A) B, g <span style="color:#080;font-weight:bold">func</span>(C) A) <span style="color:#080;font-weight:bold">func</span>(C) B {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(c C) B {
+        a := g(c)
+        <span style="color:#080;font-weight:bold">return</span> f(a)
     }
 }</code></pre></div>
 <p>Or a function that returns an error:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(f <span style="color:#007020;font-weight:bold">func</span>(A) B, g <span style="color:#007020;font-weight:bold">func</span>() (<span style="color:#666">*</span>A, <span style="color:#902000">error</span>)) <span style="color:#007020;font-weight:bold">func</span>() (<span style="color:#666">*</span>B, <span style="color:#902000">error</span>) {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>() (<span style="color:#666">*</span>B, <span style="color:#902000">error</span>) {
-        a, err <span style="color:#666">:=</span> g()
-        <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-            <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>, err
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(f <span style="color:#080;font-weight:bold">func</span>(A) B, g <span style="color:#080;font-weight:bold">func</span>() (*A, <span style="color:#888;font-weight:bold">error</span>)) <span style="color:#080;font-weight:bold">func</span>() (*B, <span style="color:#888;font-weight:bold">error</span>) {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>() (*B, <span style="color:#888;font-weight:bold">error</span>) {
+        a, err := g()
+        <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+            <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">nil</span>, err
         }
-        b <span style="color:#666">:=</span> f(<span style="color:#666">*</span>a)
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>b, <span style="color:#007020;font-weight:bold">nil</span>
+        b := f(*a)
+        <span style="color:#080;font-weight:bold">return</span> &amp;b, <span style="color:#080;font-weight:bold">nil</span>
     }
 }</code></pre></div>
 <p>All of these containers with their respective <code>fmap</code> implementations are examples of <code>functors</code>.</p>
@@ -316,35 +316,35 @@ The reason is to compose functions that return these embellished types.</p>
 
 <p>Lets start with plain function composition, without embellished types.
 In this example, we want to compose two functions <code>f</code> and <code>g</code> and return a function that takes the input that is expected by <code>f</code> and returns the output from <code>g</code>:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) B, g <span style="color:#007020;font-weight:bold">func</span>(B) C) <span style="color:#007020;font-weight:bold">func</span>(A) C {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) C {
-        b <span style="color:#666">:=</span> f(a)
-        c <span style="color:#666">:=</span> g(b)
-        <span style="color:#007020;font-weight:bold">return</span> c
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) B, g <span style="color:#080;font-weight:bold">func</span>(B) C) <span style="color:#080;font-weight:bold">func</span>(A) C {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) C {
+        b := f(a)
+        c := g(b)
+        <span style="color:#080;font-weight:bold">return</span> c
     }
 }</code></pre></div>
 <p>Obviously, this will only work if the output type of <code>f</code> matches the input type of <code>g</code>.</p>
 
 <p>Another version of this would be composing functions that return errors.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(
-    f <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#666">*</span>A) (<span style="color:#666">*</span>B, <span style="color:#902000">error</span>), 
-    g <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#666">*</span>B) (<span style="color:#666">*</span>C, <span style="color:#902000">error</span>),
-) <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#666">*</span>A) (<span style="color:#666">*</span>C, <span style="color:#902000">error</span>) {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a <span style="color:#666">*</span>A) (<span style="color:#666">*</span>C, <span style="color:#902000">error</span>) {
-        b, err <span style="color:#666">:=</span> f(a)
-        <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-            <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>, err
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(
+    f <span style="color:#080;font-weight:bold">func</span>(*A) (*B, <span style="color:#888;font-weight:bold">error</span>), 
+    g <span style="color:#080;font-weight:bold">func</span>(*B) (*C, <span style="color:#888;font-weight:bold">error</span>),
+) <span style="color:#080;font-weight:bold">func</span>(*A) (*C, <span style="color:#888;font-weight:bold">error</span>) {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a *A) (*C, <span style="color:#888;font-weight:bold">error</span>) {
+        b, err := f(a)
+        <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+            <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">nil</span>, err
         }
-        c, err <span style="color:#666">:=</span> g(b)
-        <span style="color:#007020;font-weight:bold">return</span> c, err
+        c, err := g(b)
+        <span style="color:#080;font-weight:bold">return</span> c, err
     }
 }</code></pre></div>
 <p>Now we can try to abstract this error as an embellishment <code>M</code> and see what we are left with:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;C&gt; {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) M&lt;C&gt; {
-        mb <span style="color:#666">:=</span> f(a)
-        <span style="color:#60a0b0;font-style:italic">// ...
-</span><span style="color:#60a0b0;font-style:italic"></span>        <span style="color:#007020;font-weight:bold">return</span> mc
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#080;font-weight:bold">func</span>(A) M&lt;C&gt; {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) M&lt;C&gt; {
+        mb := f(a)
+        <span style="color:#888">// ...
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">return</span> mc
     }
 }</code></pre></div>
 <p>We have to return a function that takes an <code>A</code> as an input parameter, so we start by declaring the return function.
@@ -356,31 +356,31 @@ I mean now that we have <code>mb</code>, what do we do?</p>
 <p>When we knew it was an error we could check it, but now that it is abstracted away, we can&rsquo;t.</p>
 
 <p>But &hellip; if we know that our embellishment <code>M</code> is also a <code>functor</code>, then we can <code>fmap</code> over <code>M</code>:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> fmap = <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#007020;font-weight:bold">func</span>(A) B, M&lt;A&gt;) M&lt;B&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> fmap = <span style="color:#080;font-weight:bold">func</span>(<span style="color:#080;font-weight:bold">func</span>(A) B, M&lt;A&gt;) M&lt;B&gt;</code></pre></div>
 <p>The function <code>g</code> that we want to <code>fmap</code> with does not return a simple type like <code>C</code> it returns <code>M&lt;C&gt;</code>.
 Luckily this is not a problem for <code>fmap</code>, but it changes the type signature a bit:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> fmap = <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;, M&lt;B&gt;) M&lt;M&lt;C<span style="color:#666">&gt;&gt;</span></code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> fmap = <span style="color:#080;font-weight:bold">func</span>(<span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;, M&lt;B&gt;) M&lt;M&lt;C&gt;&gt;</code></pre></div>
 <p>So now we have a value <code>mmc</code> of type <code>M&lt;M&lt;C&gt;&gt;</code>:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;C&gt; {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) M&lt;C&gt; {
-        mb <span style="color:#666">:=</span> f(a)
-        mmc <span style="color:#666">:=</span> fmap(g, mb)
-        <span style="color:#60a0b0;font-style:italic">// ...
-</span><span style="color:#60a0b0;font-style:italic"></span>        <span style="color:#007020;font-weight:bold">return</span> mc
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#080;font-weight:bold">func</span>(A) M&lt;C&gt; {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) M&lt;C&gt; {
+        mb := f(a)
+        mmc := fmap(g, mb)
+        <span style="color:#888">// ...
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">return</span> mc
     }
 }</code></pre></div>
 <p>We need a way to go from <code>M&lt;M&lt;C&gt;&gt;</code> to <code>M&lt;C&gt;</code>.</p>
 
 <p>We need our embellishment <code>M</code> to not just be a <code>functor</code>, but to also have another property.
 This extra property is a function called <code>join</code> and is defined for each <code>monad</code>, just like <code>fmap</code> was defined for each <code>functor</code>.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> join = <span style="color:#007020;font-weight:bold">func</span>(M&lt;M&lt;C<span style="color:#666">&gt;&gt;</span>) M&lt;C&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> join = <span style="color:#080;font-weight:bold">func</span>(M&lt;M&lt;C&gt;&gt;) M&lt;C&gt;</code></pre></div>
 <p>Given join, we can now write:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;C&gt; {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) M&lt;C&gt; {
-        mb <span style="color:#666">:=</span> f(a)
-        mmc <span style="color:#666">:=</span> fmap(g, mb)
-        mc <span style="color:#666">:=</span> join(mmc)
-        <span style="color:#007020;font-weight:bold">return</span> mc
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#080;font-weight:bold">func</span>(A) M&lt;C&gt; {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) M&lt;C&gt; {
+        mb := f(a)
+        mmc := fmap(g, mb)
+        mc := join(mmc)
+        <span style="color:#080;font-weight:bold">return</span> mc
     }
 }</code></pre></div>
 <p>This means we can compose two functions that return embellished types, if the embellishment defines <code>fmap</code> and <code>join</code>.
@@ -390,7 +390,7 @@ In other words, for a type to be a <code>monad</code>, these two functions need 
 
 <p>Monads are <code>functors</code>, so we don&rsquo;t need to define <code>fmap</code> for them again.
 We just need to define <code>join</code>.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> join = <span style="color:#007020;font-weight:bold">func</span>(M&lt;M&lt;C<span style="color:#666">&gt;&gt;</span>) M&lt;C&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> join = <span style="color:#080;font-weight:bold">func</span>(M&lt;M&lt;C&gt;&gt;) M&lt;C&gt;</code></pre></div>
 <p>We will now define <code>join</code> for:</p>
 
 <ul>
@@ -403,32 +403,32 @@ We just need to define <code>join</code>.</p>
 
 <p>Join on a slice is the simplest and probably the easiest to start with.
 The <code>join</code> function simply concatenates all the slices.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> join(ss [][]T) []T {
-    s <span style="color:#666">:=</span> []T{}
-    <span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> ss {
-        s = <span style="color:#007020">append</span>(s, ss[i]<span style="color:#666">...</span>)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> join(ss [][]T) []T {
+    s := []T{}
+    <span style="color:#080;font-weight:bold">for</span> i := <span style="color:#080;font-weight:bold">range</span> ss {
+        s = <span style="color:#038">append</span>(s, ss[i]...)
     }
-    <span style="color:#007020;font-weight:bold">return</span> s
+    <span style="color:#080;font-weight:bold">return</span> s
 }</code></pre></div>
 <p>Lets look at why we need <code>join</code> again, but this time focusing specifically on slices.
 Here is our compose function for slices:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) []B, g <span style="color:#007020;font-weight:bold">func</span>(B) []C) <span style="color:#007020;font-weight:bold">func</span>(A) []C {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) []C {
-        bs <span style="color:#666">:=</span> f(a)
-        css <span style="color:#666">:=</span> fmap(g, bs)
-        cs <span style="color:#666">:=</span> join(css)
-        <span style="color:#007020;font-weight:bold">return</span> cs
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) []B, g <span style="color:#080;font-weight:bold">func</span>(B) []C) <span style="color:#080;font-weight:bold">func</span>(A) []C {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) []C {
+        bs := f(a)
+        css := fmap(g, bs)
+        cs := join(css)
+        <span style="color:#080;font-weight:bold">return</span> cs
     }
 }</code></pre></div>
 <p>If we pass <code>a</code> to <code>f</code> we get <code>bs</code> which is of type <code>[]B</code>.</p>
 
 <p>We can now <code>fmap</code> over <code>[]B</code> with <code>g</code>, which will give us a value of type <code>[][]C</code> and not <code>[]C</code>:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(g <span style="color:#007020;font-weight:bold">func</span>(B) []C, bs []B) [][]C {
-    css <span style="color:#666">:=</span> <span style="color:#007020">make</span>([][]C, <span style="color:#007020">len</span>(bs))
-    <span style="color:#007020;font-weight:bold">for</span> i, b <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> bs {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(g <span style="color:#080;font-weight:bold">func</span>(B) []C, bs []B) [][]C {
+    css := <span style="color:#038">make</span>([][]C, <span style="color:#038">len</span>(bs))
+    <span style="color:#080;font-weight:bold">for</span> i, b := <span style="color:#080;font-weight:bold">range</span> bs {
         css[i] = g(b)
     }
-    <span style="color:#007020;font-weight:bold">return</span> css
+    <span style="color:#080;font-weight:bold">return</span> css
 }</code></pre></div>
 <p>And that is why we need <code>join</code>.
 We need to go from <code>css</code> to <code>cs</code> or from <code>[][]C</code> to <code>[]C</code>.</p>
@@ -444,144 +444,144 @@ We need to go from <code>css</code> to <code>cs</code> or from <code>[][]C</code
 </ul>
 
 <p>Then our functions become:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#902000">int</span>) []<span style="color:#902000">int64</span>, g <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#902000">int64</span>) []<span style="color:#902000">string</span>) 
-    <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#902000">int</span>) []<span style="color:#902000">string</span></code></pre></div><div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(g <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#902000">int64</span>) []<span style="color:#902000">string</span>, bs []<span style="color:#902000">int64</span>) [][]<span style="color:#902000">string</span></code></pre></div><div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> join(css [][]<span style="color:#902000">string</span>) []<span style="color:#902000">string</span></code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(<span style="color:#888;font-weight:bold">int</span>) []<span style="color:#888;font-weight:bold">int64</span>, g <span style="color:#080;font-weight:bold">func</span>(<span style="color:#888;font-weight:bold">int64</span>) []<span style="color:#888;font-weight:bold">string</span>) 
+    <span style="color:#080;font-weight:bold">func</span>(<span style="color:#888;font-weight:bold">int</span>) []<span style="color:#888;font-weight:bold">string</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(g <span style="color:#080;font-weight:bold">func</span>(<span style="color:#888;font-weight:bold">int64</span>) []<span style="color:#888;font-weight:bold">string</span>, bs []<span style="color:#888;font-weight:bold">int64</span>) [][]<span style="color:#888;font-weight:bold">string</span></code></pre></div><div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> join(css [][]<span style="color:#888;font-weight:bold">string</span>) []<span style="color:#888;font-weight:bold">string</span></code></pre></div>
 <p>Now we can use them in an example:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> upto(n <span style="color:#902000">int</span>) []<span style="color:#902000">int64</span> { 
-    nums <span style="color:#666">:=</span> <span style="color:#007020">make</span>([]<span style="color:#902000">int64</span>, n)
-    <span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> nums {
-        nums[i] = <span style="color:#007020">int64</span>(i<span style="color:#666">+</span><span style="color:#40a070">1</span>)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> upto(n <span style="color:#888;font-weight:bold">int</span>) []<span style="color:#888;font-weight:bold">int64</span> { 
+    nums := <span style="color:#038">make</span>([]<span style="color:#888;font-weight:bold">int64</span>, n)
+    <span style="color:#080;font-weight:bold">for</span> i := <span style="color:#080;font-weight:bold">range</span> nums {
+        nums[i] = <span style="color:#038">int64</span>(i+<span style="color:#00d;font-weight:bold">1</span>)
     }
-    <span style="color:#007020;font-weight:bold">return</span> nums
+    <span style="color:#080;font-weight:bold">return</span> nums
 }
 
-<span style="color:#007020;font-weight:bold">func</span> pair(x <span style="color:#902000">int64</span>) []<span style="color:#902000">string</span> {
-    <span style="color:#007020;font-weight:bold">return</span> []<span style="color:#902000">string</span>{strconv.FormatInt(x, <span style="color:#40a070">10</span>), strconv.FormatInt(<span style="color:#666">-</span><span style="color:#40a070">1</span><span style="color:#666">*</span>x, <span style="color:#40a070">10</span>)}
+<span style="color:#080;font-weight:bold">func</span> pair(x <span style="color:#888;font-weight:bold">int64</span>) []<span style="color:#888;font-weight:bold">string</span> {
+    <span style="color:#080;font-weight:bold">return</span> []<span style="color:#888;font-weight:bold">string</span>{strconv.FormatInt(x, <span style="color:#00d;font-weight:bold">10</span>), strconv.FormatInt(-<span style="color:#00d;font-weight:bold">1</span>*x, <span style="color:#00d;font-weight:bold">10</span>)}
 }
 
-c <span style="color:#666">:=</span> compose(upto, pair)
-c(<span style="color:#40a070">3</span>)
-<span style="color:#666">//</span> <span style="color:#4070a0">&#34;1&#34;</span>,<span style="color:#4070a0">&#34;-1&#34;</span>,<span style="color:#4070a0">&#34;2&#34;</span>,<span style="color:#4070a0">&#34;-2&#34;</span>,<span style="color:#4070a0">&#34;3&#34;</span>,<span style="color:#4070a0">&#34;-3&#34;</span></code></pre></div>
+c := compose(upto, pair)
+c(<span style="color:#00d;font-weight:bold">3</span>)
+// <span style="color:#d20;background-color:#fff0f0">&#34;1&#34;</span>,<span style="color:#d20;background-color:#fff0f0">&#34;-1&#34;</span>,<span style="color:#d20;background-color:#fff0f0">&#34;2&#34;</span>,<span style="color:#d20;background-color:#fff0f0">&#34;-2&#34;</span>,<span style="color:#d20;background-color:#fff0f0">&#34;3&#34;</span>,<span style="color:#d20;background-color:#fff0f0">&#34;-3&#34;</span></code></pre></div>
 <p>This makes a slice our first <code>monad</code>.</p>
 
 <p>Interestingly this is exactly how list comprehensions work in Haskell:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell">[ <span style="color:#06287e">y</span> <span style="color:#666">|</span> <span style="color:#06287e">x</span> <span style="color:#007020;font-weight:bold">&lt;-</span> [<span style="color:#40a070">1</span><span style="color:#666">..</span><span style="color:#40a070">3</span>], <span style="color:#06287e">y</span> <span style="color:#007020;font-weight:bold">&lt;-</span> [<span style="color:#06287e">show</span> <span style="color:#06287e">x</span>, <span style="color:#06287e">show</span> (<span style="color:#666">-</span><span style="color:#40a070">1</span> <span style="color:#666">*</span> <span style="color:#06287e">x</span>)] ]</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell">[ <span style="color:#06b;font-weight:bold">y</span> | <span style="color:#06b;font-weight:bold">x</span> <span style="color:#080">&lt;-</span> [<span style="color:#00d;font-weight:bold">1</span>..<span style="color:#00d;font-weight:bold">3</span>], <span style="color:#06b;font-weight:bold">y</span> <span style="color:#080">&lt;-</span> [<span style="color:#06b;font-weight:bold">show</span> <span style="color:#06b;font-weight:bold">x</span>, <span style="color:#06b;font-weight:bold">show</span> (-<span style="color:#00d;font-weight:bold">1</span> * <span style="color:#06b;font-weight:bold">x</span>)] ]</code></pre></div>
 <p>But you might recognize it better from Python:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">pair</span> (x):
-  <span style="color:#007020;font-weight:bold">return</span> [<span style="color:#007020">str</span>(x), <span style="color:#007020">str</span>(<span style="color:#666">-</span><span style="color:#40a070">1</span><span style="color:#666">*</span>x)]
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">pair</span> (x):
+  <span style="color:#080;font-weight:bold">return</span> [<span style="color:#038">str</span>(x), <span style="color:#038">str</span>(-<span style="color:#00d;font-weight:bold">1</span>*x)]
 
-[y <span style="color:#007020;font-weight:bold">for</span> x <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">1</span>,<span style="color:#40a070">4</span>) <span style="color:#007020;font-weight:bold">for</span> y <span style="color:#007020;font-weight:bold">in</span> pair(x) ]</code></pre></div>
+[y <span style="color:#080;font-weight:bold">for</span> x <span style="color:#080">in</span> <span style="color:#038">range</span>(<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">4</span>) <span style="color:#080;font-weight:bold">for</span> y <span style="color:#080">in</span> pair(x) ]</code></pre></div>
 <h3 id="monadic-error-handling">Monadic Error Handling</h3>
 
 <p>We can also define <code>join</code> on functions which return a value and an error.
 For this we first need to take a step back to the <code>fmap</code> function again, because of some idiosyncrasies in Go.</p>
 
 <p>Here is our <code>fmap</code> function again for a function that returns a value and an error:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> fmap = <span style="color:#007020;font-weight:bold">func</span>(f <span style="color:#007020;font-weight:bold">func</span>(B) C, g <span style="color:#007020;font-weight:bold">func</span>(A) (B, <span style="color:#902000">error</span>)) <span style="color:#007020;font-weight:bold">func</span>(A) (C, <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> fmap = <span style="color:#080;font-weight:bold">func</span>(f <span style="color:#080;font-weight:bold">func</span>(B) C, g <span style="color:#080;font-weight:bold">func</span>(A) (B, <span style="color:#888;font-weight:bold">error</span>)) <span style="color:#080;font-weight:bold">func</span>(A) (C, <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>We know our compose function is going to call <code>fmap</code> with a function <code>f</code> that also returns an error.
 This will result in our <code>fmap</code> signature looking something like this:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> fmap = <span style="color:#007020;font-weight:bold">func</span>(
-    f <span style="color:#007020;font-weight:bold">func</span>(B) (C, <span style="color:#902000">error</span>), 
-    g <span style="color:#007020;font-weight:bold">func</span>(A) (B, <span style="color:#902000">error</span>),
-) <span style="color:#007020;font-weight:bold">func</span>(A) ((C, <span style="color:#902000">error</span>), <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> fmap = <span style="color:#080;font-weight:bold">func</span>(
+    f <span style="color:#080;font-weight:bold">func</span>(B) (C, <span style="color:#888;font-weight:bold">error</span>), 
+    g <span style="color:#080;font-weight:bold">func</span>(A) (B, <span style="color:#888;font-weight:bold">error</span>),
+) <span style="color:#080;font-weight:bold">func</span>(A) ((C, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>Unfortunately tuples are not first class citizens in Go, so we can&rsquo;t write:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">((C, <span style="color:#902000">error</span>), <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">((C, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>There are a few ways to work around this problem.
 I prefer using a function, since functions, that return a tuple, are still first class citizens:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">(<span style="color:#007020;font-weight:bold">func</span>() (C, <span style="color:#902000">error</span>), <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">(<span style="color:#080;font-weight:bold">func</span>() (C, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>Now we can define our <code>fmap</code> for functions which returns a value and an error, using our work around:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> fmap(
-    f <span style="color:#007020;font-weight:bold">func</span>(B) (C, <span style="color:#902000">error</span>), 
-    g <span style="color:#007020;font-weight:bold">func</span>(A) (B, <span style="color:#902000">error</span>),
-) <span style="color:#007020;font-weight:bold">func</span>(A) (<span style="color:#007020;font-weight:bold">func</span>() (C, <span style="color:#902000">error</span>), <span style="color:#902000">error</span>) {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) (<span style="color:#007020;font-weight:bold">func</span>() (C, <span style="color:#902000">error</span>), <span style="color:#902000">error</span>) {
-        b, err <span style="color:#666">:=</span> g(a)
-        <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-            <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>, err
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> fmap(
+    f <span style="color:#080;font-weight:bold">func</span>(B) (C, <span style="color:#888;font-weight:bold">error</span>), 
+    g <span style="color:#080;font-weight:bold">func</span>(A) (B, <span style="color:#888;font-weight:bold">error</span>),
+) <span style="color:#080;font-weight:bold">func</span>(A) (<span style="color:#080;font-weight:bold">func</span>() (C, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>) {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) (<span style="color:#080;font-weight:bold">func</span>() (C, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>) {
+        b, err := g(a)
+        <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+            <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">nil</span>, err
         }
-        c, err <span style="color:#666">:=</span> f(b)
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>() (C, <span style="color:#902000">error</span>) {
-            <span style="color:#007020;font-weight:bold">return</span> c, err
-        }, <span style="color:#007020;font-weight:bold">nil</span>
+        c, err := f(b)
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>() (C, <span style="color:#888;font-weight:bold">error</span>) {
+            <span style="color:#080;font-weight:bold">return</span> c, err
+        }, <span style="color:#080;font-weight:bold">nil</span>
     }
 }</code></pre></div>
 <p>Which brings us back to our main point, our <code>join</code> function on <code>(func() (C, error), error)</code>.
 Its pretty simple and simply does one of the error checks for us.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> join(f <span style="color:#007020;font-weight:bold">func</span>() (C, <span style="color:#902000">error</span>), err <span style="color:#902000">error</span>) (C, <span style="color:#902000">error</span>) {
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>, err
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> join(f <span style="color:#080;font-weight:bold">func</span>() (C, <span style="color:#888;font-weight:bold">error</span>), err <span style="color:#888;font-weight:bold">error</span>) (C, <span style="color:#888;font-weight:bold">error</span>) {
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">nil</span>, err
     }
-    <span style="color:#007020;font-weight:bold">return</span> f()
+    <span style="color:#080;font-weight:bold">return</span> f()
 }</code></pre></div>
 <p>We can now use our compose function, since we have defined <code>join</code> and <code>fmap</code>:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> unmarshal(data []<span style="color:#902000">byte</span>) (s <span style="color:#902000">string</span>, err <span style="color:#902000">error</span>) {
-    err = json.Unmarshal(data, <span style="color:#666">&amp;</span>s)
-    <span style="color:#007020;font-weight:bold">return</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> unmarshal(data []<span style="color:#888;font-weight:bold">byte</span>) (s <span style="color:#888;font-weight:bold">string</span>, err <span style="color:#888;font-weight:bold">error</span>) {
+    err = json.Unmarshal(data, &amp;s)
+    <span style="color:#080;font-weight:bold">return</span>
 }
 
-getnum <span style="color:#666">:=</span> compose(
+getnum := compose(
     unmarshal, 
     strconv.Atoi,
 )
-getnum(<span style="color:#4070a0">`&#34;1&#34;`</span>)
-<span style="color:#666">//</span> <span style="color:#40a070">1</span>, <span style="color:#007020;font-weight:bold">nil</span></code></pre></div>
+getnum(<span style="color:#d20;background-color:#fff0f0">`&#34;1&#34;`</span>)
+// <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#080;font-weight:bold">nil</span></code></pre></div>
 <p>This results in us having to do less error checking, since the <code>monad</code> does it for us in the background using the <code>join</code> function.</p>
 
 <p>Here is another <a href="https://speakerdeck.com/rebeccaskinner/monadic-error-handling-in-go?slide=77">example</a>, where I feel like Bart Simpson:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> upgradeUser(endpoint, username <span style="color:#902000">string</span>) <span style="color:#902000">error</span> {
-    getEndpoint <span style="color:#666">:=</span> fmt.Sprintf(<span style="color:#4070a0">&#34;%s/oldusers/%s&#34;</span>, endpoint, username)
-    postEndpoint <span style="color:#666">:=</span> fmt.Sprintf(<span style="color:#4070a0">&#34;%s/newusers/%s&#34;</span>, endpoint, username)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> upgradeUser(endpoint, username <span style="color:#888;font-weight:bold">string</span>) <span style="color:#888;font-weight:bold">error</span> {
+    getEndpoint := fmt.Sprintf(<span style="color:#d20;background-color:#fff0f0">&#34;%s/oldusers/%s&#34;</span>, endpoint, username)
+    postEndpoint := fmt.Sprintf(<span style="color:#d20;background-color:#fff0f0">&#34;%s/newusers/%s&#34;</span>, endpoint, username)
 
-    resp, err <span style="color:#666">:=</span> http.Get(genEndpoint)
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> err
+    resp, err := http.Get(genEndpoint)
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> err
     }
-    data, err <span style="color:#666">:=</span> ioutil.ReadAll(resp.Body)
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> err
+    data, err := ioutil.ReadAll(resp.Body)
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> err
     }
-    olduser, err <span style="color:#666">:=</span> user.NewFromJson(data)
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> err
+    olduser, err := user.NewFromJson(data)
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> err
     }
-    newuser, err <span style="color:#666">:=</span> user.NewUserFromUser(olduser),
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> err
+    newuser, err := user.NewUserFromUser(olduser),
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> err
     }
-    buf, err <span style="color:#666">:=</span> json.Marshal(newuser)
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> err
+    buf, err := json.Marshal(newuser)
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> err
     }
     _, err = http.Post(
         postEndpoint, 
-        <span style="color:#4070a0">&#34;application/json&#34;</span>, 
+        <span style="color:#d20;background-color:#fff0f0">&#34;application/json&#34;</span>, 
         bytes.NewBuffer(buf),
     )
-    <span style="color:#007020;font-weight:bold">return</span> err
+    <span style="color:#080;font-weight:bold">return</span> err
 }</code></pre></div>
 <p>Technically <code>compose</code> could take more than two functions as parameters.
 That means that we could chain all the above functions together in one call and rewrite the above example:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> upgradeUser(endpoint, username <span style="color:#902000">string</span>) <span style="color:#902000">error</span> {
-    getEndpoint <span style="color:#666">:=</span> fmt.Sprintf(<span style="color:#4070a0">&#34;%s/oldusers/%s&#34;</span>, endpoint, username)
-    postEndpoint <span style="color:#666">:=</span> fmt.Sprintf(<span style="color:#4070a0">&#34;%s/newusers/%s&#34;</span>, endpoint, username)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> upgradeUser(endpoint, username <span style="color:#888;font-weight:bold">string</span>) <span style="color:#888;font-weight:bold">error</span> {
+    getEndpoint := fmt.Sprintf(<span style="color:#d20;background-color:#fff0f0">&#34;%s/oldusers/%s&#34;</span>, endpoint, username)
+    postEndpoint := fmt.Sprintf(<span style="color:#d20;background-color:#fff0f0">&#34;%s/newusers/%s&#34;</span>, endpoint, username)
 
-    _, err <span style="color:#666">:=</span> compose(
+    _, err := compose(
         http.Get,
-        <span style="color:#007020;font-weight:bold">func</span>(resp <span style="color:#666">*</span>http.Response) ([]<span style="color:#902000">byte</span>, <span style="color:#902000">error</span>) {
-            <span style="color:#007020;font-weight:bold">return</span> ioutil.ReadAll(resp.Body)
+        <span style="color:#080;font-weight:bold">func</span>(resp *http.Response) ([]<span style="color:#888;font-weight:bold">byte</span>, <span style="color:#888;font-weight:bold">error</span>) {
+            <span style="color:#080;font-weight:bold">return</span> ioutil.ReadAll(resp.Body)
         },
         newUserFromJson,
         newUserFromUser,
         json.Marshal,
-        <span style="color:#007020;font-weight:bold">func</span>(buf []<span style="color:#902000">byte</span>) (<span style="color:#666">*</span>http.Response, <span style="color:#902000">error</span>) {
-            <span style="color:#007020;font-weight:bold">return</span> http.Post(
+        <span style="color:#080;font-weight:bold">func</span>(buf []<span style="color:#888;font-weight:bold">byte</span>) (*http.Response, <span style="color:#888;font-weight:bold">error</span>) {
+            <span style="color:#080;font-weight:bold">return</span> http.Post(
                 postEndpoint,
-                <span style="color:#4070a0">&#34;application/json&#34;</span>,
+                <span style="color:#d20;background-color:#fff0f0">&#34;application/json&#34;</span>,
                 bytes.NewBuffer(buf),
             )
         },
     )(getEndpoint)
-    <span style="color:#007020;font-weight:bold">return</span> err
+    <span style="color:#080;font-weight:bold">return</span> err
 }</code></pre></div>
 <p>There are many other <code>monads</code> out there.
 Think of any two functions that return the same type of embellishment and that you would like to compose.
@@ -590,23 +590,23 @@ Lets do one more example.</p>
 <h3 id="concurrent-pipelines">Concurrent Pipelines</h3>
 
 <p>We can also define <code>join</code> on channels.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> join(in <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> T) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> T {
-    out <span style="color:#666">:=</span> <span style="color:#007020">make</span>(<span style="color:#007020;font-weight:bold">chan</span> T)
-    <span style="color:#007020;font-weight:bold">go</span> <span style="color:#007020;font-weight:bold">func</span>() {
-        wait <span style="color:#666">:=</span> sync.WaitGroup{}
-        <span style="color:#007020;font-weight:bold">for</span> c <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> in {
-            wait.Add(<span style="color:#40a070">1</span>)
-            <span style="color:#007020;font-weight:bold">go</span> <span style="color:#007020;font-weight:bold">func</span>(inner <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> T) {
-                <span style="color:#007020;font-weight:bold">for</span> t <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> inner {
-                    out <span style="color:#666">&lt;-</span> t
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> join(in &lt;-<span style="color:#080;font-weight:bold">chan</span> &lt;-<span style="color:#080;font-weight:bold">chan</span> T) &lt;-<span style="color:#080;font-weight:bold">chan</span> T {
+    out := <span style="color:#038">make</span>(<span style="color:#080;font-weight:bold">chan</span> T)
+    <span style="color:#080;font-weight:bold">go</span> <span style="color:#080;font-weight:bold">func</span>() {
+        wait := sync.WaitGroup{}
+        <span style="color:#080;font-weight:bold">for</span> c := <span style="color:#080;font-weight:bold">range</span> in {
+            wait.Add(<span style="color:#00d;font-weight:bold">1</span>)
+            <span style="color:#080;font-weight:bold">go</span> <span style="color:#080;font-weight:bold">func</span>(inner &lt;-<span style="color:#080;font-weight:bold">chan</span> T) {
+                <span style="color:#080;font-weight:bold">for</span> t := <span style="color:#080;font-weight:bold">range</span> inner {
+                    out &lt;- t
                 }
                 wait.Done()
             }(c)
         }
         wait.Wait()
-        <span style="color:#007020">close</span>(out)
+        <span style="color:#038">close</span>(out)
     }()
-    <span style="color:#007020;font-weight:bold">return</span> out
+    <span style="color:#080;font-weight:bold">return</span> out
 }</code></pre></div>
 <p>Here we have a channel <code>in</code> that will feed us more channels of type <code>T</code>.
 We first create the <code>out</code> channel, start a go routine, which will be used to feed it, and then return it.
@@ -621,151 +621,151 @@ Finally, we use a wait group to make sure we close the <code>out</code> channel 
 </blockquote>
 
 <p>This means we can define a compose function on functions that return channels.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> B, g <span style="color:#007020;font-weight:bold">func</span>(B) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> C) <span style="color:#007020;font-weight:bold">func</span>(A) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> C {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> C {
-        chanOfB <span style="color:#666">:=</span> f(a)
-        <span style="color:#007020;font-weight:bold">return</span> join(fmap(g, chanOfB))
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) &lt;-<span style="color:#080;font-weight:bold">chan</span> B, g <span style="color:#080;font-weight:bold">func</span>(B) &lt;-<span style="color:#080;font-weight:bold">chan</span> C) <span style="color:#080;font-weight:bold">func</span>(A) &lt;-<span style="color:#080;font-weight:bold">chan</span> C {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) &lt;-<span style="color:#080;font-weight:bold">chan</span> C {
+        chanOfB := f(a)
+        <span style="color:#080;font-weight:bold">return</span> join(fmap(g, chanOfB))
     }
 }</code></pre></div>
 <p>And because of the way that <code>join</code> is implemented, we get concurrency almost for free.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> toChan(lines []<span style="color:#902000">string</span>) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> <span style="color:#902000">string</span> {
-    c <span style="color:#666">:=</span> <span style="color:#007020">make</span>(<span style="color:#007020;font-weight:bold">chan</span> <span style="color:#902000">string</span>)
-    <span style="color:#007020;font-weight:bold">go</span> <span style="color:#007020;font-weight:bold">func</span>() {
-        <span style="color:#007020;font-weight:bold">for</span> _, line <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> lines {
-            c <span style="color:#666">&lt;-</span> line
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> toChan(lines []<span style="color:#888;font-weight:bold">string</span>) &lt;-<span style="color:#080;font-weight:bold">chan</span> <span style="color:#888;font-weight:bold">string</span> {
+    c := <span style="color:#038">make</span>(<span style="color:#080;font-weight:bold">chan</span> <span style="color:#888;font-weight:bold">string</span>)
+    <span style="color:#080;font-weight:bold">go</span> <span style="color:#080;font-weight:bold">func</span>() {
+        <span style="color:#080;font-weight:bold">for</span> _, line := <span style="color:#080;font-weight:bold">range</span> lines {
+            c &lt;- line
         }
-        <span style="color:#007020">close</span>(c)
+        <span style="color:#038">close</span>(c)
     }()
-    <span style="color:#007020;font-weight:bold">return</span> c
+    <span style="color:#080;font-weight:bold">return</span> c
 }
 
-<span style="color:#007020;font-weight:bold">func</span> wordsize(line <span style="color:#902000">string</span>) <span style="color:#666">&lt;-</span><span style="color:#007020;font-weight:bold">chan</span> <span style="color:#902000">int</span> {
-    removePunc <span style="color:#666">:=</span> strings.NewReplacer(
-        <span style="color:#4070a0">&#34;,&#34;</span>, <span style="color:#4070a0">&#34;&#34;</span>, 
-        <span style="color:#4070a0">&#34;&#39;&#34;</span>, <span style="color:#4070a0">&#34;&#34;</span>,
-        <span style="color:#4070a0">&#34;!&#34;</span>, <span style="color:#4070a0">&#34;&#34;</span>, 
-        <span style="color:#4070a0">&#34;.&#34;</span>, <span style="color:#4070a0">&#34;&#34;</span>, 
-        <span style="color:#4070a0">&#34;(&#34;</span>, <span style="color:#4070a0">&#34;&#34;</span>, 
-        <span style="color:#4070a0">&#34;)&#34;</span>, <span style="color:#4070a0">&#34;&#34;</span>, 
-        <span style="color:#4070a0">&#34;:&#34;</span>, <span style="color:#4070a0">&#34;&#34;</span>,
+<span style="color:#080;font-weight:bold">func</span> wordsize(line <span style="color:#888;font-weight:bold">string</span>) &lt;-<span style="color:#080;font-weight:bold">chan</span> <span style="color:#888;font-weight:bold">int</span> {
+    removePunc := strings.NewReplacer(
+        <span style="color:#d20;background-color:#fff0f0">&#34;,&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>, 
+        <span style="color:#d20;background-color:#fff0f0">&#34;&#39;&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>,
+        <span style="color:#d20;background-color:#fff0f0">&#34;!&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>, 
+        <span style="color:#d20;background-color:#fff0f0">&#34;.&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>, 
+        <span style="color:#d20;background-color:#fff0f0">&#34;(&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>, 
+        <span style="color:#d20;background-color:#fff0f0">&#34;)&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>, 
+        <span style="color:#d20;background-color:#fff0f0">&#34;:&#34;</span>, <span style="color:#d20;background-color:#fff0f0">&#34;&#34;</span>,
     )
-    c <span style="color:#666">:=</span> <span style="color:#007020">make</span>(<span style="color:#007020;font-weight:bold">chan</span> <span style="color:#902000">int</span>)
-    <span style="color:#007020;font-weight:bold">go</span> <span style="color:#007020;font-weight:bold">func</span>() {
-        words <span style="color:#666">:=</span> strings.Split(line, <span style="color:#4070a0">&#34; &#34;</span>)
-        <span style="color:#007020;font-weight:bold">for</span> _, word <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> words {
-            c <span style="color:#666">&lt;-</span> <span style="color:#007020">len</span>(removePunc.Replace(word))
+    c := <span style="color:#038">make</span>(<span style="color:#080;font-weight:bold">chan</span> <span style="color:#888;font-weight:bold">int</span>)
+    <span style="color:#080;font-weight:bold">go</span> <span style="color:#080;font-weight:bold">func</span>() {
+        words := strings.Split(line, <span style="color:#d20;background-color:#fff0f0">&#34; &#34;</span>)
+        <span style="color:#080;font-weight:bold">for</span> _, word := <span style="color:#080;font-weight:bold">range</span> words {
+            c &lt;- <span style="color:#038">len</span>(removePunc.Replace(word))
         }
-        <span style="color:#007020">close</span>(c)
+        <span style="color:#038">close</span>(c)
     }()
-    <span style="color:#007020;font-weight:bold">return</span> c
+    <span style="color:#080;font-weight:bold">return</span> c
 }
 
-sizes <span style="color:#666">:=</span> compose(
-    toChan([]<span style="color:#902000">string</span>{
-        <span style="color:#4070a0">&#34;Bart: Eat my monads!&#34;</span>,
-        <span style="color:#4070a0">&#34;Monads: I don&#39;t think that&#39;s a very good idea.&#34;</span>,
-        <span style="color:#4070a0">&#34;Lisa: If anyone wants monads, I&#39;ll be in my room.&#34;</span>,
-        <span style="color:#4070a0">&#34;Homer: Mmm monads&#34;</span>,
-        <span style="color:#4070a0">&#34;Maggie: (Pacifier Suck)&#34;</span>,
+sizes := compose(
+    toChan([]<span style="color:#888;font-weight:bold">string</span>{
+        <span style="color:#d20;background-color:#fff0f0">&#34;Bart: Eat my monads!&#34;</span>,
+        <span style="color:#d20;background-color:#fff0f0">&#34;Monads: I don&#39;t think that&#39;s a very good idea.&#34;</span>,
+        <span style="color:#d20;background-color:#fff0f0">&#34;Lisa: If anyone wants monads, I&#39;ll be in my room.&#34;</span>,
+        <span style="color:#d20;background-color:#fff0f0">&#34;Homer: Mmm monads&#34;</span>,
+        <span style="color:#d20;background-color:#fff0f0">&#34;Maggie: (Pacifier Suck)&#34;</span>,
     }), 
     wordsize,
 )
-total <span style="color:#666">:=</span> <span style="color:#40a070">0</span>
-<span style="color:#007020;font-weight:bold">for</span> _, size <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> sizes {
-    <span style="color:#007020;font-weight:bold">if</span> size <span style="color:#666">==</span> <span style="color:#40a070">6</span> {
-        total <span style="color:#666">+=</span> <span style="color:#40a070">1</span>
+total := <span style="color:#00d;font-weight:bold">0</span>
+<span style="color:#080;font-weight:bold">for</span> _, size := <span style="color:#080;font-weight:bold">range</span> sizes {
+    <span style="color:#080;font-weight:bold">if</span> size == <span style="color:#00d;font-weight:bold">6</span> {
+        total += <span style="color:#00d;font-weight:bold">1</span>
     }
 }
-<span style="color:#666">//</span> total <span style="color:#666">==</span> <span style="color:#40a070">6</span></code></pre></div>
+// total == <span style="color:#00d;font-weight:bold">6</span></code></pre></div>
 <h2 id="less-hand-waving">Less Hand waving</h2>
 
 <p>This was a very hand wavy explanation of <code>monads</code> and there are many things I intentionally left out, to keep things simpler, but there is one more thing that I would like to cover.</p>
 
 <p>Technically our compose function defined in the previous section, is called the <code>Kleisli Arrow</code>.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> kleisliArrow = <span style="color:#007020;font-weight:bold">func</span>(<span style="color:#007020;font-weight:bold">func</span>(A) M&lt;B&gt;, <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;C&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> kleisliArrow = <span style="color:#080;font-weight:bold">func</span>(<span style="color:#080;font-weight:bold">func</span>(A) M&lt;B&gt;, <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#080;font-weight:bold">func</span>(A) M&lt;C&gt;</code></pre></div>
 <p>When people talk about <code>monads</code> they rarely mention the <code>Kleisli Arrow</code>, which was the key for me to understanding <code>monads</code>.
 If you are lucky they explain it using <code>fmap</code> and <code>join</code>, but if you are unlucky, like me, they explain it using the bind function.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> bind = <span style="color:#007020;font-weight:bold">func</span>(M&lt;B&gt;, <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) M&lt;C&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> bind = <span style="color:#080;font-weight:bold">func</span>(M&lt;B&gt;, <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) M&lt;C&gt;</code></pre></div>
 <p>Why?</p>
 
 <p>Because <code>bind</code> is the function in Haskell that you need to implement for your type if you want it to be considered a <code>Monad</code>.</p>
 
 <p>Lets repeat our implementation of the compose function here:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;C&gt; {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) M&lt;C&gt; {
-        mb <span style="color:#666">:=</span> f(a)
-        mmc <span style="color:#666">:=</span> fmap(g, mb)
-        mc <span style="color:#666">:=</span> join(mmc)
-        <span style="color:#007020;font-weight:bold">return</span> mc
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#080;font-weight:bold">func</span>(A) M&lt;C&gt; {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) M&lt;C&gt; {
+        mb := f(a)
+        mmc := fmap(g, mb)
+        mc := join(mmc)
+        <span style="color:#080;font-weight:bold">return</span> mc
     }
 }</code></pre></div>
 <p>If the <code>bind</code> function was implemented then we could simply call it, instead of <code>fmap</code> and <code>join</code>.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> compose(f <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;C&gt; {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">func</span>(a A) M&lt;C&gt; {
-        mb <span style="color:#666">:=</span> f(a)
-        mc <span style="color:#666">:=</span> bind(mb, g)
-        <span style="color:#007020;font-weight:bold">return</span> mc
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> compose(f <span style="color:#080;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#080;font-weight:bold">func</span>(A) M&lt;C&gt; {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">func</span>(a A) M&lt;C&gt; {
+        mb := f(a)
+        mc := bind(mb, g)
+        <span style="color:#080;font-weight:bold">return</span> mc
     }
 }</code></pre></div>
 <p>Which means that <code>bind(mb, g)</code> = <code>join(fmap(g, mb))</code>.</p>
 
 <p>The <code>bind</code> function for lists would be <code>concatMap</code> or <code>flatMap</code> depending on the language.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> concatMap([]A, <span style="color:#007020;font-weight:bold">func</span>(A) []B) []B</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> concatMap([]A, <span style="color:#080;font-weight:bold">func</span>(A) []B) []B</code></pre></div>
 <h2 id="squinting">Squinting</h2>
 
 <p>I found that Go started to blur the lines for me between <code>bind</code> and the <code>Kleisli Arrow</code>.
 Go returns an error in a tuple, but a tuple is not a first class citizen.
 For example, this code will not compile, because you cannot pass <code>f</code>&rsquo;s results to <code>g</code>, in an in-line way:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> f() (<span style="color:#902000">int</span>, <span style="color:#902000">error</span>) {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">1</span>, <span style="color:#007020;font-weight:bold">nil</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> f() (<span style="color:#888;font-weight:bold">int</span>, <span style="color:#888;font-weight:bold">error</span>) {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#080;font-weight:bold">nil</span>
 }
 
-<span style="color:#007020;font-weight:bold">func</span> g(i <span style="color:#902000">int</span>, err <span style="color:#902000">error</span>, j <span style="color:#902000">int</span>) <span style="color:#902000">int</span> {
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>
+<span style="color:#080;font-weight:bold">func</span> g(i <span style="color:#888;font-weight:bold">int</span>, err <span style="color:#888;font-weight:bold">error</span>, j <span style="color:#888;font-weight:bold">int</span>) <span style="color:#888;font-weight:bold">int</span> {
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>
     }
-    <span style="color:#007020;font-weight:bold">return</span> i <span style="color:#666">+</span> j
+    <span style="color:#080;font-weight:bold">return</span> i + j
 }
 
-<span style="color:#007020;font-weight:bold">func</span> main() {
-    i <span style="color:#666">:=</span> g(f(), <span style="color:#40a070">1</span>)
-    <span style="color:#007020">println</span>(i)
+<span style="color:#080;font-weight:bold">func</span> main() {
+    i := g(f(), <span style="color:#00d;font-weight:bold">1</span>)
+    <span style="color:#038">println</span>(i)
 }</code></pre></div>
 <p>You have to write it out:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> main() {
-    i, err <span style="color:#666">:=</span> f()
-    j <span style="color:#666">:=</span> g(i, err, <span style="color:#40a070">1</span>)
-    <span style="color:#007020">println</span>(j)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> main() {
+    i, err := f()
+    j := g(i, err, <span style="color:#00d;font-weight:bold">1</span>)
+    <span style="color:#038">println</span>(j)
 }</code></pre></div>
 <p>Or you have to make <code>g</code> take a function as input, since functions are first class citizens.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> f() (<span style="color:#902000">int</span>, <span style="color:#902000">error</span>) {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">1</span>, <span style="color:#007020;font-weight:bold">nil</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> f() (<span style="color:#888;font-weight:bold">int</span>, <span style="color:#888;font-weight:bold">error</span>) {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#080;font-weight:bold">nil</span>
 }
 
-<span style="color:#007020;font-weight:bold">func</span> g(ff <span style="color:#007020;font-weight:bold">func</span>() (<span style="color:#902000">int</span>, <span style="color:#902000">error</span>), j <span style="color:#902000">int</span>) <span style="color:#902000">int</span> {
-    i, err <span style="color:#666">:=</span> ff()
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>
+<span style="color:#080;font-weight:bold">func</span> g(ff <span style="color:#080;font-weight:bold">func</span>() (<span style="color:#888;font-weight:bold">int</span>, <span style="color:#888;font-weight:bold">error</span>), j <span style="color:#888;font-weight:bold">int</span>) <span style="color:#888;font-weight:bold">int</span> {
+    i, err := ff()
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>
     }
-    <span style="color:#007020;font-weight:bold">return</span> i <span style="color:#666">+</span> j
+    <span style="color:#080;font-weight:bold">return</span> i + j
 }
 
-<span style="color:#007020;font-weight:bold">func</span> main() {
-    i <span style="color:#666">:=</span> g(f, <span style="color:#40a070">1</span>)
-    <span style="color:#007020">println</span>(i)
+<span style="color:#080;font-weight:bold">func</span> main() {
+    i := g(f, <span style="color:#00d;font-weight:bold">1</span>)
+    <span style="color:#038">println</span>(i)
 }</code></pre></div>
 <p>But that means that our bind function:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> bind = <span style="color:#007020;font-weight:bold">func</span>(M&lt;B&gt;, <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) M&lt;C&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> bind = <span style="color:#080;font-weight:bold">func</span>(M&lt;B&gt;, <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) M&lt;C&gt;</code></pre></div>
 <p>as defined for errors:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> bind = <span style="color:#007020;font-weight:bold">func</span>(b B, err <span style="color:#902000">error</span>, g <span style="color:#007020;font-weight:bold">func</span>(B) (C, <span style="color:#902000">error</span>)) (C, <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> bind = <span style="color:#080;font-weight:bold">func</span>(b B, err <span style="color:#888;font-weight:bold">error</span>, g <span style="color:#080;font-weight:bold">func</span>(B) (C, <span style="color:#888;font-weight:bold">error</span>)) (C, <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>will not be fun to use, unless we squash that tuple into a function:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> bind = <span style="color:#007020;font-weight:bold">func</span>(f <span style="color:#007020;font-weight:bold">func</span>() (B, <span style="color:#902000">error</span>), g <span style="color:#007020;font-weight:bold">func</span>(B) (C, <span style="color:#902000">error</span>)) (C, <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> bind = <span style="color:#080;font-weight:bold">func</span>(f <span style="color:#080;font-weight:bold">func</span>() (B, <span style="color:#888;font-weight:bold">error</span>), g <span style="color:#080;font-weight:bold">func</span>(B) (C, <span style="color:#888;font-weight:bold">error</span>)) (C, <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>If we squint we can see our returning tuple as a function as well:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> bind = <span style="color:#007020;font-weight:bold">func</span>(f <span style="color:#007020;font-weight:bold">func</span>() (B, <span style="color:#902000">error</span>), g <span style="color:#007020;font-weight:bold">func</span>(B) (C, <span style="color:#902000">error</span>)) <span style="color:#007020;font-weight:bold">func</span>() (C, <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> bind = <span style="color:#080;font-weight:bold">func</span>(f <span style="color:#080;font-weight:bold">func</span>() (B, <span style="color:#888;font-weight:bold">error</span>), g <span style="color:#080;font-weight:bold">func</span>(B) (C, <span style="color:#888;font-weight:bold">error</span>)) <span style="color:#080;font-weight:bold">func</span>() (C, <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>And if we squint again, then we can see that this is our compose function, where <code>f</code> just takes zero parameters:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> compose = <span style="color:#007020;font-weight:bold">func</span>(f <span style="color:#007020;font-weight:bold">func</span>(A) (B, <span style="color:#902000">error</span>), g <span style="color:#007020;font-weight:bold">func</span>(B) (C, <span style="color:#902000">error</span>)) <span style="color:#007020;font-weight:bold">func</span>(A) (C, <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> compose = <span style="color:#080;font-weight:bold">func</span>(f <span style="color:#080;font-weight:bold">func</span>(A) (B, <span style="color:#888;font-weight:bold">error</span>), g <span style="color:#080;font-weight:bold">func</span>(B) (C, <span style="color:#888;font-weight:bold">error</span>)) <span style="color:#080;font-weight:bold">func</span>(A) (C, <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>Ta da, we have our <code>Kleisli Arrow</code>, by just squinting a few times.</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> compose = <span style="color:#007020;font-weight:bold">func</span>(f <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#007020;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#007020;font-weight:bold">func</span>(A) M&lt;C&gt;</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> compose = <span style="color:#080;font-weight:bold">func</span>(f <span style="color:#080;font-weight:bold">func</span>(A) M&lt;B&gt;, g <span style="color:#080;font-weight:bold">func</span>(B) M&lt;C&gt;) <span style="color:#080;font-weight:bold">func</span>(A) M&lt;C&gt;</code></pre></div>
 <h2 id="conclusion">Conclusion</h2>
 
 <p>Monads hide some of the repeated logic of composing functions with embellished types, so that you don&rsquo;t have to feel like Bart Simpson in detention, but rather like Bart Simpson on his skateboard, bowling a cricket ball, while it is his turn to bat.</p>

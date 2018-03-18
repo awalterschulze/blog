@@ -5,7 +5,7 @@ theme = "beautifulhugo"
 publishDir = "docs"
 googleAnalytics = "UA-106798280-1"
 pygmentsCodefences = true
-pygmentsStyle= "friendly"
+pygmentsStyle= "pastie"
 
 [Params]
   subtitle = "Walter Schulze's blog about Programming"

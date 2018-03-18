@@ -224,33 +224,33 @@ percentage of functions where multiple return parameters are really what we want
 
 <p>, which means that we would rather return a value <code>or</code> an error, than a value <code>and</code> an error.
 For example:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> Atoi(s <span style="color:#902000">string</span>) (<span style="color:#902000">int</span> | <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> Atoi(s <span style="color:#888;font-weight:bold">string</span>) (<span style="color:#888;font-weight:bold">int</span> | <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <h2 id="tuples-are-not-first-class-citizens">Tuples are not first class citizens</h2>
 
 <p>In the <code>go/types</code> library I found that multiple return parameters are actually called <a href="https://golang.org/pkg/go/types/#Tuple">Tuples</a>, but these Tuples are not first class citizens. For example nested tuples are currently not supported:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span>() ((<span style="color:#902000">string</span>, <span style="color:#902000">error</span>), <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span>() ((<span style="color:#888;font-weight:bold">string</span>, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>I ran into this while building monadic error handling in <a href="https://github.com/awalterschulze/goderive">goderive</a>.
 I worked around this by using a function:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span>() (<span style="color:#007020;font-weight:bold">func</span>() (<span style="color:#902000">string</span>, <span style="color:#902000">error</span>), <span style="color:#902000">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span>() (<span style="color:#080;font-weight:bold">func</span>() (<span style="color:#888;font-weight:bold">string</span>, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>, which is not ideal, since a function implies some computation. We currently also cannot directly pass multiple return parameters to a function:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> f() (<span style="color:#902000">int</span>, <span style="color:#902000">error</span>) {
-    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">1</span>, <span style="color:#007020;font-weight:bold">nil</span>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> f() (<span style="color:#888;font-weight:bold">int</span>, <span style="color:#888;font-weight:bold">error</span>) {
+    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#080;font-weight:bold">nil</span>
 }
 
-<span style="color:#007020;font-weight:bold">func</span> g(i <span style="color:#902000">int</span>, err <span style="color:#902000">error</span>, j <span style="color:#902000">int</span>) <span style="color:#902000">int</span> {
-    <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>
+<span style="color:#080;font-weight:bold">func</span> g(i <span style="color:#888;font-weight:bold">int</span>, err <span style="color:#888;font-weight:bold">error</span>, j <span style="color:#888;font-weight:bold">int</span>) <span style="color:#888;font-weight:bold">int</span> {
+    <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>
     }
-    <span style="color:#007020;font-weight:bold">return</span> i <span style="color:#666">+</span> j
+    <span style="color:#080;font-weight:bold">return</span> i + j
 }
 
-<span style="color:#007020;font-weight:bold">func</span> main() {
-    i <span style="color:#666">:=</span> g(f(), <span style="color:#40a070">1</span>)
-    <span style="color:#007020">println</span>(i)
+<span style="color:#080;font-weight:bold">func</span> main() {
+    i := g(f(), <span style="color:#00d;font-weight:bold">1</span>)
+    <span style="color:#038">println</span>(i)
 }</code></pre></div>
 <p>This gives us the following error:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">prog.go:15:11: not enough arguments in call to g
-prog.go:15:13: multiple-value f<span style="color:#666">()</span> in single-value context</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">prog.go:15:11: not enough arguments in call to g
+prog.go:15:13: multiple-value f() in single-value context</code></pre></div>
 <p><a href="https://play.golang.org/p/fSP-jzs0cN1">See it on The Go Playground</a></p>
 
 <h2 id="what-are-sum-types">What are sum types</h2>
@@ -275,7 +275,7 @@ It can have all the values of the pointer type <code>plus</code> one for null.</
 
 <p>Elm, Haskell, etc. has a Maybe type, which is used to represent these types of values.
 The same as a pointer, it can represent <code>Just</code> the value or <code>Nothing</code> for null:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell"><span style="color:#007020;font-weight:bold">data</span> <span style="color:#902000">Maybe</span> <span style="color:#06287e">a</span> <span style="color:#007020;font-weight:bold">=</span> <span style="color:#902000">Just</span> <span style="color:#06287e">a</span> <span style="color:#666">|</span> <span style="color:#902000">Nothing</span></code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell"><span style="color:#080;font-weight:bold">data</span> <span style="color:#888;font-weight:bold">Maybe</span> <span style="color:#06b;font-weight:bold">a</span> <span style="color:#080">=</span> <span style="color:#888;font-weight:bold">Just</span> <span style="color:#06b;font-weight:bold">a</span> | <span style="color:#888;font-weight:bold">Nothing</span></code></pre></div>
 <p>These days even Java has something similar called <code>Optional</code>.
 This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and avoid null pointer exceptions.</p>
 
@@ -284,32 +284,32 @@ This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and av
 <p>Firstly, we need sum types to return a value <code>or</code> an error, instead of a value <code>and</code> an error from functions, but we need sum types for other reasons as well.</p>
 
 <p>In, my validation language, <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/ast/relapse.pb.go#L143-L157">Relapse&rsquo;s Abstract Syntax Tree</a>, each Pattern can be one of several Patterns:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> Pattern <span style="color:#007020;font-weight:bold">struct</span> {
-	Empty      <span style="color:#666">*</span>Empty
-	TreeNode   <span style="color:#666">*</span>TreeNode
-	LeafNode   <span style="color:#666">*</span>LeafNode
-	Concat     <span style="color:#666">*</span>Concat
-	Or         <span style="color:#666">*</span>Or
-	And        <span style="color:#666">*</span>And
-<span style="color:#666">...</span></code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> Pattern <span style="color:#080;font-weight:bold">struct</span> {
+	Empty      *Empty
+	TreeNode   *TreeNode
+	LeafNode   *LeafNode
+	Concat     *Concat
+	Or         *Or
+	And        *And
+...</code></pre></div>
 <p>Here I simulate a sum type with a struct which has several fields (a product type) where only one field should be non nil.  This is not ideal in terms of type safety.  For instance when writing a function that processes a pattern, I have to do a nil check for each field:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> Nullable(refs ast.RefLookup, p <span style="color:#666">*</span>ast.Pattern) <span style="color:#902000">bool</span> {
-    <span style="color:#007020;font-weight:bold">if</span> p.Empty <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">true</span>
-    } <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> p.TreeNode <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">false</span>
-    } <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> p.LeafNode <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">false</span>
-    } <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> p.Concat <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> Nullable(refs, p.Concat.GetLeftPattern()) <span style="color:#666">&amp;&amp;</span> 
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> Nullable(refs ast.RefLookup, p *ast.Pattern) <span style="color:#888;font-weight:bold">bool</span> {
+    <span style="color:#080;font-weight:bold">if</span> p.Empty != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">true</span>
+    } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.TreeNode != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">false</span>
+    } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.LeafNode != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">false</span>
+    } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.Concat != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> Nullable(refs, p.Concat.GetLeftPattern()) &amp;&amp; 
             Nullable(refs, p.Concat.GetRightPattern())
-    } <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> p.Or <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> Nullable(refs, p.Or.GetLeftPattern()) <span style="color:#666">||</span> 
+    } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.Or != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> Nullable(refs, p.Or.GetLeftPattern()) || 
             Nullable(refs, p.Or.GetRightPattern())
-    } <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> p.And <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
-        <span style="color:#007020;font-weight:bold">return</span> Nullable(refs, p.And.GetLeftPattern()) <span style="color:#666">&amp;&amp;</span> 
+    } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.And != <span style="color:#080;font-weight:bold">nil</span> {
+        <span style="color:#080;font-weight:bold">return</span> Nullable(refs, p.And.GetLeftPattern()) &amp;&amp; 
             Nullable(refs, p.And.GetRightPattern())
-    <span style="color:#666">...</span></code></pre></div>
+    ...</code></pre></div>
 <p>This is fine, but when I add a new pattern the compiler is not going to tell me that I forgot to update one of these functions.</p>
 
 <p>I opted for <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/interp/nullable.go#L24">another implementation, using a type switch</a>, but it only works because each field is of a unique type and I still have the runtime type check problem.</p>
@@ -319,30 +319,30 @@ This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and av
 <p>The use of an interface as a way to simulate a sum type can also be found in a <a href="https://github.com/golang/protobuf/blob/157d9c53be5810dd5a0fac4a467f7d5f400042ea/proto/testdata/test.pb.go#L2142">Protocol buffers library for Go</a> where they have to implement <code>oneof</code>.</p>
 
 <p>From this proto message:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-proto" data-lang="proto"><span style="color:#007020;font-weight:bold">message</span> <span style="color:#0e84b5;font-weight:bold">MyMessage</span> {<span style="">
-</span><span style=""></span>  <span style="color:#007020;font-weight:bold">oneof</span> BoolOrInt {<span style="">
-</span><span style=""></span>    <span style="color:#902000">bool</span> BoolValue <span style="color:#666">=</span> <span style="color:#40a070">1</span>;<span style="">
-</span><span style=""></span>    <span style="color:#902000">int32</span> Int32Value <span style="color:#666">=</span> <span style="color:#40a070">2</span>;<span style="">
-</span><span style=""></span>  }<span style="">
-</span><span style=""></span>}</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-proto" data-lang="proto"><span style="color:#080;font-weight:bold">message</span> <span style="color:#b06;font-weight:bold">MyMessage</span> {<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>  <span style="color:#080;font-weight:bold">oneof</span> BoolOrInt {<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>    <span style="color:#888;font-weight:bold">bool</span> BoolValue = <span style="color:#00d;font-weight:bold">1</span>;<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>    <span style="color:#888;font-weight:bold">int32</span> Int32Value = <span style="color:#00d;font-weight:bold">2</span>;<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>  }<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>}</code></pre></div>
 <p>The following go code is generated:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> MyMessage <span style="color:#007020;font-weight:bold">struct</span> {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> MyMessage <span style="color:#080;font-weight:bold">struct</span> {
 	BoolOrInt isMyMessage_BoolOrInt
 }
 
-<span style="color:#007020;font-weight:bold">type</span> isMyMessage_BoolOrInt <span style="color:#007020;font-weight:bold">interface</span> {
+<span style="color:#080;font-weight:bold">type</span> isMyMessage_BoolOrInt <span style="color:#080;font-weight:bold">interface</span> {
 	isMyMessage_BoolOrInt()
 }
 
-<span style="color:#007020;font-weight:bold">type</span> MyMessage_BoolValue <span style="color:#007020;font-weight:bold">struct</span> {
-	BoolValue <span style="color:#902000">bool</span>
+<span style="color:#080;font-weight:bold">type</span> MyMessage_BoolValue <span style="color:#080;font-weight:bold">struct</span> {
+	BoolValue <span style="color:#888;font-weight:bold">bool</span>
 }
-<span style="color:#007020;font-weight:bold">type</span> MyMessage_Int32Value <span style="color:#007020;font-weight:bold">struct</span> {
-	Int32Value <span style="color:#902000">int32</span>
+<span style="color:#080;font-weight:bold">type</span> MyMessage_Int32Value <span style="color:#080;font-weight:bold">struct</span> {
+	Int32Value <span style="color:#888;font-weight:bold">int32</span>
 }
 
-<span style="color:#007020;font-weight:bold">func</span> (<span style="color:#666">*</span>MyMessage_BoolValue) isMyMessage_BoolOrInt()        {}
-<span style="color:#007020;font-weight:bold">func</span> (<span style="color:#666">*</span>MyMessage_Int32Value) isMyMessage_BoolOrInt()       {}</code></pre></div>
+<span style="color:#080;font-weight:bold">func</span> (*MyMessage_BoolValue) isMyMessage_BoolOrInt()        {}
+<span style="color:#080;font-weight:bold">func</span> (*MyMessage_Int32Value) isMyMessage_BoolOrInt()       {}</code></pre></div>
 <p>This implementation is far from ideal, in my and others&rsquo; opinion.
 In an alternative Protocol buffer library for Go, <a href="https://github.com/gogo/protobuf/issues/168">developers cannot even agree</a> on what they would really like to have as a <code>oneof</code> implementation in Go, because Go does not lend itself to sum types.</p>
 
@@ -357,8 +357,8 @@ In an alternative Protocol buffer library for Go, <a href="https://github.com/go
 <p>This is something that could have been enforced by the compiler, instead of mere documentation.</p>
 
 <p>Another example is the <a href="https://golang.org/src/go/ast/walk.go?s=1311:1342#L41">Walk function</a>, which ends with a classic runtime error, where a compile error would have been more appropriate:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">default</span>:
-  <span style="color:#007020">panic</span>(fmt.Sprintf(<span style="color:#4070a0">&#34;ast.Walk: unexpected node type %T&#34;</span>, n))
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">default</span>:
+  <span style="color:#038">panic</span>(fmt.Sprintf(<span style="color:#d20;background-color:#fff0f0">&#34;ast.Walk: unexpected node type %T&#34;</span>, n))
 }</code></pre></div>
 <h2 id="everyone-else-has-it">Everyone else has it</h2>
 
