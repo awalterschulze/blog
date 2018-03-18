@@ -247,7 +247,12 @@ I have also demonstrated several use cases for sum types:
 
 I think a Go without multiple return parameters and with first class sum types would make for a better language.
 
-Thank you:
+### Thank you
 
   - [Gustav Paul](https://github.com/gpaul) for proof reading and making me believe this was blog post worthy.
   - [Yigal Duppen](https://github.com/publysher) for proof reading.
+
+### Referenced
+
+  - [Go Experience Reports](https://github.com/golang/go/wiki/ExperienceReports)
+  - [Go is Not Good](https://github.com/ksimka/go-is-not-good/)
