@@ -108,7 +108,9 @@ This means that checking an error can be enforced by the compiler and that a typ
 
 Sum types is how Elm can eliminate all possible runtime errors:
 
-[![Tweet case study about how Elm has no runtime errors](https://awalterschulze.github.io/blog/sum-types-over-multiple-returns/noruntimeerrors.png)](https://twitter.com/rtfeldman/status/961051166783213570)
+<a href="https://twitter.com/rtfeldman/status/961051166783213570">
+  <img src="https://awalterschulze.github.io/blog/sum-types-over-multiple-returns/no-runtime-errors.png" alt="Tweet case study about how Elm has no runtime errors">
+</a>
 
 But wait, I thought the most common runtime exception was a null pointer exception.
 Yes, technically a pointer is also a sum type.  
