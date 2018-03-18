@@ -259,17 +259,40 @@ func main() {
 }
 </code></pre>
 
-<p>I also ran into this usecase while building <a href="https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/">monadic error handling</a> for Go.</p>
+<p>This gives us the following error:</p>
+
+<pre><code class="language-sh">prog.go:15:11: not enough arguments in call to g
+prog.go:15:13: multiple-value f() in single-value context
+</code></pre>
+
+<p><a href="https://play.golang.org/p/fSP-jzs0cN1">See it on The Go Playground</a></p>
 
 <h2 id="what-are-sum-types">What are sum types</h2>
 
-<p>A sum type is also called a tagged union, oneof or sealed trait.
+<p>A sum type has many names including: tagged union, oneof or sealed trait.
 It is a way to represent a disjoint union of types in a single type.
 Say for example we have the sum type <code>(int | bool)</code>.
 This sum type will be able to represent all possible <code>int</code> values <code>plus</code> all possible <code>bool</code> values.</p>
 
 <p>The advantage of sum types are that the compiler is able to tell whether you handle all the disjoint types.
 This means that checking an error can be enforced by the compiler and that a type switch can be less error prone and allow the compiler to make sure that you handle all cases.</p>
+
+<p>Sum types is how Elm can eliminate all possible runtime errors:</p>
+
+<p><a href="https://twitter.com/rtfeldman/status/961051166783213570"><img src="https://awalterschulze.github.io/blog/sum-types-over-multiple-returns/noruntimeerrors.png" alt="Tweet case study about how Elm has no runtime errors" /></a></p>
+
+<p>But wait, I thought the most common runtime exception was a null pointer exception.
+Yes, technically a pointer is also a sum type.<br />
+It can have all the values of the pointer type <code>plus</code> one for null.</p>
+
+<p>Elm, Haskell, etc. has a Maybe type, which is used to represent these types of values.
+The same as a pointer, it can represent <code>Just</code> the value or <code>Nothing</code> for null:</p>
+
+<pre><code class="language-haskell">data Maybe a = Just a | Nothing
+</code></pre>
+
+<p>These days even Java has something similar called <code>Optional</code>.
+This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and avoid null pointer exceptions.</p>
 
 <h2 id="we-need-sum-types">We need sum types</h2>
 
@@ -310,9 +333,9 @@ This means that checking an error can be enforced by the compiler and that a typ
 
 <p>This is fine, but when I add a new pattern the compiler is not going to tell me that I forgot to update one of these functions.</p>
 
-<p>I opted for <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/interp/nullable.go#L24">another implementation, using a type switch</a>, but it only works because each field is of a unique type and I still have the runtime time type check problem.</p>
+<p>I opted for <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/interp/nullable.go#L24">another implementation, using a type switch</a>, but it only works because each field is of a unique type and I still have the runtime type check problem.</p>
 
-<p>This pushes Go to be a strong dynamically typed language, rather a strong statically typed language, which I would prefer to use.</p>
+<p>In my opinion this makes Go a strong dynamically typed language, rather a strong statically typed language, which I would prefer to use.</p>
 
 <p>The use of an interface as a way to simulate a sum type can also be found in a <a href="https://github.com/golang/protobuf/blob/157d9c53be5810dd5a0fac4a467f7d5f400042ea/proto/testdata/test.pb.go#L2142">Protocol buffers library for Go</a> where they have to implement <code>oneof</code>.</p>
 
@@ -350,13 +373,17 @@ func (*MyMessage_Int32Value) isMyMessage_BoolOrInt()       {}
 <p>This implementation is far from ideal, in my and others&rsquo; opinion.
 In an alternative Protocol buffer library for Go, <a href="https://github.com/gogo/protobuf/issues/168">developers cannot even agree</a> on what they would really like to have as a <code>oneof</code> implementation in Go, because Go does not lend itself to sum types.</p>
 
-<p>A need for sum types can also be found in the <a href="https://golang.org/pkg/go/ast/#Spec">go/ast</a> library, where Spec is documented to be one of the following types:
-  - <code>*ImportSpec</code>,
-  - <code>*ValueSpec</code> or
-  - <code>*TypeSpec</code>
-which is something that could have been enforced by the compiler, instead of mere documentation.</p>
+<p>A need for sum types can also be found in the go/ast library, where <a href="https://golang.org/pkg/go/ast/#Spec">ast.Spec</a> is documented to be one of the following types:</p>
 
-<p>Another such an instance is the <a href="https://golang.org/src/go/ast/walk.go?s=1311:1342#L41">Walk function</a>, which ends with classic runtime error, where a compile error would have been more appropriate:</p>
+<ul>
+<li><code>*ImportSpec</code></li>
+<li><code>*ValueSpec</code></li>
+<li><code>*TypeSpec</code></li>
+</ul>
+
+<p>This is something that could have been enforced by the compiler, instead of mere documentation.</p>
+
+<p>Another example is the <a href="https://golang.org/src/go/ast/walk.go?s=1311:1342#L41">Walk function</a>, which ends with a classic runtime error, where a compile error would have been more appropriate:</p>
 
 <pre><code class="language-go">default:
   panic(fmt.Sprintf(&quot;ast.Walk: unexpected node type %T&quot;, n))
@@ -368,7 +395,7 @@ which is something that could have been enforced by the compiler, instead of mer
 <p>Sum types is not a new language feature, but <a href="https://en.wikipedia.org/wiki/Tagged_union#Timeline_of_language_support">a very old one</a>.
 Algol 68 first introduced united modes (sum types) in the 1960s.
 This has been adopted by Pascal, Ada, Modula-2 as variant records.
-Later Haskell, ML and now Scala, Rust, Swift, F#, Protobufs and even C++ have adopted sum types.
+Later Haskell, ML and now Scala, Elm, Rust, Swift, F#, Protobufs and even C++ have adopted sum types.
 Even Java has <a href="https://www.youtube.com/watch?v=qul2B8iPC-o&amp;amp=&amp;index=6">announced plans</a> to also add sum types.
 I do not know why we were forced to write error prone code when a solution has existed, but I hope it can be fixed.</p>
 
@@ -390,7 +417,7 @@ I do not know why we were forced to write error prone code when a solution has e
 <br /></li>
 </ul>
 
-<p>, but I know there are <code>MANY</code> more.</p>
+<p>, but I know there are <code>MANY</code> more, including avoiding null pointer exceptions.</p>
 
 <p>I think a Go without multiple return parameters and with first class sum types would make for a better language.</p>
 

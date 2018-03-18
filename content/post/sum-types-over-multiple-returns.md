@@ -87,17 +87,40 @@ func main() {
 }
 ```
 
-I also ran into this usecase while building [monadic error handling](https://awalterschulze.github.io/blog/post/monads-for-goprogrammers/) for Go.
+This gives us the following error:
+
+```sh
+prog.go:15:11: not enough arguments in call to g
+prog.go:15:13: multiple-value f() in single-value context
+```
+
+[See it on The Go Playground](https://play.golang.org/p/fSP-jzs0cN1)
 
 ## What are sum types
 
-A sum type is also called a tagged union, oneof or sealed trait.
+A sum type has many names including: tagged union, oneof or sealed trait.
 It is a way to represent a disjoint union of types in a single type.
 Say for example we have the sum type `(int | bool)`.
 This sum type will be able to represent all possible `int` values `plus` all possible `bool` values.
 
 The advantage of sum types are that the compiler is able to tell whether you handle all the disjoint types.
 This means that checking an error can be enforced by the compiler and that a type switch can be less error prone and allow the compiler to make sure that you handle all cases.
+
+Sum types is how Elm can eliminate all possible runtime errors:
+
+[![Tweet case study about how Elm has no runtime errors](https://awalterschulze.github.io/blog/sum-types-over-multiple-returns/noruntimeerrors.png)](https://twitter.com/rtfeldman/status/961051166783213570)
+
+But wait, I thought the most common runtime exception was a null pointer exception.
+Yes, technically a pointer is also a sum type.  
+It can have all the values of the pointer type `plus` one for null.
+
+Elm, Haskell, etc. has a Maybe type, which is used to represent these types of values.
+The same as a pointer, it can represent `Just` the value or `Nothing` for null:
+```haskell
+data Maybe a = Just a | Nothing
+```
+These days even Java has something similar called `Optional`.
+This enables the compiler to enforce you to do a "null" check and avoid null pointer exceptions.
 
 ## We need sum types
 
@@ -140,9 +163,9 @@ func Nullable(refs ast.RefLookup, p *ast.Pattern) bool {
 
 This is fine, but when I add a new pattern the compiler is not going to tell me that I forgot to update one of these functions.
 
-I opted for [another implementation, using a type switch](https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/interp/nullable.go#L24), but it only works because each field is of a unique type and I still have the runtime time type check problem.
+I opted for [another implementation, using a type switch](https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/interp/nullable.go#L24), but it only works because each field is of a unique type and I still have the runtime type check problem.
 
-This pushes Go to be a strong dynamically typed language, rather a strong statically typed language, which I would prefer to use.
+In my opinion this makes Go a strong dynamically typed language, rather a strong statically typed language, which I would prefer to use.
 
 The use of an interface as a way to simulate a sum type can also be found in a [Protocol buffers library for Go](https://github.com/golang/protobuf/blob/157d9c53be5810dd5a0fac4a467f7d5f400042ea/proto/testdata/test.pb.go#L2142) where they have to implement `oneof`.  
 
@@ -180,13 +203,15 @@ func (*MyMessage_Int32Value) isMyMessage_BoolOrInt()       {}
 This implementation is far from ideal, in my and others' opinion.
 In an alternative Protocol buffer library for Go, [developers cannot even agree](https://github.com/gogo/protobuf/issues/168) on what they would really like to have as a `oneof` implementation in Go, because Go does not lend itself to sum types.
 
-A need for sum types can also be found in the [go/ast](https://golang.org/pkg/go/ast/#Spec) library, where Spec is documented to be one of the following types:
-  - `*ImportSpec`,
-  - `*ValueSpec` or
-  - `*TypeSpec`
-which is something that could have been enforced by the compiler, instead of mere documentation.
+A need for sum types can also be found in the go/ast library, where [ast.Spec](https://golang.org/pkg/go/ast/#Spec) is documented to be one of the following types:
 
-Another such an instance is the [Walk function](https://golang.org/src/go/ast/walk.go?s=1311:1342#L41), which ends with classic runtime error, where a compile error would have been more appropriate:
+  - `*ImportSpec`
+  - `*ValueSpec`
+  - `*TypeSpec`
+
+This is something that could have been enforced by the compiler, instead of mere documentation.
+
+Another example is the [Walk function](https://golang.org/src/go/ast/walk.go?s=1311:1342#L41), which ends with a classic runtime error, where a compile error would have been more appropriate:
 
 ```go
 default:
@@ -199,7 +224,7 @@ default:
 Sum types is not a new language feature, but [a very old one](https://en.wikipedia.org/wiki/Tagged_union#Timeline_of_language_support).
 Algol 68 first introduced united modes (sum types) in the 1960s.
 This has been adopted by Pascal, Ada, Modula-2 as variant records.
-Later Haskell, ML and now Scala, Rust, Swift, F#, Protobufs and even C++ have adopted sum types.
+Later Haskell, ML and now Scala, Elm, Rust, Swift, F#, Protobufs and even C++ have adopted sum types.
 Even Java has [announced plans](https://www.youtube.com/watch?v=qul2B8iPC-o&amp=&index=6) to also add sum types.
 I do not know why we were forced to write error prone code when a solution has existed, but I hope it can be fixed.
 
@@ -216,6 +241,6 @@ I have also demonstrated several use cases for sum types:
   - in the implementation of languages, and
   - protocol buffers
   
-, but I know there are `MANY` more.
+, but I know there are `MANY` more, including avoiding null pointer exceptions.
 
 I think a Go without multiple return parameters and with first class sum types would make for a better language.
