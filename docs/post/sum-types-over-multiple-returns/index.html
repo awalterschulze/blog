@@ -283,7 +283,7 @@ This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and av
 
 <p>Firstly, we need sum types to return a value <code>or</code> an error, instead of a value <code>and</code> an error from functions, but we need sum types for other reasons as well.</p>
 
-<p>In, my validation language, <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/ast/relapse.pb.go#L143-L157">Relapse&rsquo;s Abstract Syntax Tree</a>, each Pattern can be one of several Patterns:</p>
+<p>In my validation language, <a href="https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/ast/relapse.pb.go#L143-L157">Relapse&rsquo;s Abstract Syntax Tree</a>, each Pattern can be one of several Patterns:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">type</span> Pattern <span style="color:#080;font-weight:bold">struct</span> {
 	Empty      *Empty
 	TreeNode   *TreeNode
@@ -371,7 +371,7 @@ I do not know why we were forced to write error prone code when a solution has e
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>In Conclusion, I have shown that multiple return parameters are overrated, since:</p>
+<p>I have shown that multiple return parameters are overrated, since:</p>
 
 <ul>
 <li>it is rarely used for the right reason and</li>
@@ -387,13 +387,14 @@ I do not know why we were forced to write error prone code when a solution has e
 <br /></li>
 </ul>
 
-<p>, but I know there are <code>MANY</code> more, including avoiding null pointer exceptions.</p>
+<p>There are <code>MANY</code> more use cases, including avoiding null pointer exceptions.</p>
 
 <p>I think a Go without multiple return parameters and with first class sum types would make for a better language.</p>
 
 <h3 id="thank-you">Thank you</h3>
 
 <ul>
+<li><a href="https://github.com/deosjr">Sjoerd Dost</a> for proof reading and pushing me to write this as a go experience report, in the first place.</li>
 <li><a href="https://github.com/gpaul">Gustav Paul</a> for proof reading and making me believe this was blog post worthy.</li>
 <li><a href="https://github.com/publysher">Yigal Duppen</a> for proof reading.</li>
 </ul>

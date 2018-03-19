@@ -128,7 +128,7 @@ This enables the compiler to enforce you to do a "null" check and avoid null poi
 
 Firstly, we need sum types to return a value `or` an error, instead of a value `and` an error from functions, but we need sum types for other reasons as well.
 
-In, my validation language, [Relapse's Abstract Syntax Tree](https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/ast/relapse.pb.go#L143-L157), each Pattern can be one of several Patterns:
+In my validation language, [Relapse's Abstract Syntax Tree](https://github.com/katydid/katydid/blob/1eaef3ef662fd6431dea1ae4937bbae500b3be53/relapse/ast/relapse.pb.go#L143-L157), each Pattern can be one of several Patterns:
 
 ```go
 type Pattern struct {
@@ -232,7 +232,7 @@ I do not know why we were forced to write error prone code when a solution has e
 
 ## Conclusion
 
-In Conclusion, I have shown that multiple return parameters are overrated, since:
+I have shown that multiple return parameters are overrated, since:
 
   - it is rarely used for the right reason and
   - it is not even a first class citizen.
@@ -243,12 +243,13 @@ I have also demonstrated several use cases for sum types:
   - in the implementation of languages, and
   - protocol buffers
   
-, but I know there are `MANY` more, including avoiding null pointer exceptions.
+There are `MANY` more use cases, including avoiding null pointer exceptions.
 
 I think a Go without multiple return parameters and with first class sum types would make for a better language.
 
 ### Thank you
 
+  - [Sjoerd Dost](https://github.com/deosjr) for proof reading and pushing me to write this as a go experience report, in the first place.
   - [Gustav Paul](https://github.com/gpaul) for proof reading and making me believe this was blog post worthy.
   - [Yigal Duppen](https://github.com/publysher) for proof reading.
 
