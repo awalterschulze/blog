@@ -40,7 +40,7 @@ These results show us two things:
 
 Only 3.5% of functions actually use multiple return parameters:
 
-<iframe src="https://awalterschulze.github.io/blog/sum-types-over-multiple-returns/sum-types-over-multiple-returns/plot.html" width=100% height=500></iframe>
+<iframe src="https://awalterschulze.github.io/blog/sum-types-over-multiple-returns/plot.html" width=100% height=500></iframe>
 
 The tool does not count functions that return a value `and` an error as a proper use of multiple return parameters. This is because I think we should rather have sum types for this use case. I believe that most of the time we return:
 
