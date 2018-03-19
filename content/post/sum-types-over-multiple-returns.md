@@ -249,8 +249,8 @@ I think a Go without multiple return parameters and with first class sum types w
 
 ### Thank you
 
-  - [Sjoerd Dost](https://github.com/deosjr) for proof reading and pushing me to write this as a go experience report, in the first place.
-  - [Gustav Paul](https://github.com/gpaul) for proof reading and making me believe this was blog post worthy.
+  - [Sjoerd Dost](https://github.com/deosjr) for proof reading and pushing me to write this Go Experience Report.
+  - [Gustav Paul](https://github.com/gpaul) for proof reading and making me believe this was worth upgrading from a gist to a blog post.
   - [Yigal Duppen](https://github.com/publysher) for proof reading.
 
 ### Referenced
