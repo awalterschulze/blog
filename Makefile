@@ -1,8 +1,8 @@
 serve:
-	hugo server -w --buildDrafts
+	hugo server -w --buildDrafts --enableGitInfo
 
 generate:
-	hugo --cleanDestinationDir
+	hugo --cleanDestinationDir --enableGitInfo
 
 newpost:
 	echo "hugo new post/<postname>.md"

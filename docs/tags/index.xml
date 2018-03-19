@@ -8,7 +8,7 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Mon, 25 Sep 2017 13:32:51 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 25 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -16,7 +16,7 @@
     <item>
       <title>Algebraic Data Types</title>
       <link>https://awalterschulze.github.io/blog/tags/algebraic-data-types/</link>
-      <pubDate>Mon, 25 Sep 2017 13:32:51 +0200</pubDate>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
       <author>awalterschulze@gmail.com (Walter Schulze)</author>
       <guid>https://awalterschulze.github.io/blog/tags/algebraic-data-types/</guid>
       <description></description>
@@ -34,7 +34,7 @@
     <item>
       <title>Golang</title>
       <link>https://awalterschulze.github.io/blog/tags/golang/</link>
-      <pubDate>Mon, 25 Sep 2017 13:32:51 +0200</pubDate>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
       <author>awalterschulze@gmail.com (Walter Schulze)</author>
       <guid>https://awalterschulze.github.io/blog/tags/golang/</guid>
       <description></description>
@@ -52,7 +52,7 @@
     <item>
       <title>Sum Types</title>
       <link>https://awalterschulze.github.io/blog/tags/sum-types/</link>
-      <pubDate>Mon, 25 Sep 2017 13:32:51 +0200</pubDate>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
       <author>awalterschulze@gmail.com (Walter Schulze)</author>
       <guid>https://awalterschulze.github.io/blog/tags/sum-types/</guid>
       <description></description>
@@ -61,7 +61,7 @@
     <item>
       <title>Tuples</title>
       <link>https://awalterschulze.github.io/blog/tags/tuples/</link>
-      <pubDate>Mon, 25 Sep 2017 13:32:51 +0200</pubDate>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
       <author>awalterschulze@gmail.com (Walter Schulze)</author>
       <guid>https://awalterschulze.github.io/blog/tags/tuples/</guid>
       <description></description>

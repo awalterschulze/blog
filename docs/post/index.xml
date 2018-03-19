@@ -8,7 +8,7 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Mon, 25 Sep 2017 13:32:51 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 25 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -16,7 +16,7 @@
     <item>
       <title>For Sum Types: Golang&#39;s multiple return parameters are overrated</title>
       <link>https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/</link>
-      <pubDate>Mon, 25 Sep 2017 13:32:51 +0200</pubDate>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
       <author>awalterschulze@gmail.com (Walter Schulze)</author>
       <guid>https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/</guid>
       <description>In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
