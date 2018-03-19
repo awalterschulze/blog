@@ -1,0 +1,38 @@
+<head>
+        <!-- Plotly.js -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      </head>
+      
+      <body>
+        
+        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+        <script>
+var trace0 = {
+  x: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  y: [8693, 7743, 0, 0, 0, 0, 0, 0],
+  name: 'normal',
+  type: 'bar'
+};
+
+var trace1 = {
+  x: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  y: [0, 0, 413, 205, 25, 4, 1, 1],
+  name: 'multiple: 3.5%',
+  type: 'bar'
+};
+
+var trace2 = {
+  x: ['0', '1', '2', '3', '4', '5', '6', '7'],
+  y: [0, 0, 1562, 0, 0, 0, 0, 0],
+  name: 'value or error',
+  type: 'bar'
+};
+
+
+var data = [trace0, trace1, trace2];
+
+var layout = {barmode: 'stack'};
+
+Plotly.newPlot('myDiv', data, layout);
+        </script>
+      </body>

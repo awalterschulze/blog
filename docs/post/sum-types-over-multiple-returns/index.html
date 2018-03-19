@@ -213,7 +213,9 @@ percentage of functions where multiple return parameters are really what we want
 <li>most functions with multiple return parameters return a value <code>and</code> an error.</li>
 </ul>
 
-<p>Only 3.5% of functions actually use multiple return parameters.</p>
+<p>Only 3.5% of functions actually use multiple return parameters:</p>
+
+<iframe src="https://awalterschulze.github.io/blog/sum-types-over-multiple-returns/sum-types-over-multiple-returns/plot.html" width=100% height=500></iframe>
 
 <p>The tool does not count functions that return a value <code>and</code> an error as a proper use of multiple return parameters. This is because I think we should rather have sum types for this use case. I believe that most of the time we return:</p>
 
