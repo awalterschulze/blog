@@ -253,6 +253,7 @@ I think a Go without multiple return parameters and with first class sum types w
 
   - [Sjoerd Dost](https://github.com/deosjr) for proof reading and pushing me to write this Go Experience Report.
   - [Gustav Paul](https://github.com/gpaul) for proof reading and making me believe this was worth upgrading from a gist to a blog post.
+  - [Petr Bouda](https://github.com/petrbouda) for proof reading and keeping me up to date with the future of Java.
   - [Yigal Duppen](https://github.com/publysher) for proof reading.
 
 ### Referenced
