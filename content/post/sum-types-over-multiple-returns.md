@@ -260,3 +260,6 @@ I think a Go without multiple return parameters and with first class sum types w
 
   - [Go Experience Reports](https://github.com/golang/go/wiki/ExperienceReports)
   - [Go is Not Good](https://github.com/ksimka/go-is-not-good/)
+  - [r/golang](https://www.reddit.com/r/golang/comments/863r1c/for_sum_types_golangs_multiple_return_parameters/)
+  - [r/programmingcirclejerk](https://www.reddit.com/r/programmingcirclejerk/comments/863edv/lol_no_if_err_nil/)
+  - [Go+](https://plus.google.com/u/0/+WalterSchulzeA/posts/ADfFQ92CqjX)
