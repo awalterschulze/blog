@@ -8,10 +8,21 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Mon, 25 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Programmer’s Regret: Neglecting Math at University</title>
+      <link>https://awalterschulze.github.io/blog/post/neglecting-math-at-university/</link>
+      <pubDate>Sun, 07 Jul 2019 00:00:00 +0000</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/post/neglecting-math-at-university/</guid>
+      <description>Does Math Matter? Math matters both more and less than you think&amp;hellip;
+Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose which areas you want to focus on &amp;ndash; some of which do not require math &amp;ndash; and still be successful. On the other hand:
+ Mathematics is the tool used to solve spesialized problems, and Programming is doing mathematics.</description>
+    </item>
     
     <item>
       <title>For Sum Types: Golang&#39;s multiple return parameters are overrated</title>

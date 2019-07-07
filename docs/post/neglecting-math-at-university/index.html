@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>A Programmer’s Regret: Neglecting Math at University - Adenoid Adventures</title>
+  <meta property="og:title" content="A Programmer’s Regret: Neglecting Math at University" />
+  <meta name="twitter:title" content="A Programmer’s Regret: Neglecting Math at University" />
+  <meta name="description" content="Does Math Matter? Math matters both more and less than you think&hellip;
+Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose which areas you want to focus on &ndash; some of which do not require math &ndash; and still be successful. On the other hand:
+ Mathematics is the tool used to solve spesialized problems, and Programming is doing mathematics.">
+  <meta property="og:description" content="Does Math Matter? Math matters both more and less than you think&hellip;
+Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose which areas you want to focus on &ndash; some of which do not require math &ndash; and still be successful. On the other hand:
+ Mathematics is the tool used to solve spesialized problems, and Programming is doing mathematics.">
+  <meta name="twitter:description" content="Does Math Matter? Math matters both more and less than you think&hellip;
+Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose …">
+  <meta name="author" content="Walter Schulze"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Adenoid Adventures",
+    
+    "url": "https:\/\/awalterschulze.github.io\/blog\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/awalterschulze.github.io\/blog\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/awalterschulze.github.io\/blog\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/awalterschulze.github.io\/blog\/post\/neglecting-math-at-university\/",
+          "name": "A programmer’s regret neglecting math at university"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Walter Schulze"
+  },
+  "headline": "A Programmer’s Regret: Neglecting Math at University",
+  "description" : "Does Math Matter? Math matters both more and less than you think\x26hellip;\nYes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose which areas you want to focus on \x26ndash; some of which do not require math \x26ndash; and still be successful. On the other hand:\n Mathematics is the tool used to solve spesialized problems, and Programming is doing mathematics.",
+  "inLanguage" : "en",
+  "wordCount":  2313 ,
+  "datePublished" : "2019-07-07T00:00:00",
+  "dateModified" : "2019-07-07T00:00:00",
+  "image" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
+  "keywords" : [ "mathematics, category theory, abstract algebra, proofs, dependent types" ],
+  "mainEntityOfPage" : "https:\/\/awalterschulze.github.io\/blog\/post\/neglecting-math-at-university\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/awalterschulze.github.io\/blog\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="A Programmer’s Regret: Neglecting Math at University" />
+<meta property="og:description" content="Does Math Matter? Math matters both more and less than you think&hellip;
+Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose which areas you want to focus on &ndash; some of which do not require math &ndash; and still be successful. On the other hand:
+ Mathematics is the tool used to solve spesialized problems, and Programming is doing mathematics.">
+<meta property="og:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+<meta property="og:url" content="https://awalterschulze.github.io/blog/post/neglecting-math-at-university/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Adenoid Adventures" />
+
+  <meta name="twitter:title" content="A Programmer’s Regret: Neglecting Math at University" />
+  <meta name="twitter:description" content="Does Math Matter? Math matters both more and less than you think&hellip;
+Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose …">
+  <meta name="twitter:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+  <meta name="twitter:card" content="summary" />
+  <link href='https://awalterschulze.github.io/blog/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+  <meta name="twitter:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://awalterschulze.github.io/blog/post/neglecting-math-at-university/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Adenoid Adventures" />
+
+  <meta name="generator" content="Hugo 0.55.6" />
+  <link rel="alternate" href="https://awalterschulze.github.io/blog/index.xml" type="application/rss+xml" title="Adenoid Adventures"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-106798280-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Adenoid Adventures" href="https://awalterschulze.github.io/blog/">
+            <img class="avatar-img" src="https://awalterschulze.github.io/blog/avatar.png" alt="Adenoid Adventures" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>A Programmer’s Regret: Neglecting Math at University</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2019 July 7
+  
+  
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Walter Schulze
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h2 id="does-math-matter">Does Math Matter?</h2>
+
+<p>Math matters both more and less than you think&hellip;</p>
+
+<p>Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose which areas you want to focus on &ndash; some of which do not require math &ndash; and still be successful.  On the other hand:</p>
+
+<ol>
+<li>Mathematics is <strong>the</strong> tool used to solve spesialized problems, and</li>
+<li><strong>Programming is doing mathematics</strong>.<br /></li>
+</ol>
+
+<p>I would like to give you some examples for both, with the hope that this will motivate you to give math a chance to grow on you. For this I have chosen some short (average 10 minutes in length) videos that should excite you and explain the concepts better than I can.</p>
+
+<p>But first, a story. About me not caring about math&hellip;</p>
+
+<h2 id="if-you-don-t-want-to-learn-you-won-t-learn">If you don’t want to learn, you won’t learn</h2>
+
+<p>When I was at university, I didn’t really see the point of math. It was such a big change from the math we did in high school, and all I really wanted to do was program.  Math just seemed like a necessary evil for getting my degree, so that I could move onto more programming. The proofs were the least motivating of all, since it felt like they needed to be crammed solely for the exam and offered no value for my programming career. My stubborn self felt so “principled” about it that I refused to study the proofs. This resulted in me being put into a special group for underperforming students in my first year. Too proud (read stupid), I refused to study the proofs and ended up narrowly passing even though 40% of the exam was proofs. Still not getting the message, I had to rewrite a test and an exam in my second year. The exam rewrite is where I finally compromised my principles and had to give up most of my summer vacation to study proofs. I couldn’t hack the math, so I lost a vacation and still didn’t understand why it was important.  You would think that from this great failure I would learn something, but I was still blinkered by stubbornness. Suffice to say, when math became an elective, I didn’t choose it! In hindsight this is one of my biggest regrets: five years later I would find out that the problems that I found most interesting were <strong>all</strong> intimately based in math.</p>
+
+<p>I finally picked up a Computer Science book to read past the prescribed material in the week that I was handing in my master’s thesis.  This is when I finally realized that Mathematics and Computer Science were linked in a way that I found really interesting.  Since then I have been playing catch-up with all the students who were actually paying attention in class, during … my valuable after-work free time.  This has been an ongoing process for over ten years now, when I could have rather just paid attention for the four years that it was shoved in my face.  This is ten years I could have spent learning new things, like my peers who paid attention, but instead my math is still not at graduate level. Sometimes I really feel like I wasted my life, but rather than dwell on this any further, let’s look at some examples of Math that is important for programming.</p>
+
+<h2 id="examples-of-math-as-a-tool-for-programmers">Examples of Math as a tool for Programmers</h2>
+
+<p>Obviously graphics programming in games and movies requires physics knowledge, but since exact physics can be too expensive to properly simulate, we typically use Numerical Methods from Mathematics, for example using Verlet Integration to approximate ragdoll physics:</p>
+
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2TIEfgC3tAo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
+
+<p>Less obvious might be Google’s web search algorithm.  You might think this is simply counting words on web pages and showing the page with the highest count of the relevant word at the top, but this ranking is too easy to manipulate, for example a web page that just repeats the word math, does not actually contain any math.  Ranking the pages to have the most relevant results at the top is a much harder problem.  The PageRank algorithm takes into account the number of links to and from a web page and places them in a matrix, then it uses an approximation of an eigenvector from Linear Algebra to calculate a more relevant ranking:</p>
+
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/F5fcEtqysGs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
+
+<p>Artificial Intelligence or rather the subfield of Machine Learning, is something that I found very intriguing while studying. Tracking gestures on a dance game, finding movies that you might like on Netflix, recognizing the song that is currently playing, etc.  If you want to help to build any of these systems, you will need at least a good understanding of Calculus, Probability Theory and Linear Algebra.</p>
+
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8onB7rPG4Pk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
+
+<p>I think those are enough examples, which use math as the tool for solving specialized problems.  I now want to talk about the less obvious and show that math is programming, which I now find even more intriguing.</p>
+
+<h2 id="programming-is-eating-math">Programming is eating Math</h2>
+
+<h3 id="abstraction-as-an-appetizer">Abstraction as an Appetizer</h3>
+
+<p>Abstraction is an extremely important part of programming. It is one way we can break up a complex problem into smaller pieces.  We see some pattern or want to hide some complexity and we create an abstraction, using for example abstract classes or interfaces. We even create patterns for how we abstract and abstract over those patterns.  It is very important how we abstract, since abstractions can be very confusing or very useful.  How can we discover the most useful abstractions?</p>
+
+<p>Even though computers, as we know them, have only been around for a few decades, questions of computation and the design of computing engines have existed for hundreds of years.  This is quite a surprising fact, but still it is considered a very young field when compared to mathematics, which has been around for thousands of years.  This means that mathematics has had quite a bit more time to come up with solutions to certain problems. We might as well take a look to see if there are ideas that we can steal - in fact, it might be arrogant not to!</p>
+
+<p>No surprise &hellip; Mathematics has an appropriate sounding sub field called Abstract Algebra.
+Here is a little taste of Abstract Algebra, with an explanation of a Group:</p>
+
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QudbrUcVPxk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
+
+<p>A Group was a good abstraction over addition and multiplication, but it is also a superclass of a Monoid.  If you take a Group and remove the property that the elements need inverses, you are left with a Monoid.  A Monoid is a set of elements, which includes an identity element and an associative operation.  Now we have an abstraction that not only works for addition, but also:</p>
+
+<p><center>
+<table>
+    <tr>
+        <td><b>Monoid</b></td>
+        <td><b>Identity</b></td>
+        <td><b>Operation</b></td>
+    </tr>
+    <tr>
+        <td>Addition over Integers</td>
+        <td>0</td>
+        <td>+</td>
+    </tr>
+    <tr>
+        <td>Multiplication over Integers</td>
+        <td>1</td>
+        <td>x</td>
+    </tr>
+    <tr>
+        <td>Concatenation over Strings</td>
+        <td>empty string</td>
+        <td>concat</td>
+    </tr>
+    <tr>
+        <td>Extending over Lists</td>
+        <td>empty list</td>
+        <td>extend</td>
+    </tr>
+    <tr>
+        <td>Union over Sets</td>
+        <td>empty set</td>
+        <td>union</td>
+    </tr>
+    <tr>
+        <td>Any over Booleans</td>
+        <td>false</td>
+        <td>or</td>
+    </tr>
+    <tr>
+        <td>All over Booleans</td>
+        <td>true</td>
+        <td>and</td>
+    </tr>
+    <tr>
+        <td>Overlay for Images</td>
+        <td>Transparent Image</td>
+        <td>Overlay</td>
+    </tr><br />
+</table>
+</center></p>
+
+<p>This abstraction is useful, because now we can write single implementations of functions that work for any monoid.  For example:</p>
+
+<ul>
+<li>A simple function <code>mconcat</code>, which takes a list of monoid elements and combines them into a single element.  Summing a list of integers is now the same as overlaying a list of images.</li>
+<li>A more complex function <code>foldMap</code> can recursively walk over a tree and either:
+
+<ul>
+<li>return whether any element is true,</li>
+<li>find if there is any element is larger than 5, or</li>
+<li>transform the foldable structure into a set,
+all depending on the type of monoid we use.</li>
+</ul></li>
+</ul>
+
+<p>We can abstract even further and not only make this function work for trees, but for any foldable container, in other words, any container that can be transformed to a list.</p>
+
+<p>Knowing about monoids can be useful when designing a library.  Whenever you have a binary function, like multiply, which takes two parameters of the same type and returns a result of the same type, it is a good idea to think about what the identity element would be.  If you find one, you have found a very intuitive way of using your binary function over lists.  Your function will even work on the empty list, since you have a sensible default with mathematical properties, and it will remove a case for error handling, which will simplify your user’s code.</p>
+
+<p>Here we used the abstraction to create shared implementations, but an abstraction can be and should be more useful than that.  The abstraction is at the service of explaining or discovering the connections.</p>
+
+<h3 id="the-composition-of-the-main-course">The Composition of the Main Course</h3>
+
+<p>One quite popular way that humans solve a complex problem is to divide and conquer.  Break down the problem into smaller parts, solve those smaller problems and then compose those solutions into a solution for the bigger problem.  Can you think of another (general) way? &hellip;</p>
+
+<p>In programming we break up a problem into several smaller functions that solve smaller problems and then compose them together into bigger and bigger functions that eventually solve the bigger problem.  What would be the best way to compose functions together? I wonder if math has any ideas that we can steal?</p>
+
+<p>Category Theory, another subfield of Mathematics, is what I like to call abstract Abstract Algebra, but really it is the mathematics of composition, where we study the context of objects rather than their content.  Here we can find many useful ideas, like:</p>
+
+<ul>
+<li>Functors, which allow us to apply a function to every element in a container using a map function, like Lists in Python, the Stream API and Optional in Java or even functions in Haskell.</li>
+<li>Monads, which are the basis of list comprehensions in Python, LINQ in C#, parser combinators in Scala, IO and most concurrency in Haskell, etc.
+Find me a programming language and I’ll find you a useful monad in that language.</li>
+<li>F-Algebras, which allow us to abstract over recursion - but to be honest, now we are at the edge of my knowledge.</li>
+</ul>
+
+<p>These extremely abstract concepts can take a while to mature in your brain, so the earlier you start the better.  See below a short video that tries to explain monads:</p>
+
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Nq-q2USYetQ?start=55" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
+
+<h3 id="the-proof-is-in-the-pudding">The Proof is in the Pudding</h3>
+
+<p>This is the sweetest and final part of your meal of math.</p>
+
+<p>Now, you might remember that I said that I found proofs to be the least motivating part of doing Mathematics at University.  Well what if I told you that types can be viewed as propositions and programs as proofs:</p>
+
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SknxggwRPzU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
+
+<p>Here are some provable properties:</p>
+
+<ul>
+<li>x + y = y + x</li>
+<li>P &amp; (Q | R) = (P &amp; Q) | (P &amp; R)</li>
+<li>length(filter(predicate, list)) &lt;= length(list)</li>
+<li>The executable code the C compiler produces is exactly as specified by the semantics of the source C program, see <a href="http://compcert.inria.fr/compcert-C.html">CompCert</a></li>
+</ul>
+
+<p>Now that I know that I can use programming to prove things mathematically, I find proofs to be the most interesting thing about programming.  Proofs allow us to write safer programs with fewer errors, because we can prove properties instead of just testing them.</p>
+
+<p>But wait, if you can prove things using programming, can’t you also contribute to Mathematics by simply doing the thing we love, writing programs? Yes and mathematics seriously needs you.  Proofs are not just hard for you, but also hard for mathematicians.  <a href="https://www.youtube.com/watch?v=E9RiR9AcXeE">Mathematicians create bugs in proofs all the time - and these bugs go undiscovered for decades</a>.  Homotopy Type Theory, which studies different types of equality, is disrupting the foundations of Mathematics with its univalent point of view, because it thinks that the so called foundations of Mathematics are buggy.  Yes, not even math is perfect and there is lots of room to contribute.</p>
+
+<p>I am still new to the concept of proving using programming, but I find this very exciting and can’t wait to learn more.  I can recommend reading <a href="https://mitpress.mit.edu/books/little-typer">The Little Typer</a>, which provides a great introduction to proving using dependent types to any programmer that has some experience with recursion.</p>
+
+<h2 id="find-inspiration-and-build-foundations">Find Inspiration and Build Foundations</h2>
+
+<p>It seems the thing that I have been trying to avoid at all costs, turned out to be the thing that I loved doing most of all. Don’t make the same mistake I made: Make the best of your mandatory Mathematics subjects or you will regret it later.</p>
+
+<p>If your educators or education material is not inspiring you to explore this vast area of knowledge, then please turn to the plethora of alternative online resource, like <a href="https://www.youtube.com/">YouTube</a>, <a href="https://www.coursera.org/">Coursera</a> or <a href="https://www.edx.org">Edx</a> or try to find a better book.  There is someone who can explain a difficult concept and inspire you - you just need to take the time to find them. You also need to practice using exercises, just like you practice programming.</p>
+
+<p>Other times I have struggled because I didn’t understand a previous fundamental concept that was required to understand the new material.  Don’t be ashamed to go back and fix your understanding.  In math, many things build on top of one another and without solid foundations it is very hard to make any progress.  It is almost always worth taking the time to go back and find an alternative resource on the subject and try to properly grasp that key concept, instead of moving forward and banging your head against a wall.</p>
+
+<p>I have a <a href="https://github.com/awalterschulze/learning/blob/master/Mathematics.md">todo list</a> that I am using to try to catch up to all the math that I missed.  As you will see, this only the start of a very long and delightful journey, but there are various other journeys you can take too.  Mathematics is a huge and exciting subject, where almost everything is connected.  It might be useful to take a quick look at the bigger picture:</p>
+
+<p><center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OmJ-4B-mS-Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center></p>
+
+<h2 id="thank-you">Thank you</h2>
+
+<ul>
+<li><a href="http://www.cs.sun.ac.za/~kroon/">Steve Kroon</a> for incredibly scrupulous proofreading.</li>
+<li><a href="https://github.com/ShadowBrandon199">Brandon Ashley</a> for inspiring this post.</li>
+<li><a href="https://github.com/paulcadman">Paul Cadman</a> for providing a mathematical perspective.</li>
+<li><a href="https://www.linkedin.com/in/liyuan-bi-668761121/">Liyuan Bi</a> for helping me add more examples.</li>
+</ul>
+
+<h2 id="referenced">Referenced</h2>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://awalterschulze.github.io/blog//tags/mathematics/">mathematics</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/category-theory/">category theory</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/abstract-algebra/">abstract algebra</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/proofs/">proofs</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/dependent-types/">dependent types</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/" data-toggle="tooltip" data-placement="top" title="For Sum Types: Golang&#39;s multiple return parameters are overrated">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:awalterschulze@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/awalterschulze" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/schulzewalter" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Walter Schulze
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.55.6</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://awalterschulze.github.io/blog/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://awalterschulze.github.io/blog/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

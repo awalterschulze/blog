@@ -3,26 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://awalterschulze.github.io/blog/post/neglecting-math-at-university/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://awalterschulze.github.io/blog/</loc>
-    <lastmod>2018-08-23T15:05:52+02:00</lastmod>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/post/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/abstract-algebra/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/category-theory/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/dependent-types/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/mathematics/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/proofs/</loc>
+    <lastmod>2019-07-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/</loc>
     <lastmod>2018-08-23T15:05:52+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/post/</loc>
-    <lastmod>2018-08-23T15:05:52+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/tags/</loc>
-    <lastmod>2018-08-23T15:05:52+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

@@ -8,10 +8,55 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Mon, 25 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>abstract algebra</title>
+      <link>https://awalterschulze.github.io/blog/tags/abstract-algebra/</link>
+      <pubDate>Sun, 07 Jul 2019 00:00:00 +0000</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/abstract-algebra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>category theory</title>
+      <link>https://awalterschulze.github.io/blog/tags/category-theory/</link>
+      <pubDate>Sun, 07 Jul 2019 00:00:00 +0000</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/category-theory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dependent types</title>
+      <link>https://awalterschulze.github.io/blog/tags/dependent-types/</link>
+      <pubDate>Sun, 07 Jul 2019 00:00:00 +0000</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/dependent-types/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mathematics</title>
+      <link>https://awalterschulze.github.io/blog/tags/mathematics/</link>
+      <pubDate>Sun, 07 Jul 2019 00:00:00 +0000</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/mathematics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>proofs</title>
+      <link>https://awalterschulze.github.io/blog/tags/proofs/</link>
+      <pubDate>Sun, 07 Jul 2019 00:00:00 +0000</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/proofs/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>algebraic data types</title>
