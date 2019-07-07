@@ -8,5 +8,8 @@ newpost:
 	echo "hugo new post/<postname>.md"
 
 update:
-	brew upgrade hugo
+	brew upgrade hugo || true
 	git submodule update --recursive --remote
+
+install:
+	brew install hugo

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
   <head>
+    
+
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>For Sum Types: Golang&#39;s multiple return parameters are overrated</title>
+  <title>For Sum Types: Golang&#39;s multiple return parameters are overrated - Adenoid Adventures</title>
   <meta property="og:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
   <meta name="twitter:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
   <meta name="description" content="In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
@@ -14,7 +16,88 @@ Analysis of multiple return parameters I wrote a little tool which does some ana
 Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source code. Thank you to the go/types library. The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:">
   <meta name="twitter:description" content="In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
 Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source …">
-  <meta name="author" content="Walter Schulze"/>
+  <meta name="author" content="Walter Schulze"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Adenoid Adventures",
+    
+    "url": "https:\/\/awalterschulze.github.io\/blog\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/awalterschulze.github.io\/blog\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/awalterschulze.github.io\/blog\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/awalterschulze.github.io\/blog\/post\/sum-types-over-multiple-returns\/",
+          "name": "For sum types golang\x27s multiple return parameters are overrated"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Walter Schulze"
+  },
+  "headline": "For Sum Types: Golang\x27s multiple return parameters are overrated",
+  "description" : "In this Go Experience Report I am going to make a case for sum types over multiple return parameters.\nAnalysis of multiple return parameters I wrote a little tool which does some analysis of Go source code. Thank you to the go\/types library. The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:",
+  "inLanguage" : "en",
+  "wordCount":  1374 ,
+  "datePublished" : "2017-09-25T00:00:00",
+  "dateModified" : "2017-09-25T00:00:00",
+  "image" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
+  "keywords" : [ "algebraic data types, golang, sum types, tuples" ],
+  "mainEntityOfPage" : "https:\/\/awalterschulze.github.io\/blog\/post\/sum-types-over-multiple-returns\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/awalterschulze.github.io\/blog\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
+<meta property="og:description" content="In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
+Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source code. Thank you to the go/types library. The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:">
+<meta property="og:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+<meta property="og:url" content="https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Adenoid Adventures" />
+
+  <meta name="twitter:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
+  <meta name="twitter:description" content="In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
+Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source …">
+  <meta name="twitter:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+  <meta name="twitter:card" content="summary" />
   <link href='https://awalterschulze.github.io/blog/favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="https://awalterschulze.github.io/blog/avatar.png" />
   <meta name="twitter:image" content="https://awalterschulze.github.io/blog/avatar.png" />
@@ -23,20 +106,67 @@ Analysis of multiple return parameters I wrote a little tool which does some ana
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Adenoid Adventures" />
 
-  <meta name="generator" content="Hugo 0.37.1" />
-  <link rel="canonical" href="https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/" />
-  <link rel="alternate" href="https://awalterschulze.github.io/blog/index.xml" type="application/rss+xml" title="Adenoid Adventures">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/codeblock.css" />
+  <meta name="generator" content="Hugo 0.55.6" />
+  <link rel="alternate" href="https://awalterschulze.github.io/blog/index.xml" type="application/rss+xml" title="Adenoid Adventures"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-106798280-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Adenoid Adventures" href="https://awalterschulze.github.io/blog/">
+            <img class="avatar-img" src="https://awalterschulze.github.io/blog/avatar.png" alt="Adenoid Adventures" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
 
+    
 
 
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -83,58 +213,12 @@ Analysis of multiple return parameters I wrote a little tool which does some ana
     </div>
 </div>
 
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-106798280-1', 'auto');
-ga('send', 'pageview');
-</script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
 
-</head>
-
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="main-navbar">
-      <ul class="nav navbar-nav navbar-right">
-        
-
-        
-
-        
-      </ul>
-    </div>
-
-    <div class="avatar-container">
-      <div class="avatar-img-border">
-        
-          <a title="Adenoid Adventures" href="https://awalterschulze.github.io/blog/">
-            <img class="avatar-img" src="https://awalterschulze.github.io/blog/avatar.png" alt="Adenoid Adventures" />
-          </a>
-        
-      </div>
-    </div>
-
-  </div>
-</nav>
-
-
-
-
-    
   
   
   
+
+
 
 
 
@@ -144,27 +228,33 @@ ga('send', 'pageview');
   <header class="header-section ">
     
     <div class="intro-header no-img">
-      
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-heading">
-              <h1>For Sum Types: Golang&#39;s multiple return parameters are overrated</h1>
-                
-                
-                  <span class="post-meta">
+              
+                <h1>For Sum Types: Golang&#39;s multiple return parameters are overrated</h1>
+              
+              
+              
+              
+                <span class="post-meta">
   
   
-  <i class="fa fa-calendar-o"></i>&nbsp;Posted on 2017 September 25
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2017 September 25
   
-    &nbsp;(Last modified on 2018 March 19)
+    &nbsp;(Last modified on 2018 August 23)
   
+  
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Walter Schulze
   
   
 </span>
 
 
-                
+              
             </div>
           </div>
         </div>
@@ -228,7 +318,7 @@ percentage of functions where multiple return parameters are really what we want
 
 <p>, which means that we would rather return a value <code>or</code> an error, than a value <code>and</code> an error.
 For example:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> Atoi(s <span style="color:#888;font-weight:bold">string</span>) (<span style="color:#888;font-weight:bold">int</span> | <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> <span style="color:#06b;font-weight:bold">Atoi</span>(s <span style="color:#888;font-weight:bold">string</span>) (<span style="color:#888;font-weight:bold">int</span> | <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <h2 id="tuples-are-not-first-class-citizens">Tuples are not first class citizens</h2>
 
 <p>In the <code>go/types</code> library I found that multiple return parameters are actually called <a href="https://golang.org/pkg/go/types/#Tuple">Tuples</a>, but these Tuples are not first class citizens. For example nested tuples are currently not supported:</p>
@@ -237,19 +327,19 @@ For example:</p>
 I worked around this by using a function:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span>() (<span style="color:#080;font-weight:bold">func</span>() (<span style="color:#888;font-weight:bold">string</span>, <span style="color:#888;font-weight:bold">error</span>), <span style="color:#888;font-weight:bold">error</span>)</code></pre></div>
 <p>, which is not ideal, since a function implies some computation. We currently also cannot directly pass multiple return parameters to a function:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> f() (<span style="color:#888;font-weight:bold">int</span>, <span style="color:#888;font-weight:bold">error</span>) {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> <span style="color:#06b;font-weight:bold">f</span>() (<span style="color:#888;font-weight:bold">int</span>, <span style="color:#888;font-weight:bold">error</span>) {
     <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#080;font-weight:bold">nil</span>
 }
 
-<span style="color:#080;font-weight:bold">func</span> g(i <span style="color:#888;font-weight:bold">int</span>, err <span style="color:#888;font-weight:bold">error</span>, j <span style="color:#888;font-weight:bold">int</span>) <span style="color:#888;font-weight:bold">int</span> {
+<span style="color:#080;font-weight:bold">func</span> <span style="color:#06b;font-weight:bold">g</span>(i <span style="color:#888;font-weight:bold">int</span>, err <span style="color:#888;font-weight:bold">error</span>, j <span style="color:#888;font-weight:bold">int</span>) <span style="color:#888;font-weight:bold">int</span> {
     <span style="color:#080;font-weight:bold">if</span> err != <span style="color:#080;font-weight:bold">nil</span> {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>
     }
     <span style="color:#080;font-weight:bold">return</span> i + j
 }
 
-<span style="color:#080;font-weight:bold">func</span> main() {
-    i := g(f(), <span style="color:#00d;font-weight:bold">1</span>)
+<span style="color:#080;font-weight:bold">func</span> <span style="color:#06b;font-weight:bold">main</span>() {
+    i := <span style="color:#06b;font-weight:bold">g</span>(<span style="color:#06b;font-weight:bold">f</span>(), <span style="color:#00d;font-weight:bold">1</span>)
     <span style="color:#038">println</span>(i)
 }</code></pre></div>
 <p>This gives us the following error:</p>
@@ -297,7 +387,7 @@ This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and av
 	And        *And
 ...</code></pre></div>
 <p>Here I simulate a sum type with a struct which has several fields (a product type) where only one field should be non nil.  This is not ideal in terms of type safety.  For instance when writing a function that processes a pattern, I have to do a nil check for each field:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> Nullable(refs ast.RefLookup, p *ast.Pattern) <span style="color:#888;font-weight:bold">bool</span> {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">func</span> <span style="color:#06b;font-weight:bold">Nullable</span>(refs ast.RefLookup, p *ast.Pattern) <span style="color:#888;font-weight:bold">bool</span> {
     <span style="color:#080;font-weight:bold">if</span> p.Empty != <span style="color:#080;font-weight:bold">nil</span> {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">true</span>
     } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.TreeNode != <span style="color:#080;font-weight:bold">nil</span> {
@@ -305,14 +395,14 @@ This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and av
     } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.LeafNode != <span style="color:#080;font-weight:bold">nil</span> {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#080;font-weight:bold">false</span>
     } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.Concat != <span style="color:#080;font-weight:bold">nil</span> {
-        <span style="color:#080;font-weight:bold">return</span> Nullable(refs, p.Concat.GetLeftPattern()) &amp;&amp; 
-            Nullable(refs, p.Concat.GetRightPattern())
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#06b;font-weight:bold">Nullable</span>(refs, p.Concat.<span style="color:#06b;font-weight:bold">GetLeftPattern</span>()) &amp;&amp; 
+            <span style="color:#06b;font-weight:bold">Nullable</span>(refs, p.Concat.<span style="color:#06b;font-weight:bold">GetRightPattern</span>())
     } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.Or != <span style="color:#080;font-weight:bold">nil</span> {
-        <span style="color:#080;font-weight:bold">return</span> Nullable(refs, p.Or.GetLeftPattern()) || 
-            Nullable(refs, p.Or.GetRightPattern())
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#06b;font-weight:bold">Nullable</span>(refs, p.Or.<span style="color:#06b;font-weight:bold">GetLeftPattern</span>()) || 
+            <span style="color:#06b;font-weight:bold">Nullable</span>(refs, p.Or.<span style="color:#06b;font-weight:bold">GetRightPattern</span>())
     } <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> p.And != <span style="color:#080;font-weight:bold">nil</span> {
-        <span style="color:#080;font-weight:bold">return</span> Nullable(refs, p.And.GetLeftPattern()) &amp;&amp; 
-            Nullable(refs, p.And.GetRightPattern())
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#06b;font-weight:bold">Nullable</span>(refs, p.And.<span style="color:#06b;font-weight:bold">GetLeftPattern</span>()) &amp;&amp; 
+            <span style="color:#06b;font-weight:bold">Nullable</span>(refs, p.And.<span style="color:#06b;font-weight:bold">GetRightPattern</span>())
     ...</code></pre></div>
 <p>This is fine, but when I add a new pattern the compiler is not going to tell me that I forgot to update one of these functions.</p>
 
@@ -335,7 +425,7 @@ This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and av
 }
 
 <span style="color:#080;font-weight:bold">type</span> isMyMessage_BoolOrInt <span style="color:#080;font-weight:bold">interface</span> {
-	isMyMessage_BoolOrInt()
+	<span style="color:#06b;font-weight:bold">isMyMessage_BoolOrInt</span>()
 }
 
 <span style="color:#080;font-weight:bold">type</span> MyMessage_BoolValue <span style="color:#080;font-weight:bold">struct</span> {
@@ -345,8 +435,8 @@ This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and av
 	Int32Value <span style="color:#888;font-weight:bold">int32</span>
 }
 
-<span style="color:#080;font-weight:bold">func</span> (*MyMessage_BoolValue) isMyMessage_BoolOrInt()        {}
-<span style="color:#080;font-weight:bold">func</span> (*MyMessage_Int32Value) isMyMessage_BoolOrInt()       {}</code></pre></div>
+<span style="color:#080;font-weight:bold">func</span> (*MyMessage_BoolValue) <span style="color:#06b;font-weight:bold">isMyMessage_BoolOrInt</span>()        {}
+<span style="color:#080;font-weight:bold">func</span> (*MyMessage_Int32Value) <span style="color:#06b;font-weight:bold">isMyMessage_BoolOrInt</span>()       {}</code></pre></div>
 <p>This implementation is far from ideal, in my and others&rsquo; opinion.
 In an alternative Protocol buffer library for Go, <a href="https://github.com/gogo/protobuf/issues/168">developers cannot even agree</a> on what they would really like to have as a <code>oneof</code> implementation in Go, because Go does not lend itself to sum types.</p>
 
@@ -362,7 +452,7 @@ In an alternative Protocol buffer library for Go, <a href="https://github.com/go
 
 <p>Another example is the <a href="https://golang.org/src/go/ast/walk.go?s=1311:1342#L41">Walk function</a>, which ends with a classic runtime error, where a compile error would have been more appropriate:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;font-weight:bold">default</span>:
-  <span style="color:#038">panic</span>(fmt.Sprintf(<span style="color:#d20;background-color:#fff0f0">&#34;ast.Walk: unexpected node type %T&#34;</span>, n))
+  <span style="color:#038">panic</span>(fmt.<span style="color:#06b;font-weight:bold">Sprintf</span>(<span style="color:#d20;background-color:#fff0f0">&#34;ast.Walk: unexpected node type %T&#34;</span>, n))
 }</code></pre></div>
 <h2 id="everyone-else-has-it">Everyone else has it</h2>
 
@@ -414,6 +504,24 @@ I do not know why we were forced to write error prone code when a solution has e
 <li><a href="https://plus.google.com/u/0/+WalterSchulzeA/posts/ADfFQ92CqjX">Go+</a></li>
 </ul>
 
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://awalterschulze.github.io/blog//tags/algebraic-data-types/">algebraic data types</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/golang/">golang</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/sum-types/">sum types</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/tuples/">tuples</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
       </article>
 
       
@@ -443,35 +551,33 @@ I do not know why we were forced to write error prone code when a solution has e
               <li>
                 <a href="mailto:awalterschulze@gmail.com" title="Email me">
                   <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
                   </span>
                 </a>
               </li>
               <li>
                 <a href="https://github.com/awalterschulze" title="GitHub">
                   <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                   </span>
                 </a>
               </li>
               <li>
                 <a href="https://linkedin.com/in/schulzewalter" title="LinkedIn">
                   <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
                   </span>
                 </a>
               </li>
           
           <li>
-            
-            <a href="https://awalterschulze.github.io/blog/index.xml" title="RSS">
-            
+            <a href="" title="RSS">
               <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
               </span>
             </a>
           </li>
@@ -484,8 +590,10 @@ I do not know why we were forced to write error prone code when a solution has e
             
           
 
-          &nbsp;&bull;&nbsp;
-          2018
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
 
           
             &nbsp;&bull;&nbsp;
@@ -494,22 +602,22 @@ I do not know why we were forced to write error prone code when a solution has e
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.37.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="http://gohugo.io">Hugo v0.55.6</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
           
         </p>
       </div>
     </div>
   </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://awalterschulze.github.io/blog/js/main.js"></script><script> renderMathInElement(document.body); </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
-<script src="https://awalterschulze.github.io/blog/js/load-photoswipe.js"></script>
+
+<script src="https://awalterschulze.github.io/blog/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://awalterschulze.github.io/blog/js/load-photoswipe.js"></script>
+
+
+
 
 
 

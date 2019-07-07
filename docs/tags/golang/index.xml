@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Golang on Adenoid Adventures</title>
+    <title>golang on Adenoid Adventures</title>
     <link>https://awalterschulze.github.io/blog/tags/golang/</link>
-    <description>Recent content in Golang on Adenoid Adventures</description>
+    <description>Recent content in golang on Adenoid Adventures</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
