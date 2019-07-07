@@ -177,7 +177,7 @@ If your educators or education material is not inspiring you to explore this vas
 
 Other times I have struggled because I didn’t understand a previous fundamental concept that was required to understand the new material.  Don’t be ashamed to go back and fix your understanding.  In math, many things build on top of one another and without solid foundations it is very hard to make any progress.  It is almost always worth taking the time to go back and find an alternative resource on the subject and try to properly grasp that key concept, instead of moving forward and banging your head against a wall.
 
-I have a [todo list](https://github.com/awalterschulze/learning/blob/master/Mathematics.md) that I am using to try to catch up to all the math that I missed.  As you will see, this only the start of a very long and delightful journey, but there are various other journeys you can take too.  Mathematics is a huge and exciting subject, where almost everything is connected.  It might be useful to take a quick look at the bigger picture:
+I have a [todo list](https://github.com/awalterschulze/learning/blob/master/Mathematics.md) that I am using to try to catch up to all the math that I missed.  As you will see, this is only the start of a very long and delightful journey.  Mathematics is a huge and exciting subject, where almost everything is connected.  It might be useful to take a look at the bigger picture:
 
 <center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OmJ-4B-mS-Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
