@@ -10,7 +10,7 @@ Math matters both more and less than you think...
 
 Yes, you can ignore math and be a highly paid professional programmer. Programming is a wide enough field that you can choose which areas you want to focus on -- some of which do not require math -- and still be successful.  On the other hand:
 
-   1. Mathematics is **the** tool used to solve spesialized problems, and
+   1. Mathematics is **the** tool used to solve specialized problems, and
    2. **Programming is doing mathematics**.  
 
 I would like to give you some examples for both, with the hope that this will motivate you to give math a chance to grow on you. For this I have chosen some short (average 10 minutes in length) videos that should excite you and explain the concepts better than I can.
