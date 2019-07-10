@@ -9,7 +9,7 @@ tags: ["monads", "golang", "generator"]
 Monads are all about function composition and hiding the tedious part of it.
 
 After 7 years of being a Go programmer, typing `if err != nil` can become quite tedious.
-Everytime I type `if err != nil` I thank the Gophers for a readable language with great tooling, but at the same time I curse them for making me feel like I'm Bart Simpson in detention.
+Everytime I type `if err != nil` I thank the Gophers for a readable language with great tooling, but at the same time I curse them for making me feel like I am Bart Simpson in detention.
 
 ![Missing image of Bart Simpson writing if err != nil on the detention chalkboard](https://awalterschulze.github.io/blog/monads-for-goprogrammers/bartiferr.png "error detention")
 
