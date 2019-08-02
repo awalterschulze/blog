@@ -192,4 +192,5 @@ I have a [todo list](https://github.com/awalterschulze/learning/blob/master/Math
 
 ## Referenced
 
-
+  - [Hacker News](https://news.ycombinator.com/item?id=20563663) - 234 points
+  - [r/learnprogramming](https://www.reddit.com/r/learnprogramming/comments/cjg8th/a_programmers_regret_neglecting_math_at_university/) - 1386 up votes
