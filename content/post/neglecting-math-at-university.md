@@ -190,6 +190,11 @@ I have a [todo list](https://github.com/awalterschulze/learning/blob/master/Math
   - [Paul Cadman](https://github.com/paulcadman) for providing a mathematical perspective.
   - [Liyuan Bi](https://www.linkedin.com/in/liyuan-bi-668761121/) for helping me add more examples.
 
+## Translations
+
+  - [Chinese](https://mp.weixin.qq.com/s/VAivA3uVWYkrk-nQ7lFp1A)
+  - [Arabic](https://elmestoo.wordpress.com/2019/10/30/%d8%ad%d8%b3%d8%b1%d8%a9-%d9%85%d8%a8%d8%b1%d9%85%d8%ac-%d8%a5%d9%87%d9%85%d8%a7%d9%84%d9%8a-%d9%84%d9%84%d8%b1%d9%8a%d8%a7%d8%b6%d9%8a%d8%a7%d8%aa-%d8%a3%d9%8a%d8%a7%d9%85-%d8%a7%d9%84%d8%ac%d8%a7/)
+
 ## Referenced
 
   - [Hacker News](https://news.ycombinator.com/item?id=20563663) - 234 points
