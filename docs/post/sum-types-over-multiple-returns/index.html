@@ -8,14 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <title>For Sum Types: Golang&#39;s multiple return parameters are overrated - Adenoid Adventures</title>
-  <meta property="og:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
-  <meta name="twitter:title" content="For Sum Types: Golang&#39;s multiple return parameters are overrated" />
   <meta name="description" content="In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
 Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source code. Thank you to the go/types library. The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:">
-  <meta property="og:description" content="In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
-Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source code. Thank you to the go/types library. The tool simply counts the number of times multiple return parameters are used. I ran this tool over the standard library and these are the results:">
-  <meta name="twitter:description" content="In this Go Experience Report I am going to make a case for sum types over multiple return parameters.
-Analysis of multiple return parameters I wrote a little tool which does some analysis of Go source …">
   <meta name="author" content="Walter Schulze"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -101,16 +95,7 @@ Analysis of multiple return parameters I wrote a little tool which does some ana
   <meta name="twitter:site" content="@awalterschulze" />
   <meta name="twitter:creator" content="@awalterschulze" />
   <link href='https://awalterschulze.github.io/blog/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta property="og:image" content="https://awalterschulze.github.io/blog/avatar.png" />
-  <meta name="twitter:image" content="https://awalterschulze.github.io/blog/avatar.png" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@awalterschulze" />
-  <meta name="twitter:creator" content="@awalterschulze" />
-  <meta property="og:url" content="https://awalterschulze.github.io/blog/post/sum-types-over-multiple-returns/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Adenoid Adventures" />
-
-  <meta name="generator" content="Hugo 0.55.6" />
+  <meta name="generator" content="Hugo 0.59.1" />
   <link rel="alternate" href="https://awalterschulze.github.io/blog/index.xml" type="application/rss+xml" title="Adenoid Adventures"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -252,7 +237,9 @@ if (!doNotTrack) {
   
   
   
-    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Walter Schulze
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Walter Schulze
+    
   
   
 </span>
@@ -373,7 +360,7 @@ It can have all the values of the pointer type <code>plus</code> one for null.</
 
 <p>Elm, Haskell, etc. has a Maybe type, which is used to represent these types of values.
 The same as a pointer, it can represent <code>Just</code> the value or <code>Nothing</code> for null:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell"><span style="color:#080;font-weight:bold">data</span> <span style="color:#888;font-weight:bold">Maybe</span> <span style="color:#06b;font-weight:bold">a</span> <span style="color:#080">=</span> <span style="color:#888;font-weight:bold">Just</span> <span style="color:#06b;font-weight:bold">a</span> | <span style="color:#888;font-weight:bold">Nothing</span></code></pre></div>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-haskell" data-lang="haskell"><span style="color:#080;font-weight:bold">data</span> <span style="color:#888;font-weight:bold">Maybe</span> a <span style="color:#080">=</span> <span style="color:#888;font-weight:bold">Just</span> a | <span style="color:#888;font-weight:bold">Nothing</span></code></pre></div>
 <p>These days even Java has something similar called <code>Optional</code>.
 This enables the compiler to enforce you to do a &ldquo;null&rdquo; check and avoid null pointer exceptions.</p>
 
@@ -550,7 +537,8 @@ I do not know why we were forced to write error prone code when a solution has e
   </div>
 </div>
 
-    <footer>
+      
+<footer>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -618,8 +606,8 @@ I do not know why we were forced to write error prone code when a solution has e
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.55.6</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
-          
+          <a href="https://gohugo.io">Hugo v0.59.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          &nbsp;&bull;&nbsp;[<a href="false1a3cdf0ad85d8074156fc38db266fca7af7b00f3">1a3cdf0a</a>]
         </p>
       </div>
     </div>
@@ -640,6 +628,7 @@ I do not know why we were forced to write error prone code when a solution has e
 
 
 
+    
   </body>
 </html>
 

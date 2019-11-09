@@ -1,58 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
     <loc>https://awalterschulze.github.io/blog/post/neglecting-math-at-university/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/post/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/tags/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/abstract-algebra/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/</loc>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/category-theory/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/dependent-types/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/mathematics/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/post/</loc>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/proofs/</loc>
-    <lastmod>2019-08-02T20:28:34+01:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/</loc>
+    <lastmod>2019-11-09T20:14:56+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/algebraic-data-types/</loc>
+    <lastmod>2018-08-23T15:05:52+02:00</lastmod>
   </url>
   
   <url>
@@ -61,27 +58,28 @@
   </url>
   
   <url>
-    <loc>https://awalterschulze.github.io/blog/tags/algebraic-data-types/</loc>
-    <lastmod>2018-08-23T15:05:52+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://awalterschulze.github.io/blog/tags/golang/</loc>
     <lastmod>2019-07-10T20:25:51+01:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/sum-types/</loc>
     <lastmod>2018-08-23T15:05:52+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/tuples/</loc>
     <lastmod>2018-08-23T15:05:52+02:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/generator/</loc>
+    <lastmod>2019-07-10T20:25:51+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/monads/</loc>
+    <lastmod>2019-07-10T20:25:51+01:00</lastmod>
   </url>
   
   <url>
@@ -90,20 +88,7 @@
   </url>
   
   <url>
-    <loc>https://awalterschulze.github.io/blog/tags/generator/</loc>
-    <lastmod>2019-07-10T20:25:51+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/tags/monads/</loc>
-    <lastmod>2019-07-10T20:25:51+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://awalterschulze.github.io/blog/categories/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>
