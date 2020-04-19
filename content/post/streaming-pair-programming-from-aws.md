@@ -1,5 +1,5 @@
 ---
-title: "Streaming Pair Programming from Aws"
+title: "Streaming Pair Programming from AWS"
 date: 2020-04-19T09:56:08+01:00
 draft: true
 tags: ["twitch", "aws", "teamviewer", "pair programming", "zoom", "coq", "vscode"]
@@ -154,23 +154,79 @@ In the end Teamviewer was more user friendly for me and solved the sound problem
     + Click `Ok`.
     This makes no sense to me, but after I did this, it was possible for me to use `Ctrl` after I logged into my user account, via Teamviewer.
 
-## TODO, still to write up
+## Install virtual sound card
 
-- OBS required being installed by Administrator
-- Then I needed to create an image, so that I can stop and start the server and not lose too much state.  This works.
+On the windows server:
 
-Idea is that output of zoom goes to this virtual sound card
-And then OBS captures the input from this card and streams it to twitch.
+  - Download [VB-Audio Software's VB-Cable](https://www.vb-audio.com/Cable/). We don't need the VB-Cable A+B, etc. We only need the `VBCABLE_Driver_Pack43.zip`.
+  - Unzip and run `VBCABLE_Setup_x64`.
+  - In Teamviewer, go to your sound card settings, by right clicking in the bottom right corner on the little speaker and selecting `Playback devices`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LittleSpeaker.png "LittleSpeaker")
+  - Under `Playback` you should see `Cable Input` by `VB-Audio Virtual Cable`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Sound.png "Sound")
+    Please ignore the other playback devices, I tried several routes before realizing remote desktop was incompatible with virtual sound cards and I haven't taken the time to clean up the other virtual sound cards, I ended up not using or even evaluating.
+  - The virtual sound card is now installed, we are going to use it to thread the zoom output sound into OBS input sound and stream this to Twitch.
 
-- Another improvement would be if multiple of us can log in and share a desktop.  This would then be truly collaborative.
+## Install and setup Zoom or another Video Call program
 
-we need to route zoom audio to obs so it can be streamed 
+I chose [Zoom](https://zoom.us/), because:
 
-live share vscode for sharing collaborative editing
-https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-pack
+  - Zoom allows screen sharing and doesn't turn off your webcam to do so.  Screen sharing was important for pair programming, but could be superseded by more Teamviewer usage in future.
+  - Zoom's window in which participants are viewed is the prettiest to put in a corner of your screen and has `always on top` enabled automatically.
 
-autohotkey
-https://autohotkey.com/board/topic/60675-osx-style-command-keys-in-windows/
+I might reconsider this choice in future, since Zoom calls over 40 minutes are not free and removing this from the setup would moderately reduce the overall cost of this setup.
 
-OBS
-https://www.freecodecamp.org/news/lessons-from-my-first-year-of-live-coding-on-twitch-41a32e2f41c1/
+Whichever Video Call program you choose, it is important to setup the sound output.  Here is how I did it for Zoom, but you should easily be able to reproduce this with any Video Calling program.
+
+  - Install Zoom on your windows server and create a new account.  You are going to need two accounts for Zoom. One for the windows server and one for your home computer.  Only the account that will be hosting the meetings will need to be a paid account, if you are planning on pair programming longer than 40 minutes at a time, like me.
+  - Go to Zoom settings and then `Audio`.  Set the Speaker to `CABLE Input (VB-Audio Virtual Cable)`, the Microphone doesn't matter as we won't be using the server's microphone.
+  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ZoomAudio.png "ZoomAudio")
+
+Now Zoom will send its output, which should include everyone on the call's audio to `CABLE Input..`, which we are going to capture using `OBS`.
+
+## Install and setup OBS
+
+[OBS Studio](https://obsproject.com/) is used to Stream to Twitch, Youtube, etc. Now is probably a good time to skim through a [better blog](https://www.freecodecamp.org/news/lessons-from-my-first-year-of-live-coding-on-twitch-41a32e2f41c1/) to learn a bit more about OBS and how to use it.
+There are also many videos that explains how to setup OBS.  We will not be going into that.  We will only be touching on the specific OBS configuration for this setup, namely how to route the audio and how to share our screen using the multiple monitors of this AWS Server.
+
+  - Log into your windows server as Administrator. Installing OBS requires being logged in as Administrator, so I installed it using Remote Desktop.
+  - Download and install [OBS Studio](https://obsproject.com/) and setup connection to Twitch.
+  - After installation, we can log back into our user, using Teamviewer.
+  - Go to `View` in the top menu bar, under `Active monitor`, click `Show all monitors`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ShowAllMonitors.png "ShowAllMonitors")
+  - Open `OBS Studio` and drag it to the smaller second monitor.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DualMonitors.png "DualMonitors").  Your OBS will be less interesting than mine, since mine is already setup. OBS will be running on the small `monitor 2` and we will be using `monitor 1` for everything we want to stream to Twitch.
+  - We can capture the sound from zoom that we have routed to `CABLE Input (VB-Audio Virtual Cable)` in OBS, by first creating a Scene. Click the `+` button in the `Scene` panel.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Scene.png "Scene")
+  - Select our new scene and click the `+` button under `Sources` and select `Audio Output Capture`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AudioOutputCapture.png "AudioOutputCapture")
+  - Select `Create New`, type a name and click `OK`.
+  - Select the `Device` from the dropdown: `CABLE Input (VB-Audio Virtual Cable)` and click `OK`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Device.png "Device")
+  - You should now be able to test the sound, by creating a Zoom call between your home computer and the windows server and see the green bar in the Audio Mixer move, when you talk.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Mixer.png "Mixer")
+  - We can capture `monitor 1`, by adding another Source.  Click the `+` under `Sources` and select `Display Capture`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DisplayCapture.png 
+    "DisplayCapture")
+  - Select `Create New`, type a name and click `OK`.
+  - Select the `Device` from the drop down `Display 1...` and click `OK`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DisplayDevice.png 
+    "DisplayDevice")
+  - You can now test the sound and display by clicking the `Start Recording` button in OBS, creating a zoom call and watching and listening to yourself speak, by playing the recorded file.
+    
+## Install and setup IDE
+
+This setup is specific to VSCode and Coq, but you can install any IDE for any programming language you want.
+
+  - Install [VSCode](https://code.visualstudio.com/), [Coq](https://coq.inria.fr/) and [VSCoq](https://github.com/coq-community/vscoq)
+  - Install [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) if you want to do collaborative editing, instead of just having your pair programmers, be backseat coders.  Possibly a better way to do this is with multiple Teamviewer logins, but we still have to test that.
+
+## Create an Image
+
+Before you stop the server, you need to create an image, so that you can stop and start the server and not lose all your setup work.
+
+## Remapping keys
+
+Autohotkey is a product I am trying to out to remap the mac shortcuts I am used to into windows keys.  This [script](https://autohotkey.com/board/topic/60675-osx-style-command-keys-in-windows/) seems like a good start.
+
+
