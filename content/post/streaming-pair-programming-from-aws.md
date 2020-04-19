@@ -1,0 +1,116 @@
+---
+title: "Streaming Pair Programming from Aws"
+date: 2020-04-19T09:56:08+01:00
+draft: true
+tags: ["twitch", "aws", "teamviewer", "pair programming", "zoom", "coq", "vscode"]
+---
+
+## Why?
+
+  - **Why Streaming?** One of the advantages of living in a big city, like London, is not just that you don't have to own a car, but it makes it easier to find people, who are interested in learning the same thing you are and who are at a similar level in their learning experience on this topic. People you can form a study group with. I remember that working in, Stellenbosch, South Africa, I had to drive an hour and a half, one way, to Scarborough, Cape Town to find a group of about ten people interested in functional programming.  
+<center>
+<iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1757916.0067339428!2d17.632468364941275!3d-34.08608619022217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x1dcdb2f75188e2a5%3A0x7009aa00dee36be2!2sStellenbosch%2C%20South%20Africa!3m2!1d-33.9321045!2d18.860152!4m5!1s0x1dcc14ff23836223%3A0xc728558c5dcf53ac!2sZensa%20Lodge%2C%20534%20Egret%20St%2C%20Scarborough%2C%207975%2C%20South%20Africa!3m2!1d-34.199730699999996!2d18.375520599999998!5e1!3m2!1sen!2suk!4v1587292763786!5m2!1sen!2suk&zoom=20" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+</center> 
+  Things have since changed with regards to functional programming at Stellenbosch University, where Haskell is now being taught in a popular choice module, but what if I wanted to study Coq programming next.  What if there was a way to share some of the London study group with others?  First idea, Twitch seems to be a low expectations, low effort, somewhat popular way for sharing your programming process.
+
+  - **Why Pair programming?** Pair programming on a Coq project, where I am still learning the language, libraries and not to mention the underlying theory, has been more educational to me than I could have imagined.  If I was to share something, the pair programming had to be part of it, as this was where I was getting most value and I don't want to lose that.
+
+  - **Why AWS?** tl;dr more CPU! A friend from the study group and I started pair programming some Saturdays, this evolved into a video call, where it was easy to include the whole study group. Video calling in general is not, lets say CPU friendly and Zoom is no exception.  If you are then also running OBS (the streaming software), you have two programs both competing for 250% of your 400% CPU.  At some point typing in VSCode felt like I was typing in a remote terminal over a dial up modem.
+
+What if we could rent a beast of a machine on AWS and run everything there, the VSCodes, the Zooms and the OBSs.  They would then end up using only 25% CPU, including Teamviewer.
+
+## Setup
+
+I thought streaming pair programming was going to be easy. 
+I thought it would be as easy as Ted's setup for [remote pair programming on twitch with zoom](https://www.tedmyoung.com/remote-pair-programming-on-twitch-with-zoom/).  All running on my local machine.
+I never thought I would run out of CPU and need an AWS, but here we are and here is my longer than expected setup process, which I almost gave up when I was 90% done.  After this things are running smoothly, but there are several loop holes to jump through and I thought I'd better document it, in case I need to reproduce it, but also for others who might be interested.
+
+1. Find an appropriate AWS machine.
+2. Ask amazon to lift CPU limit.
+3. Update security group to enable remote desktop
+4. Log in using remote desktop
+5. Update internet explorer security
+6. Install and setup Teamviewer
+7. Install virtual sound card
+8. Install and setup Zoom
+9. Install and setup OBS
+10. Install and setup IDE
+
+### Find an appropriate AWS machine
+
+I found the
+[Microsoft Windows Server 2016 with NVIDIA GRID Driver](https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Microsoft-Windows-Server-2016-/B073WHLGMC) machine. It is a `g3.4xlarge`, which has 16 cores.
+This setup with 16 cores ended up running at 25% CPU, so I wouldn't recommend a 4 core machine.  I chose windows over linux, because this is "the year of the linux desktop".  If you are new to AWS, you won't be able to launch this yet and you will need to increase your CPU limit, see instructions in the next section.
+
+This server looks expensive and it is not cheap, but given you are only paying for it when it is running, if you are disciplined in stopping the server, when you are not using it, it can be affordable, depending on how much you intend to use it.  Now is a good time to make that calculation and decide whether you can live with the hourly rate, which is about $2 per hour, at the time of writing.
+
+### Ask Amazon to lift CPU Limit
+
+  - Create an AWS account of log into your existing one by going to your [AWS Console](https://console.aws.amazon.com/)
+  - At the top, click `Services` and from the menu under `Compute` select [EC2](https://console.aws.amazon.com/ec2)
+  - On the side menu, click `Limits`
+  - Search for CPU and select `Running On-Demand All G instances`, this is if you also chose a machine that starts with `g`, like the `g3.4xlarge`.  If you are new to AWS, like me, you will need to increase your `Current Limit` of `0` to `16` to be able to launch the chosen machine.  If your limit is already high enough you can skip this section.
+  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSLimits.png "Limits")
+  - Click `Request limit increase` in the top corner.
+  - A form will open:
+    + Make sure `EC2 Instances` is selected for `Limit type`
+  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseClassification.png "CaseClassification")
+    + Select your Region, `All G instances` if you are requesting a machine that starts with `g`, like the `g3.4xlarge`.  Choose a `New limit value` of `16` if that is appropriate for your selected machine, like the `g3.4xlarge`.
+  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRequests.png "Requests")
+    + Finally describe your use case in the `Use case description` box.
+  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseDescription.png "CaseDescription")
+  - And now you will have to wait for amazon's human reviewers to look at the case and decide whether to increase the limits.  I waited about 3 days.
+  - Then you should be able to launch in the instance.
+
+## Update security group to enable remote desktop
+
+AWS Windows servers don't let you log into them using remote desktop by default.
+You have to create a new security group or update the default security group to allow for RDP traffic.
+
+  - go to [AWS Console](https://console.aws.amazon.com/)
+  - go to [EC2](https://console.aws.amazon.com/ec2)
+  - On the left, under `Network & Security`, find `Security Groups` and click on it
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/SecurityGroups.png "SecurityGroups")
+  - `Create security group` or `Edit Inbound Rules` of an existing group. To edit an existing group, for example the `default` Security group: Select it, click on `Actions` and then `Edit Inbound Rules`.
+  -  Next you will need to add two new rules, using the `Add Rule` button:
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRDP.png "AWS RDP Rules")
+    `Type: RDP, Source: 0.0.0.0/0` and `Type: RDP, Source: ::/0`
+  - Finally click `Save rules`. Now you should be able to use remote desktop to log into your server.
+
+## Launch and log into server
+
+  - If you haven't yet, now is the time to launch your instance
+    [Microsoft Windows Server 2016 with NVIDIA GRID Driver](https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Microsoft-Windows-Server-2016-/B073WHLGMC)
+    + click on `Continue to Subscribe`.  This doesn't cost anything for this specific instance, since it is an instance marketed by AWS themselves, but other instances on AWS Marketplace, might cost a subscription fee.
+    + click on `Continue to Configuration`
+    + pick your specific region, we chose `EU (Ireland)`.
+    + check that the `Software Pricing` is `$0/hr` if you haven't chosen a different machine. `Infrastructure Pricing` should have a real cost associated with it.
+    + click on `Continue to Launch`
+  - go to [EC2](https://console.aws.amazon.com/ec2)
+  - click on Instances on the left side menu.
+  - Now the machine might already be started, or initializing, but if is not, then right click on the instance, select `Instance State` and then `Start`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Instances.png "Instances")
+
+## TODO, still to write up
+
+- Then I need to lift Internet Explorer security in Server ... so I could download chrome
+- OBS required being installed by Administrator
+- Then I needed to create an image, so that I can stop and start the server and not lose too much state.  This works.
+
+Idea is that output of zoom goes to this virtual sound card
+And then OBS captures the input from this card and streams it to twitch.
+
+- Another improvement would be if multiple of us can log in and share a desktop.  This would then be truly collaborative.
+
+Apparently I have to connect with VNC, since Remote Desktop cannot handle virtual audio cards
+Remote Desktop overrides audio to remote audio which VNC apparently doesn’t do.
+we need to route zoom audio to obs so it can be streamed 
+
+live share vscode for sharing collaborative editing
+https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-pack
+
+autohotkey
+https://autohotkey.com/board/topic/60675-osx-style-command-keys-in-windows/
+
+OBS
+https://www.freecodecamp.org/news/lessons-from-my-first-year-of-live-coding-on-twitch-41a32e2f41c1/
