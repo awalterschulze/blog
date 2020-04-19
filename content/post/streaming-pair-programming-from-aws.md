@@ -10,7 +10,7 @@ tags: ["twitch", "aws", "teamviewer", "pair programming", "zoom", "coq", "vscode
   - **Why Streaming?** One of the advantages of living in a big city, like London, is not just that you don't have to own a car, but it makes it easier to find people, who are interested in learning the same thing you are and who are at a similar level in their learning experience on this topic. People you can form a study group with. I remember that working in, Stellenbosch, South Africa, I had to drive an hour and a half, one way, to Scarborough, Cape Town to find a group of about ten people interested in functional programming.  
 <center>
 <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1757916.0067339428!2d17.632468364941275!3d-34.08608619022217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x1dcdb2f75188e2a5%3A0x7009aa00dee36be2!2sStellenbosch%2C%20South%20Africa!3m2!1d-33.9321045!2d18.860152!4m5!1s0x1dcc14ff23836223%3A0xc728558c5dcf53ac!2sZensa%20Lodge%2C%20534%20Egret%20St%2C%20Scarborough%2C%207975%2C%20South%20Africa!3m2!1d-34.199730699999996!2d18.375520599999998!5e1!3m2!1sen!2suk!4v1587292763786!5m2!1sen!2suk&zoom=20" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-</center> 
+</center>
   Things have since changed with regards to functional programming at Stellenbosch University, where Haskell is now being taught in a popular choice module, but what if I wanted to study Coq programming next.  What if there was a way to share some of the London study group with others?  First idea, Twitch seems to be a low expectations, low effort, somewhat popular way for sharing your programming process.
 
   - **Why Pair programming?** Pair programming on a Coq project, where I am still learning the language, libraries and not to mention the underlying theory, has been more educational to me than I could have imagined.  If I was to share something, the pair programming had to be part of it, as this was where I was getting most value and I don't want to lose that.
@@ -35,6 +35,8 @@ I never thought I would run out of CPU and need an AWS, but here we are and here
 8. Install and setup Zoom
 9. Install and setup OBS
 10. Install and setup IDE
+
+Disclaimer: My home computer is a mac, so some of this setup is geared towards catering for a osx, but even more significantly since I chose a windows machine as my AWS server, a lot of this is specific to having windows as your remote machine.
 
 ### Find an appropriate AWS machine
 
@@ -69,7 +71,7 @@ You have to create a new security group or update the default security group to 
 
   - go to [AWS Console](https://console.aws.amazon.com/)
   - go to [EC2](https://console.aws.amazon.com/ec2)
-  - On the left, under `Network & Security`, find `Security Groups` and click on it
+  - On the left, under `Network & Security`, click on `Security Groups`.
     ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/SecurityGroups.png "SecurityGroups")
   - `Create security group` or `Edit Inbound Rules` of an existing group. To edit an existing group, for example the `default` Security group: Select it, click on `Actions` and then `Edit Inbound Rules`.
   -  Next you will need to add two new rules, using the `Add Rule` button:
@@ -77,9 +79,10 @@ You have to create a new security group or update the default security group to 
     `Type: RDP, Source: 0.0.0.0/0` and `Type: RDP, Source: ::/0`
   - Finally click `Save rules`. Now you should be able to use remote desktop to log into your server.
 
-## Launch and log into server
+## Launch and log into server using Remote Desktop
 
-  - If you haven't yet, now is the time to launch your instance
+  - If you are on a mac, you will need to install [remote desktop](https://apps.apple.com/us/app/microsoft-remote-desktop-10/id1295203466?mt=12).
+  - Now is the time launch your instance
     [Microsoft Windows Server 2016 with NVIDIA GRID Driver](https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Microsoft-Windows-Server-2016-/B073WHLGMC)
     + click on `Continue to Subscribe`.  This doesn't cost anything for this specific instance, since it is an instance marketed by AWS themselves, but other instances on AWS Marketplace, might cost a subscription fee.
     + click on `Continue to Configuration`
@@ -90,10 +93,69 @@ You have to create a new security group or update the default security group to 
   - click on Instances on the left side menu.
   - Now the machine might already be started, or initializing, but if is not, then right click on the instance, select `Instance State` and then `Start`.
     ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Instances.png "Instances")
+  - Wait for `Status Checks` to turn from `Initializing` to `2/2 checks passed`.
+  - Right click on your machine and click `Connect`
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Connect.png "Connect")
+  - Click on `Download Remote Desktop File`
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DownloadRemoteDesktopFile.png "DownloadRemoteDesktopFile")
+  - You will also need to `Get Password`, but that I will leave up to you.
+  - Now open the downloaded remote desktop file, using remote desktop.
+  - You will need to paste in the password you got from `Get Password`.
+  - Well done you can now remotely control the AWS windows server, from your home computer, using remote desktop.
+
+## Update Internet Explorer security
+
+This first problem you will encounter on your windows server, is Internet Explorer has been severely limited, via a security setting.  Basically, you won't even be able to download a real browser. Lets fix that.
+
+On your windows server, via Remote Desktop:
+
+  - Open `Server Manager`
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ServerManager.png "ServerManager")
+  - In the left panel, Select `Local Server`
+  - In the top panel with heading `Properties`, in the right middle of the window, you will see `IE Enhanced Security Configuration`.  Mine already, says `Off`, but yours will say `On`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/IEEnhanced.png "IEEnhanced")
+  - Click on `On` and select `Off` for both users and Administrator.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/InternetExplorerEnhanced.png "InternetExplorerEnhanced")
+  - Click `Ok`.
+  - Close `Server Manager`
+  - Open Internet Explorer, it should now show that `Caution: Internet Explorer Enhanced Security Configuration is Enabled`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/InternetSecurityNotEnabled.png "InternetSecurityNotEnabled")
+  - Download and install your browser of choice.
+
+## Install Teamviewer
+
+Why do we need Teamviewer, when Remote Desktop is working so well?  It all comes down to sound.  A server doesn't have a sound card, but we want to stream the sound from our video call to Twitch.  We will need to install a virtual sound card and this doesn't play nicely with Remote Desktop.  
+I also chose Teamviewer over VNC, because we will need cloud connect for a user friendly experience and this is free for personal use on Teamviewer, where I found with VNC servers that it looked like I needed to pay.  I could be wrong.
+In the end Teamviewer was more user friendly for me and solved the sound problem.
+
+  - Install [Teamviewer](https://www.teamviewer.com/) on your mac and windows server.
+  - On the windows server, Sign in or create a Teamviewer account and sign in.
+  - On the windows server, Tick `Start Teamviewer with Windows` and `Easy access for ... is granted`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/GrantEasyAccess.png "GrantEasyAccess")
+  - On your mac, sign into your Teamviewer account.
+  - You should now see the machine under `Computer & Contacts`.
+  - Double Click on the machine to connect.
+  - You should get a notification about `multiple monitors`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/MultipleMonitors.png "MultipleMonitors"). This server has two virtual monitors, which is going to be very useful for streaming.  Click `Ok`.
+  - You should now see a locked screen, that requires `Ctrl+Alt+Delete` to unlock.  Click on `Actions` in the top menu bar and then select `Ctrl+Alt+Delete`.
+  - You should now be able to log into your Administrator account.  You might have a problem here, which is copy and paste is not working, at least it didn't work for me.
+  - Click on `Actions` again in the top menu bar and then select `Send key combinations`
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/KeyCombinations.png "KeyCombinations"). Try again. You might still have a problem, just like me.  You are not alone.  We are going to try and fix it, at least I did fix it somewhat.  I never got pasting into the password textbox to work, but I did get `Ctrl` key combinations to start working.
+  - Now is as good a time as any to create a user account.  If you are unable to log into Teamviewer, yet.  Go to remote desktop and create a user account, with a password, that you can remember and type without copying and pasting.  You can keep your Administrator account secure and only ever need to use it with Remote Desktop.  Only your user account will need to work with Teamviewer and might need a password that you can actually remember and type out.
+  - Now you can use Teamviewer to log into your user account.
+  - One more thing I would encourage you to Configure is to Optimize for speed over quality of image.  If you are planning to code, then typing is a big part of that and typing feedback can be very important. Go to Teamviewer's `Preferences`. Click on `Remote Control` and from the `Quality` dropdown, select `Optimize speed`.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/OptimizeSpeed.png "OptimizeSpeed")
+  - If you have trouble sending `Ctrl` through Teamviewer from your mac, like me.  Here is something that worked for me and I don't understand why.
+    + On your mac go to Keyboard Settings.
+      ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Keyboard.png "Keyboard")
+    + Click on `Modifier Keys...`
+    + Set `Control Key` to `Command`.
+      ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ModifierKeys.png "ModifierKeys")
+    + Click `Ok`.
+    This makes no sense to me, but after I did this, it was possible for me to use `Ctrl` after I logged into my user account, via Teamviewer.
 
 ## TODO, still to write up
 
-- Then I need to lift Internet Explorer security in Server ... so I could download chrome
 - OBS required being installed by Administrator
 - Then I needed to create an image, so that I can stop and start the server and not lose too much state.  This works.
 
@@ -102,8 +164,6 @@ And then OBS captures the input from this card and streams it to twitch.
 
 - Another improvement would be if multiple of us can log in and share a desktop.  This would then be truly collaborative.
 
-Apparently I have to connect with VNC, since Remote Desktop cannot handle virtual audio cards
-Remote Desktop overrides audio to remote audio which VNC apparently doesn’t do.
 we need to route zoom audio to obs so it can be streamed 
 
 live share vscode for sharing collaborative editing
