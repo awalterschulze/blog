@@ -7,7 +7,7 @@ tags: ["twitch", "aws", "teamviewer", "pair programming", "zoom", "coq", "vscode
 
 ## Why?
 
-  - **Why Streaming?** One of the advantages of living in a big city, like London, is not just that you don't have to own a car, but it makes it easier to find people, who are interested in learning the same thing you are and who are at a similar level in their learning experience on this topic. People you can form a study group with. I remember that working in, Stellenbosch, South Africa, I had to drive an hour and a half, one way, to Scarborough, Cape Town to find a group of about ten people interested in functional programming.  
+  - **Why Streaming?** One of the advantages of living in a big city, like London, is not just that you don't have to own a car, but it makes it easier to find people, who are interested in learning the same thing you are and who are at a similar level in their learning experience on the topic. People you can form a study group with. I remember that working in, Stellenbosch, South Africa, I had to drive an hour and a half, one way, to Scarborough, Cape Town to find a group of about ten people interested in functional programming.  
 <center>
 <iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1757916.0067339428!2d17.632468364941275!3d-34.08608619022217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x1dcdb2f75188e2a5%3A0x7009aa00dee36be2!2sStellenbosch%2C%20South%20Africa!3m2!1d-33.9321045!2d18.860152!4m5!1s0x1dcc14ff23836223%3A0xc728558c5dcf53ac!2sZensa%20Lodge%2C%20534%20Egret%20St%2C%20Scarborough%2C%207975%2C%20South%20Africa!3m2!1d-34.199730699999996!2d18.375520599999998!5e1!3m2!1sen!2suk!4v1587292763786!5m2!1sen!2suk&zoom=20" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 </center>
@@ -153,6 +153,7 @@ In the end Teamviewer was more user friendly for me and solved the sound problem
       ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ModifierKeys.png "ModifierKeys")
     + Click `Ok`.
     This makes no sense to me, but after I did this, it was possible for me to use `Ctrl` after I logged into my user account, via Teamviewer.
+    I think it just requires some fiddling, because I have since turned back the settings and the problem remains fixed.
 
 ## Install virtual sound card
 
@@ -227,6 +228,67 @@ Before you stop the server, you need to create an image, so that you can stop an
 
 ## Remapping keys
 
-Autohotkey is a product I am trying to out to remap the mac shortcuts I am used to into windows keys.  This [script](https://autohotkey.com/board/topic/60675-osx-style-command-keys-in-windows/) seems like a good start.
+I use Autohotkey to remap my most popular mac shortcuts to windows shortcuts.
+- Log in as Administrator.
+- Install [AutoHotkey](https://www.autohotkey.com/) on your windows server.
 
+Create a script file: mac.ahk
+```ahk
+;Autohotkey script
 
+;Cmd+Up => Ctrl+Home
+#Up::Send ^{Home}
+;Cmd+Down => Ctrl+End
+#Down::Send ^{End}
+;Cmd+Left => Home
+#Left::Send {Home}
+;Cmd+Right => End
+#Right::Send {End}
+;Cmd+Shift+Left => Shift+Home
+#+Left::Send +{Home}
+;Cmd+ShiftRight => Shift+End
+#+Right::Send +{End}
+;Cmd+A => Ctrl+A
+#a::Send ^a
+#b::Send ^b
+#c::Send ^c
+#d::Send ^d 
+#e::Send ^e
+#f::Send ^f
+#g::Send ^g
+#h::Send ^h
+#i::Send ^i
+#j::Send ^j
+#k::Send ^k
+#l::Send ^l
+#m::Send ^m
+#n::Send ^n
+#o::Send ^o
+#p::Send ^p
+;Cmd+Q => Alt+F4
+#q::Send !{F4}
+#r::Send ^r
+#s::Send ^s
+#t::Send ^t
+#u::Send ^u
+#v::Send ^v
+;Cmd+W => Ctrl+F4
+#w::Send ^{F4}
+#x::Send ^x
+#y::Send ^y
+#z::Send ^z
+#1::Send ^1
+#2::Send ^2
+#3::Send ^3
+#4::Send ^4
+#5::Send ^5
+#6::Send ^6
+#7::Send ^7
+#8::Send ^8
+#9::Send ^9
+#0::Send ^0
+```
+
+This script has to run as Administrator, otherwise you will probably have problems.
+Right click on the file and choose `Run as Administrator`.
+I needed to have Teamviewer's `Send key combinations` enabled, others have reported the opposite so play around with this.
