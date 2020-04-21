@@ -102,6 +102,8 @@ You have to create a new security group or update the default security group to 
   - Now open the downloaded remote desktop file, using remote desktop.
   - You will need to paste in the password you got from `Get Password`.
   - Well done you can now remotely control the AWS windows server, from your home computer, using remote desktop.
+  - Before you possibly stop your server, remember to create an image in the AWS E2 Instances.
+    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/CreateImage.png "CreateImage")
 
 ## Update Internet Explorer security
 
@@ -221,10 +223,6 @@ This setup is specific to VSCode and Coq, but you can install any IDE for any pr
 
   - Install [VSCode](https://code.visualstudio.com/), [Coq](https://coq.inria.fr/) and [VSCoq](https://github.com/coq-community/vscoq)
   - Install [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) if you want to do collaborative editing, instead of just having your pair programmers, be backseat coders.  Possibly a better way to do this is with multiple Teamviewer logins, but we still have to test that.
-
-## Create an Image
-
-Before you stop the server, you need to create an image, so that you can stop and start the server and not lose all your setup work.
 
 ## Remapping keys
 
