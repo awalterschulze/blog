@@ -260,3 +260,12 @@ If you want to do collaborative editing, instead of just having your pair progra
 
 - Teamviewer allows for multiple logins and that works great, since now your collaborators have full control and of the GUI, not just the text boxes.  You need to coordinate who is using the keyboard.  Also less obviously you are also sharing a copy and paste buffer.  So if one of you is doing something on their own computer and copies something, the other person can paste this into teamviewer onto your public stream, so be careful about copying passwords, etc.
 - Alternative you can install [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare), but we couldn't get this working with Coq's Proof View.  I hope we are wrong, because this would solve a lot of problems.
+- Screen share via Zoom allows multiple collaborators switch between who is driving. Yes technically the server doesn't have to be the one that is sharing its screen with your collaborators.  Your collaborators can actually share their local screen and this shared screen can then be captured with OBS on the server and streamed to twitch.  In this case collaborators with limited CPU, might want to limit the amount of frames they are sharing.
+
+1. Go to Zoom Settings
+2. Click Share Screen
+3. Click the Advanced button in the lower right hand corner.
+4. Check the Limit your screen share box
+5. Select 4 frames-per-second.
+
+![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LimitFrames.png "LimitFrames")
