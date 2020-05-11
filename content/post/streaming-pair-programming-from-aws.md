@@ -52,15 +52,15 @@ This server looks expensive and it is not cheap, but given you are only paying f
   - At the top, click `Services` and from the menu under `Compute` select [EC2](https://console.aws.amazon.com/ec2)
   - On the side menu, click `Limits`
   - Search for CPU and select `Running On-Demand All G instances`, this is if you also chose a machine that starts with `g`, like the `g3.4xlarge`.  If you are new to AWS, like me, you will need to increase your `Current Limit` of `0` to `16` to be able to launch the chosen machine.  If your limit is already high enough you can skip this section.
-  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSLimits.png "Limits")
+  <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSLimits.png" style="padding:20px;max-height:300px;display:inline-block"></img>
   - Click `Request limit increase` in the top corner.
   - A form will open:
     + Make sure `EC2 Instances` is selected for `Limit type`
-  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseClassification.png "CaseClassification")
+  <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseClassification.png" style="padding:20px;max-height:300px;display:inline-block"></img>
     + Select your Region, `All G instances` if you are requesting a machine that starts with `g`, like the `g3.4xlarge`.  Choose a `New limit value` of `16` if that is appropriate for your selected machine, like the `g3.4xlarge`.
-  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRequests.png "Requests")
+  <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRequests.png" style="padding:20px;max-height:300px;display:inline-block"></img>
     + Finally describe your use case in the `Use case description` box.
-  ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseDescription.png "CaseDescription")
+  <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseDescription.png" style="padding:20px;max-height:300px;display:inline-block"></img>
   - And now you will have to wait for amazon's human reviewers to look at the case and decide whether to increase the limits.  I waited about 3 days.
   - Then you should be able to launch in the instance.
 
@@ -72,10 +72,10 @@ You have to create a new security group or update the default security group to 
   - go to [AWS Console](https://console.aws.amazon.com/)
   - go to [EC2](https://console.aws.amazon.com/ec2)
   - On the left, under `Network & Security`, click on `Security Groups`.
-    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/SecurityGroups.png "SecurityGroups")
+    <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/SecurityGroups.png" style="padding:10px;max-height:300px;display:inline-block"></img>
   - `Create security group` or `Edit Inbound Rules` of an existing group. To edit an existing group, for example the `default` Security group: Select it, click on `Actions` and then `Edit Inbound Rules`.
   -  Next you will need to add two new rules, using the `Add Rule` button:
-    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRDP.png "AWS RDP Rules")
+    <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRDP.png" style="padding:20px;max-height:300px;display:inline-block"></img>
     `Type: RDP, Source: 0.0.0.0/0` and `Type: RDP, Source: ::/0`
   - Finally click `Save rules`. Now you should be able to use remote desktop to log into your server.
 
@@ -102,7 +102,7 @@ You have to create a new security group or update the default security group to 
   - Now open the downloaded remote desktop file, using remote desktop.
   - You will need to paste in the password you got from `Get Password`.
   - Well done you can now remotely control the AWS windows server, from your home computer, using remote desktop.
-  - Before you possibly stop your server, remember to create an image in the AWS E2 Instances.
+  - Before you possibly `stop` your machine, remember to create an image in the AWS E2 Instances, otherwise you could lose your work?
     ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/CreateImage.png "CreateImage")
 
 ## Update Internet Explorer security
@@ -112,7 +112,7 @@ This first problem you will encounter on your windows server, is Internet Explor
 On your windows server, via Remote Desktop:
 
   - Open `Server Manager`
-    ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ServerManager.png "ServerManager")
+    <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ServerManager.png" style="padding:20px;max-height:300px;display:inline-block"></img>
   - In the left panel, Select `Local Server`
   - In the top panel with heading `Properties`, in the right middle of the window, you will see `IE Enhanced Security Configuration`.  Mine already, says `Off`, but yours will say `On`.
     ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/IEEnhanced.png "IEEnhanced")
@@ -221,12 +221,19 @@ There are also many videos that explains how to setup OBS.  We will not be going
 
 This setup is specific to VSCode and Coq, but you can install any IDE for any programming language you want.
 
-  - Install [VSCode](https://code.visualstudio.com/), [Coq](https://coq.inria.fr/) and [VSCoq](https://github.com/coq-community/vscoq)
-  - Install [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) if you want to do collaborative editing, instead of just having your pair programmers, be backseat coders.  Possibly a better way to do this is with multiple Teamviewer logins, but we still have to test that.
+  - Install [VSCode](https://code.visualstudio.com/)
+  - Install your programming language, in our case [Coq](https://coq.inria.fr/)
+  - Install your VSCode plugin, in our case [VSCoq](https://github.com/coq-community/vscoq) and make sure it points to your Coq installation.
 
 ## Remapping keys
 
-I use Autohotkey to remap my most popular mac shortcuts to windows shortcuts.
+First mac uses the Cmd key, where windows uses Ctrl key a lot.
+This is a simple fix on your mac.
+Simply go into your keyboard settings and remap Cmd to Ctrl.
+
+![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Control.png "Control")
+
+For the rest, I use Autohotkey to remap my most popular mac shortcuts to windows shortcuts.
 - Log in as Administrator.
 - Install [AutoHotkey](https://www.autohotkey.com/) on your windows server.
 
@@ -234,59 +241,22 @@ Create a script file: mac.ahk
 ```ahk
 ;Autohotkey script
 
-;Cmd+Up => Ctrl+Home
-#Up::Send ^{Home}
-;Cmd+Down => Ctrl+End
-#Down::Send ^{End}
-;Cmd+Left => Home
-#Left::Send {Home}
-;Cmd+Right => End
-#Right::Send {End}
-;Cmd+Shift+Left => Shift+Home
-#+Left::Send +{Home}
-;Cmd+ShiftRight => Shift+End
-#+Right::Send +{End}
-;Cmd+A => Ctrl+A
-#a::Send ^a
-#b::Send ^b
-#c::Send ^c
-#d::Send ^d 
-#e::Send ^e
-#f::Send ^f
-#g::Send ^g
-#h::Send ^h
-#i::Send ^i
-#j::Send ^j
-#k::Send ^k
-#l::Send ^l
-#m::Send ^m
-#n::Send ^n
-#o::Send ^o
-#p::Send ^p
-;Cmd+Q => Alt+F4
-#q::Send !{F4}
-#r::Send ^r
-#s::Send ^s
-#t::Send ^t
-#u::Send ^u
-#v::Send ^v
-;Cmd+W => Ctrl+F4
-#w::Send ^{F4}
-#x::Send ^x
-#y::Send ^y
-#z::Send ^z
-#1::Send ^1
-#2::Send ^2
-#3::Send ^3
-#4::Send ^4
-#5::Send ^5
-#6::Send ^6
-#7::Send ^7
-#8::Send ^8
-#9::Send ^9
-#0::Send ^0
+;Ctrl+Shift+Left => Shift+Home
+^+Left::Send +{Home}
+;Ctrl+ShiftRight => Shift+End
+^+Right::Send +{End}
+
+^w::Send ^{F4}
+^q::Send !{F4}
 ```
 
 This script has to run as Administrator, otherwise you will probably have problems.
 Right click on the file and choose `Run as Administrator`.
 I needed to have Teamviewer's `Send key combinations` enabled, others have reported the opposite so play around with this.
+
+## Collaborating
+
+If you want to do collaborative editing, instead of just having your pair programmers, be backseat coders. 
+
+- Teamviewer allows for multiple logins and that works great, since now your collaborators have full control and of the GUI, not just the text boxes.  You need to coordinate who is using the keyboard.  Also less obviously you are also sharing a copy and paste buffer.  So if one of you is doing something on their own computer and copies something, the other person can paste this into teamviewer onto your public stream, so be careful about copying passwords, etc.
+- Alternative you can install [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare), but we couldn't get this working with Coq's Proof View.  I hope we are wrong, because this would solve a lot of problems.
