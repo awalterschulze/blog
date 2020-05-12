@@ -309,5 +309,6 @@ If you want to do collaborative editing, instead of just having your pair progra
 
   - [Ayman Osman](https://github.com/aymanosman) for the idea of using AWS, tutoring me in how to use AWS and also encouraging me when I was about to give up.
   - [Max Heiber](https://github.com/mheiber) for the initial idea to stream Coq programming.
-  - [Paul Cadman](https://github.com/paulcadman) for searching and finding a way to limit the number of frames in Zoom, when my CPU was still struggling.
+  - [Paul Cadman](https://github.com/paulcadman) for testing and searching and finding a way to limit the number of frames in Zoom, when my CPU was still struggling.
+  - [Niels uit de Bos](https://github.com/Nielius) for testing the stream.
   
