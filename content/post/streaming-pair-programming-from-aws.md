@@ -1,9 +1,11 @@
 ---
-title: "Streaming Pair Programming from AWS"
-date: 2020-04-19T09:56:08+01:00
+title: "Streaming Pair Programming from AWS (DRAFT)"
+date: 2020-05-12T09:22:08+01:00
 draft: true
 tags: ["twitch", "aws", "teamviewer", "pair programming", "zoom", "coq", "vscode"]
 ---
+
+![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/FilmStrip.png "FilmStrip")
 
 ## Why?
 
@@ -269,3 +271,10 @@ If you want to do collaborative editing, instead of just having your pair progra
 5. Select 4 frames-per-second.
 
 ![Missing](https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LimitFrames.png "LimitFrames")
+
+## Thank you
+
+  - [Ayman Osman](https://github.com/aymanosman) for helping me with almost all the technical details and ideas, but also encouraging me when I was about to give up.
+  - [Max Heiber](https://github.com/mheiber) for the initial idea to stream.
+  - [Paul Cadman](https://github.com/paulcadman) for searching and finding a way to limit the number of frames in Zoom, when my CPU was still struggling.
+  
