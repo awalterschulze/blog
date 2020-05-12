@@ -3,17 +3,67 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://awalterschulze.github.io/blog/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/aws/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/coq/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/pair-programming/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/post/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/post/streaming-pair-programming-from-aws/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/teamviewer/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/twitch/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/vscode/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://awalterschulze.github.io/blog/tags/zoom/</loc>
+    <lastmod>2020-05-12T19:43:05+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://awalterschulze.github.io/blog/post/neglecting-math-at-university/</loc>
     <lastmod>2019-11-23T20:11:05+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://awalterschulze.github.io/blog/tags/abstract-algebra/</loc>
-    <lastmod>2019-11-23T20:11:05+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/</loc>
     <lastmod>2019-11-23T20:11:05+00:00</lastmod>
   </url>
   
@@ -33,17 +83,7 @@
   </url>
   
   <url>
-    <loc>https://awalterschulze.github.io/blog/post/</loc>
-    <lastmod>2019-11-23T20:11:05+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://awalterschulze.github.io/blog/tags/proofs/</loc>
-    <lastmod>2019-11-23T20:11:05+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://awalterschulze.github.io/blog/tags/</loc>
     <lastmod>2019-11-23T20:11:05+00:00</lastmod>
   </url>
   

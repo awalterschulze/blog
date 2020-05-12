@@ -1,7 +1,6 @@
 ---
 title: "Streaming Pair Programming from AWS (DRAFT)"
 date: 2020-05-12T09:22:08+01:00
-draft: true
 tags: ["twitch", "aws", "teamviewer", "pair programming", "zoom", "coq", "vscode"]
 ---
 

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Streaming Pair Programming from AWS (DRAFT) - Adenoid Adventures</title>
+  <meta name="description" content="Why?  Why Streaming? One of the advantages of living in a big city, like London, is not just that you don&rsquo;t have to own a car. It also makes it easier to find like minded people. People who are interested in learning the same thing you are and who are at a similar level in their learning experience on that topic, people you can form a study group with.">
+  <meta name="author" content="Walter Schulze"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Adenoid Adventures",
+    
+    "url": "https:\/\/awalterschulze.github.io\/blog\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/awalterschulze.github.io\/blog\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/awalterschulze.github.io\/blog\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/awalterschulze.github.io\/blog\/post\/streaming-pair-programming-from-aws\/",
+          "name": "Streaming pair programming from a w s ( d r a f t)"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Walter Schulze"
+  },
+  "headline": "Streaming Pair Programming from AWS (DRAFT)",
+  "description" : "Why?  Why Streaming? One of the advantages of living in a big city, like London, is not just that you don\x26rsquo;t have to own a car. It also makes it easier to find like minded people. People who are interested in learning the same thing you are and who are at a similar level in their learning experience on that topic, people you can form a study group with.",
+  "inLanguage" : "en",
+  "wordCount":  3098 ,
+  "datePublished" : "2020-05-12T09:22:08",
+  "dateModified" : "2020-05-12T09:22:08",
+  "image" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
+  "keywords" : [ "twitch, aws, teamviewer, pair programming, zoom, coq, vscode" ],
+  "mainEntityOfPage" : "https:\/\/awalterschulze.github.io\/blog\/post\/streaming-pair-programming-from-aws\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/awalterschulze.github.io\/blog\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Streaming Pair Programming from AWS (DRAFT)" />
+<meta property="og:description" content="Why?  Why Streaming? One of the advantages of living in a big city, like London, is not just that you don&rsquo;t have to own a car. It also makes it easier to find like minded people. People who are interested in learning the same thing you are and who are at a similar level in their learning experience on that topic, people you can form a study group with.">
+<meta property="og:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+<meta property="og:url" content="https://awalterschulze.github.io/blog/post/streaming-pair-programming-from-aws/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Adenoid Adventures" />
+
+  <meta name="twitter:title" content="Streaming Pair Programming from AWS (DRAFT)" />
+  <meta name="twitter:description" content="Why?  Why Streaming? One of the advantages of living in a big city, like London, is not just that you don&rsquo;t have to own a car. It also makes it easier to find like minded people. People who are …">
+  <meta name="twitter:image" content="https://awalterschulze.github.io/blog/avatar.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@awalterschulze" />
+  <meta name="twitter:creator" content="@awalterschulze" />
+  <link href='https://awalterschulze.github.io/blog/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.59.1" />
+  <link rel="alternate" href="https://awalterschulze.github.io/blog/index.xml" type="application/rss+xml" title="Adenoid Adventures"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/syntax.css" /><link rel="stylesheet" href="https://awalterschulze.github.io/blog/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-106798280-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Adenoid Adventures" href="https://awalterschulze.github.io/blog/">
+            <img class="avatar-img" src="https://awalterschulze.github.io/blog/avatar.png" alt="Adenoid Adventures" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Streaming Pair Programming from AWS (DRAFT)</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on 2020 May 12
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Walter Schulze
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/FilmStrip.png" alt="Missing" title="FilmStrip" /></p>
+
+<h2 id="why">Why?</h2>
+
+<ul>
+<li><p><strong>Why Streaming?</strong> One of the advantages of living in a big city, like London, is not just that you don&rsquo;t have to own a car. It also makes it easier to find like minded people. People who are interested in learning the same thing you are and who are at a similar level in their learning experience on that topic, people you can form a study group with. I remember that working in, Stellenbosch, South Africa, I had to drive an hour and a half, one way, to Scarborough, Cape Town to find a group of about ten people interested in functional programming.<br />
+<center>
+<iframe src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1757916.0067339428!2d17.632468364941275!3d-34.08608619022217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x1dcdb2f75188e2a5%3A0x7009aa00dee36be2!2sStellenbosch%2C%20South%20Africa!3m2!1d-33.9321045!2d18.860152!4m5!1s0x1dcc14ff23836223%3A0xc728558c5dcf53ac!2sZensa%20Lodge%2C%20534%20Egret%20St%2C%20Scarborough%2C%207975%2C%20South%20Africa!3m2!1d-34.199730699999996!2d18.375520599999998!5e1!3m2!1sen!2suk!4v1587292763786!5m2!1sen!2suk&zoom=20" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+</center>
+Things have since changed with regards to functional programming at Stellenbosch University, where Haskell is now being taught in a popular choice module, but what if I wanted to study Coq programming next.  What if there was a way to share some of the study group I found in London with others?  Streaming on Twitch seems to be a way to accomplish this. What better place for streaming Coq, &ldquo;the world&rsquo;s geekiest computer game&rdquo;.</p></li>
+
+<li><p><strong>Why Pair programming?</strong> Pair programming on a Coq project, where I am still learning the language, libraries and underlying theory, has been more educational to me than I could have ever imagined.  If I was to share something, the pair programming had to be part of it.</p></li>
+
+<li><p><strong>Why AWS?</strong> tl;dr more CPU! A friend from the study group and I started pair programming some Saturdays in coffee shops. This evolved into a video call, where it was easy to include a whole study group. Video calling in general is not CPU friendly and Zoom is no exception.  If you are also running OBS (the streaming software), you have two programs both competing for 250% of your 400% CPU.  At some point typing into the editor, felt like I was typing into a remote terminal over a dial up modem.  AWS allows us to rent a beast of a machine which could handle all of this including Teamviewer at 25% CPU.</p></li>
+</ul>
+
+<blockquote>
+<p>Quick, everyone who knows what Twitch is Google what a dial up modem is and everyone who knows what a dial up modem is, you may now Google what Twitch is.</p>
+</blockquote>
+
+<h2 id="setup">Setup</h2>
+
+<p>I thought streaming pair programming was going to be easy.
+I thought it would be as easy as Ted&rsquo;s setup for <a href="https://www.tedmyoung.com/remote-pair-programming-on-twitch-with-zoom/">remote pair programming on twitch with zoom</a>, all running on my local machine.</p>
+
+<p>My laptop couldn&rsquo;t handle it and this required me needing to rent an AWS Server, which in turn led to a longer than expected setup process.  I almost gave up when I was 90% done and needed some encouragement from a friend to push me over the finish line.</p>
+
+<ol>
+<li>Find an appropriate AWS machine.</li>
+<li>Ask amazon to lift CPU limit.</li>
+<li>Update security group to enable remote desktop</li>
+<li>Log in using remote desktop</li>
+<li>Update internet explorer security</li>
+<li>Install and setup Teamviewer</li>
+<li>Install virtual sound card</li>
+<li>Install and setup Zoom</li>
+<li>Install and setup OBS</li>
+<li>Install and setup IDE</li>
+</ol>
+
+<h3 id="find-an-appropriate-aws-machine">Find an appropriate AWS machine</h3>
+
+<p>We found the
+<a href="https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Microsoft-Windows-Server-2016-/B073WHLGMC">Microsoft Windows Server 2016 with NVIDIA GRID Driver</a> machine. It is a <code>g3.4xlarge</code>, which has 16 cores.
+This setup with 16 cores ended up running at 25% CPU, so I wouldn&rsquo;t recommend a 4 core machine.  I chose windows over linux, because this <strong>is</strong> &ldquo;the year of the linux desktop&rdquo;.  If you are new to AWS, you won&rsquo;t be able to launch this yet and you will need to increase your CPU limit, see instructions in the next section.</p>
+
+<p>This server looks expensive and it is not cheap, but given you are only paying for it when it is running, if you are disciplined in stopping the server, when you are not using it, it can be affordable, depending on how much you intend to use it.  Now is a good time to make that calculation and decide whether you can live with the hourly rate, which is about $2 per hour, at the time of writing.</p>
+
+<h3 id="ask-amazon-to-lift-cpu-limit">Ask Amazon to lift CPU Limit</h3>
+
+<ul>
+<li>Create an AWS account or log into your existing one by going to your <a href="https://console.aws.amazon.com/">AWS Console</a></li>
+<li>At the top, click <code>Services</code> and from the menu under <code>Compute</code> select <a href="https://console.aws.amazon.com/ec2">EC2</a></li>
+<li>On the side menu, click <code>Limits</code></li>
+<li>Search for CPU and select <code>Running On-Demand All G instances</code>, this is if you also chose a machine that starts with <code>g</code>, like the <code>g3.4xlarge</code>.  If you are new to AWS, like me, you will need to increase your <code>Current Limit</code> from <code>0</code> to <code>16</code> to be able to launch the chosen machine. I selected <code>32</code>, just in case.  If your limit is already high enough you can skip this section.
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSLimits.png" style="padding:20px;max-height:300px;display:inline-block"></img></li>
+<li>Click <code>Request limit increase</code> in the top corner.</li>
+<li>A form will open:
+
+<ul>
+<li>Make sure <code>EC2 Instances</code> is selected for <code>Limit type</code>
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseClassification.png" style="padding:20px;max-height:300px;display:inline-block"></img></li>
+<li>Select your Region, <code>All G instances</code> if you are requesting a machine that starts with <code>g</code>, like the <code>g3.4xlarge</code>.  Choose a <code>New limit value</code> of <code>16</code> if that is appropriate for your selected machine, like the <code>g3.4xlarge</code>.
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRequests.png" style="padding:20px;max-height:300px;display:inline-block"></img></li>
+<li>Finally describe your use case in the <code>Use case description</code> box.
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSCaseDescription.png" style="padding:20px;max-height:300px;display:inline-block"></img></li>
+</ul></li>
+<li>And now you will have to wait for amazon&rsquo;s human reviewers to look at the case and decide whether to increase the limits.  I waited about 3 days.</li>
+<li>Then you should be able to launch in the instance.</li>
+</ul>
+
+<h2 id="update-security-group-to-enable-remote-desktop">Update security group to enable remote desktop</h2>
+
+<p>AWS Windows servers don&rsquo;t let you log into them using remote desktop by default.
+You have to create a new security group or update the default security group to allow for RDP traffic.</p>
+
+<ul>
+<li>go to <a href="https://console.aws.amazon.com/">AWS Console</a></li>
+<li>go to <a href="https://console.aws.amazon.com/ec2">EC2</a></li>
+<li>On the left, under <code>Network &amp; Security</code>, click on <code>Security Groups</code>.
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/SecurityGroups.png" style="padding:10px;max-height:300px;display:inline-block"></img></li>
+<li>Now you need to <code>Create security group</code> or <code>Edit Inbound Rules</code> for an existing group. To edit an existing group, for example the <code>default</code> Security group, like I did: Select it, click on <code>Actions</code> and then <code>Edit Inbound Rules</code>.</li>
+<li>Next, add two new rules, using the <code>Add Rule</code> button:
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AWSRDP.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+<code>Type: RDP, Source: 0.0.0.0/0</code> and <code>Type: RDP, Source: ::/0</code></li>
+<li>Finally click <code>Save rules</code>. Now you should be able to use remote desktop to log into your server.</li>
+</ul>
+
+<h2 id="launch-and-log-into-server-using-remote-desktop">Launch and log into server using Remote Desktop</h2>
+
+<p>If AWS has approved your CPU limit increase, you can move onto this step.</p>
+
+<ul>
+<li>If you are on a mac, like me, you will need to install <a href="https://apps.apple.com/us/app/microsoft-remote-desktop-10/id1295203466?mt=12">remote desktop</a>.</li>
+<li>Now is the time to launch your instance
+<a href="https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Microsoft-Windows-Server-2016-/B073WHLGMC">Microsoft Windows Server 2016 with NVIDIA GRID Driver</a>
+
+<ul>
+<li>click on <code>Continue to Subscribe</code>.  This doesn&rsquo;t cost anything for this specific instance, since it is an instance marketed by AWS themselves, but other instances on AWS Marketplace, might cost a subscription fee.</li>
+<li>click on <code>Continue to Configuration</code></li>
+<li>pick your specific region, we chose <code>EU (Ireland)</code>.</li>
+<li>check that the <code>Software Pricing</code> is <code>$0/hr</code> if you haven&rsquo;t chosen a different machine. <code>Infrastructure Pricing</code> should have a real cost associated with it.</li>
+<li>click on <code>Continue to Launch</code></li>
+</ul></li>
+<li>go to <a href="https://console.aws.amazon.com/ec2">EC2</a></li>
+<li>click on Instances on the left side menu.</li>
+<li>Now the machine might already be started, or initializing, but if is not, then right click on the instance, select <code>Instance State</code> and then <code>Start</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Instances.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Wait for <code>Status Checks</code> to turn from <code>Initializing</code> to <code>2/2 checks passed</code>.</li>
+<li>Right click on your machine and click <code>Connect</code></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Connect.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Click on <code>Download Remote Desktop File</code></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DownloadRemoteDesktopFile.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>You will also need to click <code>Get Password</code>, but I will leave those details up to you.</li>
+<li>Now open the downloaded remote desktop file, using remote desktop.</li>
+<li>You will need to paste in the password you got from <code>Get Password</code>.</li>
+<li>Well done! You can now remotely control the AWS windows server, from your home computer, using remote desktop.</li>
+<li>Before you possibly <code>stop</code> your machine, remember to create an image in the AWS E2 Instances, otherwise you could lose your work?</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/CreateImage.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<h2 id="update-internet-explorer-security">Update Internet Explorer security</h2>
+
+<p>This first problem you will encounter on your windows server, is Internet Explorer has been severely limited, via a security setting.  Basically, you won&rsquo;t even be able to download another browser. Let&rsquo;s fix that.</p>
+
+<p>On your windows server, via Remote Desktop:</p>
+
+<ul>
+<li><p>Open <code>Server Manager</code></p>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ServerManager.png" style="padding:20px;max-height:300px;display:inline-block"></img></p></li>
+
+<li><p>In the left panel, Select <code>Local Server</code></p></li>
+
+<li><p>In the top panel with heading <code>Properties</code>, in the right middle of that panel, you will see <code>IE Enhanced Security Configuration</code>.  Mine already, says <code>Off</code>, but yours will say <code>On</code>.</p></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/IEEnhanced.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Click on <code>On</code> and select <code>Off</code> for both users and Administrator.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/InternetExplorerEnhanced.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Click <code>Ok</code>.</li>
+<li>Close <code>Server Manager</code></li>
+<li>Open Internet Explorer, it should now show that <code>Caution: Internet Explorer Enhanced Security Configuration is not enabled</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/InternetSecurityNotEnabled.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Download and install your browser of choice.</li>
+</ul>
+
+<h2 id="install-teamviewer">Install Teamviewer</h2>
+
+<p>Why do we need Teamviewer, when Remote Desktop is working so well?  It all comes down to sound.  A server doesn&rsquo;t have a sound card, but we want to stream the sound from our video call to Twitch.  We will need to install a virtual sound card and this doesn&rsquo;t play nicely with Remote Desktop.</p>
+
+<p>VNC is another option, but we opted for Teamviewer, because we will need cloud connect for a user friendly experience and this is free for personal use on Teamviewer, where I found with VNC servers that it looked like I needed to pay.  I could be wrong.
+In the end Teamviewer was more user friendly for me and solved the sound problem.</p>
+
+<ul>
+<li>Install <a href="https://www.teamviewer.com/">Teamviewer</a> on your mac and windows server.</li>
+<li>Once installed, on the windows server, Sign in or create a Teamviewer account and sign in.</li>
+<li>On the windows server, Tick <code>Start Teamviewer with Windows</code> and <code>Easy access for ... is granted</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/GrantEasyAccess.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>On your mac, sign into your Teamviewer account.</li>
+<li>You should now see the machine under <code>Computer &amp; Contacts</code>.</li>
+<li>Double Click on the machine to connect.</li>
+<li>You should get a notification about <code>multiple monitors</code>. This server has two virtual monitors, which is going to be very useful for streaming.  Click <code>Ok</code></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/MultipleMonitors.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>You should now see a locked screen, that requires <code>Ctrl+Alt+Delete</code> to unlock.  Click on <code>Actions</code> in the top menu bar and then select <code>Ctrl+Alt+Delete</code>.</li>
+<li>You should now be able to log into your Administrator account.  You might have a problem here, which is copy and paste is not working, at least it didn&rsquo;t work for me.</li>
+
+<li><p>Click on <code>Actions</code> again in the top menu bar and then select <code>Send key combinations</code>. Try again. You might still have a problem, just like me.  You are not alone, but it did eventually start working. Unfortunately, I never got to understand why.</p>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/KeyCombinations.png" style="padding:20px;max-height:300px;display:inline-block"></img></p></li>
+
+<li><p>Now is as good a time as any to create a user account.  If you are unable to log into Teamviewer, yet.  Go to remote desktop and create a user account, with a password that you can remember and type without copying and pasting.  You can keep your Administrator account secure and only ever need to use it with Remote Desktop.  Only your user account will need to work with Teamviewer and might need a password that you can actually remember and type out.</p></li>
+
+<li><p>Now you can use Teamviewer to log into your user account.</p></li>
+
+<li><p>One more thing I would encourage you to Configure is to Optimize for speed over quality of image.  If you are planning to code, then typing is a big part of that and typing feedback can be very important. Go to Teamviewer&rsquo;s <code>Preferences</code>. Click on <code>Remote Control</code> and from the <code>Quality</code> dropdown, select <code>Optimize speed</code>.</p></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/OptimizeSpeed.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<h2 id="install-virtual-sound-card">Install virtual sound card</h2>
+
+<p>On the windows server:</p>
+
+<ul>
+<li>Download <a href="https://www.vb-audio.com/Cable/">VB-Audio Software&rsquo;s VB-Cable</a>. We don&rsquo;t need the VB-Cable A+B, etc. We only need the <code>VBCABLE_Driver_Pack43.zip</code>.</li>
+<li>Unzip and run <code>VBCABLE_Setup_x64</code>.</li>
+<li>In Teamviewer, go to your sound card settings, by right clicking in the bottom right corner on the little speaker and selecting <code>Playback devices</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LittleSpeaker.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Under <code>Playback</code> you should see <code>Cable Input</code> by <code>VB-Audio Virtual Cable</code>. Please ignore the other playback devices, I tried several routes before realizing remote desktop was incompatible with virtual sound cards and I haven&rsquo;t taken the time to clean up the other virtual sound cards I ended up not using or even evaluating.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Sound.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>The virtual sound card is now installed, we are going to use it to thread the zoom output sound into OBS input sound and stream this to Twitch.</li>
+</ul>
+
+<h2 id="install-and-setup-zoom-or-another-video-call-program">Install and setup Zoom or another Video Call program</h2>
+
+<p>I chose <a href="https://zoom.us/">Zoom</a>, because:</p>
+
+<ul>
+<li>Zoom allows screen sharing and doesn&rsquo;t turn off your webcam to do so.</li>
+<li>Zoom&rsquo;s window in which participants are viewed is the prettiest to put in a corner of your screen and has <code>always on top</code> enabled automatically.</li>
+</ul>
+
+<p>I might reconsider this choice in future, since Zoom calls over 40 minutes are not free and removing this from the setup would moderately reduce the overall cost of this setup.</p>
+
+<p>Whichever Video Call program you choose, it is important to setup the sound output.  Here is how I did it for Zoom, but you should easily be able to reproduce this with any Video Calling program.</p>
+
+<ul>
+<li>Install Zoom on your windows server and create a new account.  You are going to need two accounts for Zoom. One for the windows server and one for your home computer.  Only the account that will be hosting the meetings will need to be a paid account, if you are planning on pair programming longer than 40 minutes at a time, like me.</li>
+<li>Go to Zoom settings and then <code>Audio</code>.  Set the Speaker to <code>CABLE Input (VB-Audio Virtual Cable)</code>, the Microphone doesn&rsquo;t matter as we won&rsquo;t be using the server&rsquo;s microphone.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ZoomAudio.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<p>Now Zoom will send its output, which should include everyone on the call&rsquo;s audio to <code>CABLE Input..</code>, which we are going to capture using <code>OBS</code>.</p>
+
+<h2 id="install-and-setup-obs">Install and setup OBS</h2>
+
+<p><a href="https://obsproject.com/">OBS Studio</a> is used to Stream to Twitch, Youtube, etc. Now is probably a good time to skim through a <a href="https://www.freecodecamp.org/news/lessons-from-my-first-year-of-live-coding-on-twitch-41a32e2f41c1/">better blog</a> to learn a bit more about OBS and how to use it.
+There are also many videos that explains how to setup OBS.  We will not be going into that.  We will only be touching on the specific OBS configuration for this setup, namely how to route the audio and how to share our screen using the multiple monitors of this AWS Server.</p>
+
+<ul>
+<li>Log into your windows server as Administrator. Installing OBS requires being logged in as Administrator, so I installed it using Remote Desktop.</li>
+<li>Download and install <a href="https://obsproject.com/">OBS Studio</a> and setup connection to Twitch.  There should be step by step instructions for doing so.</li>
+<li>After installation, we can log back into our user, using Teamviewer.</li>
+<li>Go to <code>View</code> in the top menu bar, under <code>Active monitor</code>, click <code>Show all monitors</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/ShowAllMonitors.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Open <code>OBS Studio</code> and drag it to the smaller second monitor. Your OBS will be less interesting than mine, since mine is already setup. OBS will be running on the small <code>monitor 2</code> and we will be using <code>monitor 1</code> for everything we want to stream to Twitch.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DualMonitors.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>We can capture the sound from zoom that we have routed to <code>CABLE Input (VB-Audio Virtual Cable)</code> in OBS, by first creating a Scene. Click the <code>+</code> button in the <code>Scene</code> panel.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Scene.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Select our new scene and click the <code>+</code> button under <code>Sources</code> and select <code>Audio Output Capture</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AudioOutputCapture.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Select <code>Create New</code>, type a name and click <code>OK</code>.</li>
+<li>Select the <code>Device</code> from the dropdown: <code>CABLE Input (VB-Audio Virtual Cable)</code> and click <code>OK</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Device.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>You should now be able to test the sound, by creating a Zoom call between your home computer and the windows server and see the green bar in the Audio Mixer move, when you talk.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Mixer.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>We can capture <code>monitor 1</code>, by adding another Source.  Click the <code>+</code> under <code>Sources</code> and select <code>Display Capture</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DisplayCapture.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Select <code>Create New</code>, type a name and click <code>OK</code>.</li>
+<li>Select the <code>Device</code> from the drop down <code>Display 1...</code> and click <code>OK</code>.</li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/DisplayDevice.png" style="padding:20px;max-height:600px;display:inline-block"></img></p>
+
+<ul>
+<li>You can now test the sound and display by clicking the <code>Start Recording</code> button in OBS, creating a zoom call and watching and listening to yourself speak, by playing the recorded file.
+<br /></li>
+</ul>
+
+<h2 id="install-and-setup-ide">Install and setup IDE</h2>
+
+<p>This setup is specific to VSCode and Coq, but you can install any IDE for any programming language you want.</p>
+
+<ul>
+<li>Install <a href="https://code.visualstudio.com/">VSCode</a></li>
+<li>Install your programming language, in our case <a href="https://coq.inria.fr/">Coq</a></li>
+<li>Install your VSCode plugin, in our case <a href="https://github.com/coq-community/vscoq">VSCoq</a> and make sure it points to your Coq installation.</li>
+</ul>
+
+<h2 id="remapping-keys">Remapping keys</h2>
+
+<p>Controlling a windows machine from a mac, means that several of your usual shortcuts no longer work.
+Mac uses the Cmd key, where windows uses Ctrl key a lot. This is a simple fix on your mac.
+Go into your keyboard settings, select <code>Modifier Keys</code> and remap Cmd to Ctrl.</p>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Control.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<p>For the rest, I use Autohotkey to remap my most popular mac shortcuts to windows shortcuts.</p>
+
+<ul>
+<li>Log in as Administrator.</li>
+<li>Install <a href="https://www.autohotkey.com/">AutoHotkey</a> on your windows server.</li>
+</ul>
+
+<p>Create a script file: mac.ahk</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ahk" data-lang="ahk">;Autohotkey script
+
+;Ctrl+Shift+Left =&gt; Shift+Home
+^+Left::Send +{Home}
+;Ctrl+ShiftRight =&gt; Shift+End
+^+Right::Send +{End}
+
+^w::Send ^{F4}
+^q::Send !{F4}</code></pre></div>
+<p>This script has to run as Administrator.
+Right click on the file and choose <code>Run as Administrator</code>, when you log in as your normal user.
+I needed to have Teamviewer&rsquo;s <code>Send key combinations</code> enabled, others have reported the opposite so play around with this.</p>
+
+<h2 id="collaborating">Collaborating</h2>
+
+<p>If you want to do collaborative editing, instead of just having your pair programmers, be backseat coders. There are several options:</p>
+
+<ul>
+<li>Teamviewer allows for multiple logins and that works great, since now your collaborators have full control.  You need to coordinate who is using the keyboard.  Also less obviously you are also sharing a copy and paste buffer.  So if one of you is doing something on their own computer and copies something, the other person can paste this into teamviewer onto your public stream, so be careful about copying passwords, etc.</li>
+<li>Alternatively you can install <a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare">Live Share</a>, but we couldn&rsquo;t get this working with Coq&rsquo;s Proof View.  I hope we are wrong, because this would solve a lot of problems.</li>
+<li>Screen share via Zoom allows multiple collaborators to switch between who is driving. Yes technically the server doesn&rsquo;t have to be the one that is sharing its screen with your collaborators.  Your collaborators can actually share their local screen and this shared screen can then be captured with OBS on the AWS server and streamed to twitch.  In this case collaborators with limited CPU, might want to limit the amount of frames they are sharing.</li>
+</ul>
+
+<ol>
+<li>Go to Zoom Settings</li>
+<li>Click <code>Share Screen</code></li>
+<li>Click the <code>Advanced</code> button in the lower right hand corner.</li>
+<li>Check the Limit your screen share box</li>
+<li>Select 4 frames-per-second.</li>
+</ol>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LimitFrames.png" style="padding:20px;max-height:600px;display:inline-block"></img></p>
+
+<h2 id="thank-you">Thank you</h2>
+
+<ul>
+<li><a href="https://github.com/aymanosman">Ayman Osman</a> for the idea of using AWS, tutoring me in how to use AWS and also encouraging me when I was about to give up.</li>
+<li><a href="https://github.com/mheiber">Max Heiber</a> for the initial idea to stream Coq programming.</li>
+<li><a href="https://github.com/paulcadman">Paul Cadman</a> for searching and finding a way to limit the number of frames in Zoom, when my CPU was still struggling.
+<br /></li>
+</ul>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://awalterschulze.github.io/blog//tags/twitch/">twitch</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/aws/">aws</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/teamviewer/">teamviewer</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/pair-programming/">pair programming</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/zoom/">zoom</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/coq/">coq</a>&nbsp;
+            
+              <a href="https://awalterschulze.github.io/blog//tags/vscode/">vscode</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://awalterschulze.github.io/blog/post/neglecting-math-at-university/" data-toggle="tooltip" data-placement="top" title="A Programmer’s Regret: Neglecting Math at University">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:awalterschulze@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/awalterschulze" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/awalterschulze" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/schulzewalter" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Walter Schulze
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2020
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://awalterschulze.github.io/blog/">Adenoid Adventures</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.59.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          &nbsp;&bull;&nbsp;[<a href="false810617612fe886558f0beb974765bf7f473d35dd">81061761</a>]
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://awalterschulze.github.io/blog/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://awalterschulze.github.io/blog/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

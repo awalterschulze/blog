@@ -8,10 +8,19 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Sun, 07 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2020 09:22:08 +0100</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Streaming Pair Programming from AWS (DRAFT)</title>
+      <link>https://awalterschulze.github.io/blog/post/streaming-pair-programming-from-aws/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/post/streaming-pair-programming-from-aws/</guid>
+      <description>Why?  Why Streaming? One of the advantages of living in a big city, like London, is not just that you don&amp;rsquo;t have to own a car. It also makes it easier to find like minded people. People who are interested in learning the same thing you are and who are at a similar level in their learning experience on that topic, people you can form a study group with.</description>
+    </item>
     
     <item>
       <title>A Programmer’s Regret: Neglecting Math at University</title>

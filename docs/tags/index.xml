@@ -8,10 +8,73 @@
     <language>en-us</language>
     <managingEditor>awalterschulze@gmail.com (Walter Schulze)</managingEditor>
     <webMaster>awalterschulze@gmail.com (Walter Schulze)</webMaster>
-    <lastBuildDate>Sun, 07 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2020 09:22:08 +0100</lastBuildDate>
     
 	<atom:link href="https://awalterschulze.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>aws</title>
+      <link>https://awalterschulze.github.io/blog/tags/aws/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>coq</title>
+      <link>https://awalterschulze.github.io/blog/tags/coq/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/coq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pair programming</title>
+      <link>https://awalterschulze.github.io/blog/tags/pair-programming/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/pair-programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>teamviewer</title>
+      <link>https://awalterschulze.github.io/blog/tags/teamviewer/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/teamviewer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>twitch</title>
+      <link>https://awalterschulze.github.io/blog/tags/twitch/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/twitch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vscode</title>
+      <link>https://awalterschulze.github.io/blog/tags/vscode/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/vscode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zoom</title>
+      <link>https://awalterschulze.github.io/blog/tags/zoom/</link>
+      <pubDate>Tue, 12 May 2020 09:22:08 +0100</pubDate>
+      <author>awalterschulze@gmail.com (Walter Schulze)</author>
+      <guid>https://awalterschulze.github.io/blog/tags/zoom/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>abstract algebra</title>
