@@ -305,6 +305,23 @@ If you want to do collaborative editing, instead of just having your pair progra
 
 <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LimitFrames.png" style="padding:20px;max-height:600px;display:inline-block"></img>
 
+## Stream
+
+Finally you are ready to stream.
+
+You will probably want to create pictures that you can use to display when you are:
+
+ - Offline
+ - Starting Soon
+ - Taking a Break and possibly
+ - Entering a password
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/StreamOffline.png" style="padding:20px;max-height:600px;display:inline-block"></img>
+
+You can also setup Twitch to preserve you videos for later viewing, so viewers don't always have to watch at the exact time that the stream is occurring.
+
+Come check out the resulting stream: https://www.twitch.tv/awalterschulze
+
 ## Thank you
 
   - [Ayman Osman](https://github.com/aymanosman) for the idea of using AWS, tutoring me in how to use AWS and also encouraging me when I was about to give up.
