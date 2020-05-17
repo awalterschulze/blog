@@ -261,6 +261,9 @@ This setup is specific to VSCode and Coq, but you can install any IDE for any pr
   - Install [VSCode](https://code.visualstudio.com/)
   - Install your programming language, in our case [Coq](https://coq.inria.fr/)
   - Install your VSCode plugin, in our case [VSCoq](https://github.com/coq-community/vscoq) and make sure it points to your Coq installation.
+  - Turn off some suggestions. Suggestions are great for auto complete, but if they happen when you simply type space they can be disruptive and possibly over work the language server.  I found turning this one setting off `Editor > Suggest: Show Properties` in vscode, results in hints from VSCoq to only happen after I have typed some letters.
+
+  <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/AutoComplete.png" style="padding:20px;max-height:600px;display:inline-block"></img>
 
 ## Remap keys {#Remap}
 
