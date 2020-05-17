@@ -51,7 +51,7 @@ Go to [twitch.tv](https://www.twitch.tv/) and create an account.
 
 Now we want to setup Twitch to preserve you videos for later viewing, so viewers don't always have to watch at the exact time that the stream is occurring.
 
-  - Go to you channel https://twitch.tv/<username>
+  - Go to you channel https://twitch.tv/awalterschulze
   - Click on your profile in the top right corner and click on `Settings`
 
 <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/TwitchProfile.png" style="padding:20px;max-height:300px;display:inline-block"></img>
