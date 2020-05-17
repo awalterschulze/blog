@@ -27,18 +27,21 @@ I thought it would be as easy as Ted's setup for [remote pair programming on twi
 
 My laptop couldn't handle it and this required me needing to rent an AWS Server, which in turn led to a longer than expected setup process.  I almost gave up when I was 90% done and needed some encouragement from a friend to push me over the finish line.
 
-1. Find an appropriate AWS machine.
-2. Ask amazon to lift CPU limit.
-3. Update security group to enable remote desktop
-4. Log in using remote desktop
-5. Update internet explorer security
-6. Install and setup Teamviewer
-7. Install virtual sound card
-8. Install and setup Zoom
-9. Install and setup OBS
-10. Install and setup IDE
+1. [Find an appropriate AWS machine](#AWSMachine)
+2. [Ask amazon to lift CPU limit](#CPULimit)
+3. [Update security group to enable remote desktop](#Security)
+4. [Launch and log into server using Remote Desktop](#RemoteDesktop)
+5. [Update internet explorer security](#IE)
+6. [Install and setup Teamviewer](#Teamviewer)
+7. [Install virtual sound card](#Sound)
+8. [Install and setup Zoom](#Zoom)
+9. [Install and setup OBS](#OBS)
+10. [Install and setup IDE](#IDE)
+11. [Remap keys](#Remap)
+12. [Choose a method of collaboration](#Collab)
+13. [Stream](#Stream)
 
-### Find an appropriate AWS machine
+### Find an appropriate AWS machine {#AWSMachine}
 
 We found the
 [Microsoft Windows Server 2016 with NVIDIA GRID Driver](https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Microsoft-Windows-Server-2016-/B073WHLGMC) machine. It is a `g3.4xlarge`, which has 16 cores.
@@ -46,7 +49,7 @@ This setup with 16 cores ended up running at 25% CPU, so I wouldn't recommend a 
 
 This server looks expensive and it is not cheap, but given you are only paying for it when it is running, if you are disciplined in stopping the server, when you are not using it, it can be affordable, depending on how much you intend to use it.  Now is a good time to make that calculation and decide whether you can live with the hourly rate, which is about $2 per hour, at the time of writing.
 
-### Ask Amazon to lift CPU Limit
+### Ask Amazon to lift CPU Limit {#CPULimit}
 
   - Create an AWS account or log into your existing one by going to your [AWS Console](https://console.aws.amazon.com/)
   - At the top, click `Services` and from the menu under `Compute` select [EC2](https://console.aws.amazon.com/ec2)
@@ -64,7 +67,7 @@ This server looks expensive and it is not cheap, but given you are only paying f
   - And now you will have to wait for amazon's human reviewers to look at the case and decide whether to increase the limits.  I waited about 3 days.
   - Then you should be able to launch in the instance.
 
-## Update security group to enable remote desktop
+## Update security group to enable remote desktop {#Security}
 
 AWS Windows servers don't let you log into them using remote desktop by default.
 You have to create a new security group or update the default security group to allow for RDP traffic.
@@ -79,7 +82,7 @@ You have to create a new security group or update the default security group to 
     `Type: RDP, Source: 0.0.0.0/0` and `Type: RDP, Source: ::/0`
   - Finally click `Save rules`. Now you should be able to use remote desktop to log into your server.
 
-## Launch and log into server using Remote Desktop
+## Launch and log into server using Remote Desktop {#RemoteDesktop}
 
 If AWS has approved your CPU limit increase, you can move onto this step.
 
@@ -114,7 +117,7 @@ If AWS has approved your CPU limit increase, you can move onto this step.
 
   <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/CreateImage.png" style="padding:20px;max-height:300px;display:inline-block"></img>
 
-## Update Internet Explorer security
+## Update Internet Explorer security {#IE}
 
 This first problem you will encounter on your windows server, is Internet Explorer has been severely limited, via a security setting.  Basically, you won't even be able to download another browser. Let's fix that.
 
@@ -141,7 +144,7 @@ On your windows server, via Remote Desktop:
 
   - Download and install your browser of choice.
 
-## Install Teamviewer
+## Install and setup Teamviewer {#Teamviewer}
 
 Why do we need Teamviewer, when Remote Desktop is working so well?  It all comes down to sound.  A server doesn't have a sound card, but we want to stream the sound from our video call to Twitch.  We will need to install a virtual sound card and this doesn't play nicely with Remote Desktop.
 
@@ -173,7 +176,7 @@ In the end Teamviewer was more user friendly for me and solved the sound problem
 
   <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/OptimizeSpeed.png" style="padding:20px;max-height:300px;display:inline-block"></img>
 
-## Install virtual sound card
+## Install virtual sound card {#Sound}
 
 On the windows server:
 
@@ -189,7 +192,7 @@ On the windows server:
     
   - The virtual sound card is now installed, we are going to use it to thread the zoom output sound into OBS input sound and stream this to Twitch.
 
-## Install and setup Zoom or another Video Call program
+## Install and setup Zoom {#Zoom}
 
 I chose [Zoom](https://zoom.us/), because:
 
@@ -207,7 +210,7 @@ Whichever Video Call program you choose, it is important to setup the sound outp
 
 Now Zoom will send its output, which should include everyone on the call's audio to `CABLE Input..`, which we are going to capture using `OBS`.
 
-## Install and setup OBS
+## Install and setup OBS {#OBS}
 
 [OBS Studio](https://obsproject.com/) is used to Stream to Twitch, Youtube, etc. Now is probably a good time to skim through a [better blog](https://www.freecodecamp.org/news/lessons-from-my-first-year-of-live-coding-on-twitch-41a32e2f41c1/) to learn a bit more about OBS and how to use it.
 There are also many videos that explains how to setup OBS.  We will not be going into that.  We will only be touching on the specific OBS configuration for this setup, namely how to route the audio and how to share our screen using the multiple monitors of this AWS Server.
@@ -251,7 +254,7 @@ There are also many videos that explains how to setup OBS.  We will not be going
 
   - You can now test the sound and display by clicking the `Start Recording` button in OBS, creating a zoom call and watching and listening to yourself speak, by playing the recorded file.
     
-## Install and setup IDE
+## Install and setup IDE {#IDE}
 
 This setup is specific to VSCode and Coq, but you can install any IDE for any programming language you want.
 
@@ -259,7 +262,7 @@ This setup is specific to VSCode and Coq, but you can install any IDE for any pr
   - Install your programming language, in our case [Coq](https://coq.inria.fr/)
   - Install your VSCode plugin, in our case [VSCoq](https://github.com/coq-community/vscoq) and make sure it points to your Coq installation.
 
-## Remapping keys
+## Remap keys {#Remap}
 
 Controlling a windows machine from a mac, means that several of your usual shortcuts no longer work.
 Mac uses the Cmd key, where windows uses Ctrl key a lot. This is a simple fix on your mac.
@@ -289,7 +292,7 @@ This script has to run as Administrator.
 Right click on the file and choose `Run as Administrator`, when you log in as your normal user.
 I needed to have Teamviewer's `Send key combinations` enabled, others have reported the opposite so play around with this.
 
-## Collaborating
+## Choose a method of collaboration {#Collab}
 
 If you want to do collaborative editing, instead of just having your pair programmers, be backseat coders. There are several options:
 
@@ -305,7 +308,7 @@ If you want to do collaborative editing, instead of just having your pair progra
 
 <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LimitFrames.png" style="padding:20px;max-height:600px;display:inline-block"></img>
 
-## Stream
+## Stream {#Stream}
 
 Finally you are ready to stream.
 

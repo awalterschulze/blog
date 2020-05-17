@@ -59,7 +59,7 @@
   "headline": "Streaming Pair Programming from AWS (DRAFT)",
   "description" : "Why?  Why Streaming? One of the advantages of living in a big city, like London, is not just that you don\x26rsquo;t have to own a car. It also makes it easier to find like minded people. People who are interested in learning the same thing you are and who are at a similar level in their learning experience on that topic, people you can form a study group with.",
   "inLanguage" : "en",
-  "wordCount":  3177 ,
+  "wordCount":  3189 ,
   "datePublished" : "2020-05-12T09:22:08",
   "dateModified" : "2020-05-12T09:22:08",
   "image" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
@@ -229,6 +229,8 @@ if (!doNotTrack) {
   
   <i class="fas fa-calendar"></i>&nbsp;Posted on 2020 May 12
   
+    &nbsp;(Last modified on 2020 May 13)
+  
   
   
   
@@ -284,19 +286,22 @@ I thought it would be as easy as Ted&rsquo;s setup for <a href="https://www.tedm
 <p>My laptop couldn&rsquo;t handle it and this required me needing to rent an AWS Server, which in turn led to a longer than expected setup process.  I almost gave up when I was 90% done and needed some encouragement from a friend to push me over the finish line.</p>
 
 <ol>
-<li>Find an appropriate AWS machine.</li>
-<li>Ask amazon to lift CPU limit.</li>
-<li>Update security group to enable remote desktop</li>
-<li>Log in using remote desktop</li>
-<li>Update internet explorer security</li>
-<li>Install and setup Teamviewer</li>
-<li>Install virtual sound card</li>
-<li>Install and setup Zoom</li>
-<li>Install and setup OBS</li>
-<li>Install and setup IDE</li>
+<li><a href="#AWSMachine">Find an appropriate AWS machine</a></li>
+<li><a href="#CPULimit">Ask amazon to lift CPU limit</a></li>
+<li><a href="#Security">Update security group to enable remote desktop</a></li>
+<li><a href="#RemoteDesktop">Launch and log into server using Remote Desktop</a></li>
+<li><a href="#IE">Update internet explorer security</a></li>
+<li><a href="#Teamviewer">Install and setup Teamviewer</a></li>
+<li><a href="#Sound">Install virtual sound card</a></li>
+<li><a href="#Zoom">Install and setup Zoom</a></li>
+<li><a href="#OBS">Install and setup OBS</a></li>
+<li><a href="#IDE">Install and setup IDE</a></li>
+<li><a href="#Remap">Remap keys</a></li>
+<li><a href="#Collab">Choose a method of collaboration</a></li>
+<li><a href="#Stream">Stream</a></li>
 </ol>
 
-<h3 id="find-an-appropriate-aws-machine">Find an appropriate AWS machine</h3>
+<h3 id="AWSMachine">Find an appropriate AWS machine</h3>
 
 <p>We found the
 <a href="https://aws.amazon.com/marketplace/pp/Amazon-Web-Services-Microsoft-Windows-Server-2016-/B073WHLGMC">Microsoft Windows Server 2016 with NVIDIA GRID Driver</a> machine. It is a <code>g3.4xlarge</code>, which has 16 cores.
@@ -304,7 +309,7 @@ This setup with 16 cores ended up running at 25% CPU, so I wouldn&rsquo;t recomm
 
 <p>This server looks expensive and it is not cheap, but given you are only paying for it when it is running, if you are disciplined in stopping the server, when you are not using it, it can be affordable, depending on how much you intend to use it.  Now is a good time to make that calculation and decide whether you can live with the hourly rate, which is about $2 per hour, at the time of writing.</p>
 
-<h3 id="ask-amazon-to-lift-cpu-limit">Ask Amazon to lift CPU Limit</h3>
+<h3 id="CPULimit">Ask Amazon to lift CPU Limit</h3>
 
 <ul>
 <li>Create an AWS account or log into your existing one by going to your <a href="https://console.aws.amazon.com/">AWS Console</a></li>
@@ -327,7 +332,7 @@ This setup with 16 cores ended up running at 25% CPU, so I wouldn&rsquo;t recomm
 <li>Then you should be able to launch in the instance.</li>
 </ul>
 
-<h2 id="update-security-group-to-enable-remote-desktop">Update security group to enable remote desktop</h2>
+<h2 id="Security">Update security group to enable remote desktop</h2>
 
 <p>AWS Windows servers don&rsquo;t let you log into them using remote desktop by default.
 You have to create a new security group or update the default security group to allow for RDP traffic.</p>
@@ -344,7 +349,7 @@ You have to create a new security group or update the default security group to 
 <li>Finally click <code>Save rules</code>. Now you should be able to use remote desktop to log into your server.</li>
 </ul>
 
-<h2 id="launch-and-log-into-server-using-remote-desktop">Launch and log into server using Remote Desktop</h2>
+<h2 id="RemoteDesktop">Launch and log into server using Remote Desktop</h2>
 
 <p>If AWS has approved your CPU limit increase, you can move onto this step.</p>
 
@@ -390,7 +395,7 @@ You have to create a new security group or update the default security group to 
 
 <p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/CreateImage.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
 
-<h2 id="update-internet-explorer-security">Update Internet Explorer security</h2>
+<h2 id="IE">Update Internet Explorer security</h2>
 
 <p>This first problem you will encounter on your windows server, is Internet Explorer has been severely limited, via a security setting.  Basically, you won&rsquo;t even be able to download another browser. Let&rsquo;s fix that.</p>
 
@@ -426,7 +431,7 @@ You have to create a new security group or update the default security group to 
 <li>Download and install your browser of choice.</li>
 </ul>
 
-<h2 id="install-teamviewer">Install Teamviewer</h2>
+<h2 id="Teamviewer">Install and setup Teamviewer</h2>
 
 <p>Why do we need Teamviewer, when Remote Desktop is working so well?  It all comes down to sound.  A server doesn&rsquo;t have a sound card, but we want to stream the sound from our video call to Twitch.  We will need to install a virtual sound card and this doesn&rsquo;t play nicely with Remote Desktop.</p>
 
@@ -467,7 +472,7 @@ In the end Teamviewer was more user friendly for me and solved the sound problem
 
 <p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/OptimizeSpeed.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
 
-<h2 id="install-virtual-sound-card">Install virtual sound card</h2>
+<h2 id="Sound">Install virtual sound card</h2>
 
 <p>On the windows server:</p>
 
@@ -489,7 +494,7 @@ In the end Teamviewer was more user friendly for me and solved the sound problem
 <li>The virtual sound card is now installed, we are going to use it to thread the zoom output sound into OBS input sound and stream this to Twitch.</li>
 </ul>
 
-<h2 id="install-and-setup-zoom-or-another-video-call-program">Install and setup Zoom or another Video Call program</h2>
+<h2 id="Zoom">Install and setup Zoom</h2>
 
 <p>I chose <a href="https://zoom.us/">Zoom</a>, because:</p>
 
@@ -511,7 +516,7 @@ In the end Teamviewer was more user friendly for me and solved the sound problem
 
 <p>Now Zoom will send its output, which should include everyone on the call&rsquo;s audio to <code>CABLE Input..</code>, which we are going to capture using <code>OBS</code>.</p>
 
-<h2 id="install-and-setup-obs">Install and setup OBS</h2>
+<h2 id="OBS">Install and setup OBS</h2>
 
 <p><a href="https://obsproject.com/">OBS Studio</a> is used to Stream to Twitch, Youtube, etc. Now is probably a good time to skim through a <a href="https://www.freecodecamp.org/news/lessons-from-my-first-year-of-live-coding-on-twitch-41a32e2f41c1/">better blog</a> to learn a bit more about OBS and how to use it.
 There are also many videos that explains how to setup OBS.  We will not be going into that.  We will only be touching on the specific OBS configuration for this setup, namely how to route the audio and how to share our screen using the multiple monitors of this AWS Server.</p>
@@ -574,7 +579,7 @@ There are also many videos that explains how to setup OBS.  We will not be going
 <br /></li>
 </ul>
 
-<h2 id="install-and-setup-ide">Install and setup IDE</h2>
+<h2 id="IDE">Install and setup IDE</h2>
 
 <p>This setup is specific to VSCode and Coq, but you can install any IDE for any programming language you want.</p>
 
@@ -584,7 +589,7 @@ There are also many videos that explains how to setup OBS.  We will not be going
 <li>Install your VSCode plugin, in our case <a href="https://github.com/coq-community/vscoq">VSCoq</a> and make sure it points to your Coq installation.</li>
 </ul>
 
-<h2 id="remapping-keys">Remapping keys</h2>
+<h2 id="Remap">Remap keys</h2>
 
 <p>Controlling a windows machine from a mac, means that several of your usual shortcuts no longer work.
 Mac uses the Cmd key, where windows uses Ctrl key a lot. This is a simple fix on your mac.
@@ -613,7 +618,7 @@ Go into your keyboard settings, select <code>Modifier Keys</code> and remap Cmd 
 Right click on the file and choose <code>Run as Administrator</code>, when you log in as your normal user.
 I needed to have Teamviewer&rsquo;s <code>Send key combinations</code> enabled, others have reported the opposite so play around with this.</p>
 
-<h2 id="collaborating">Collaborating</h2>
+<h2 id="Collab">Choose a method of collaboration</h2>
 
 <p>If you want to do collaborative editing, instead of just having your pair programmers, be backseat coders. There are several options:</p>
 
@@ -633,7 +638,7 @@ I needed to have Teamviewer&rsquo;s <code>Send key combinations</code> enabled, 
 
 <p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/LimitFrames.png" style="padding:20px;max-height:600px;display:inline-block"></img></p>
 
-<h2 id="stream">Stream</h2>
+<h2 id="Stream">Stream</h2>
 
 <p>Finally you are ready to stream.</p>
 
@@ -776,7 +781,7 @@ I needed to have Teamviewer&rsquo;s <code>Send key combinations</code> enabled, 
         
         <p class="credits theme-by text-muted">
           <a href="https://gohugo.io">Hugo v0.59.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
-          &nbsp;&bull;&nbsp;[<a href="falseed75241464ee19bfee133c92182ee1bc39123d4a">ed752414</a>]
+          &nbsp;&bull;&nbsp;[<a href="falsee9d28efb7ac3b718b24e4d563c17999aa589471c">e9d28efb</a>]
         </p>
       </div>
     </div>
