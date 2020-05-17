@@ -27,19 +27,62 @@ I thought it would be as easy as Ted's setup for [remote pair programming on twi
 
 My laptop couldn't handle it and this required me needing to rent an AWS Server, which in turn led to a longer than expected setup process.  I almost gave up when I was 90% done and needed some encouragement from a friend to push me over the finish line.
 
-1. [Find an appropriate AWS machine](#AWSMachine)
-2. [Ask amazon to lift CPU limit](#CPULimit)
-3. [Update security group to enable remote desktop](#Security)
-4. [Launch and log into server using Remote Desktop](#RemoteDesktop)
-5. [Update internet explorer security](#IE)
-6. [Install and setup Teamviewer](#Teamviewer)
-7. [Install virtual sound card](#Sound)
-8. [Install and setup Zoom](#Zoom)
-9. [Install and setup OBS](#OBS)
-10. [Install and setup IDE](#IDE)
-11. [Remap keys](#Remap)
-12. [Choose a method of collaboration](#Collab)
-13. [Stream](#Stream)
+1. [Setup Twitch](#Twitch)
+2. [Find an appropriate AWS machine](#AWSMachine)
+3. [Ask amazon to lift CPU limit](#CPULimit)
+4. [Update security group to enable remote desktop](#Security)
+5. [Launch and log into server using Remote Desktop](#RemoteDesktop)
+6. [Update internet explorer security](#IE)
+7. [Install and setup Teamviewer](#Teamviewer)
+8. [Install virtual sound card](#Sound)
+9. [Install and setup Zoom](#Zoom)
+10. [Install and setup OBS](#OBS)
+11. [Install and setup IDE](#IDE)
+12. [Remap keys](#Remap)
+13. [Choose a method of collaboration](#Collab)
+14. [Stream](#Stream)
+
+### Setup Twitch {#Twitch}
+
+Technically you can stream to Twitch or Youtube.
+I chose Twitch, since this is apparently more popular with coders.
+
+Go to [twitch.tv](https://www.twitch.tv/) and create an account.
+
+Now we want to setup Twitch to preserve you videos for later viewing, so viewers don't always have to watch at the exact time that the stream is occurring.
+
+  - Go to you channel https://twitch.tv/<username>
+  - Click on your profile in the top right corner and click on `Settings`
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/TwitchProfile.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+
+  - Click on `Channel and Videos`
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/TwitchSettings.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+
+  - Enable `Store past broadcasts` 
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/TwitchStore.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+
+Next you need an image to display on your channel when you are offline.
+
+Scroll down to `Video Player Banner` and click `Update`.
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/VideoBanner.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+
+Next click on the hamburger on the top left and then click on `Stream Manager`.
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Hamburger.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+
+Under `Quick Actions` click `Edit Stream Info`
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/QuickActions.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+
+Finally set the Category as `Science & Technology`.
+
+<img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/EditStream.png" style="padding:20px;max-height:300px;display:inline-block"></img>
+
+Unfortunately there is no coding category.  Apparently there was one, but it has been shutdown and grouped into the Science & Technology category.
 
 ### Find an appropriate AWS machine {#AWSMachine}
 
@@ -301,7 +344,7 @@ If you want to do collaborative editing, instead of just having your pair progra
 
   - Teamviewer allows for multiple logins and that works great, since now your collaborators have full control.  You need to coordinate who is using the keyboard.  Also less obviously you are also sharing a copy and paste buffer.  So if one of you is doing something on their own computer and copies something, the other person can paste this into teamviewer onto your public stream, so be careful about copying passwords, etc.
   - Alternatively you can install [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare), but we couldn't get this working with Coq's Proof View.  I hope we are wrong, because this would solve a lot of problems.
-  - Screen share via Zoom allows multiple collaborators to switch between who is driving. Yes technically the server doesn't have to be the one that is sharing its screen with your collaborators.  Your collaborators can actually share their local screen and this shared screen can then be captured with OBS on the AWS server and streamed to twitch.  In this case collaborators with limited CPU, might want to limit the amount of frames they are sharing.
+  - Screen share via Zoom allows multiple collaborators to switch between who is driving. Yes technically the server doesn't have to be the one that is sharing its screen with your collaborators.  Your collaborators can actually share their local screen and this shared screen can then be captured with OBS on the AWS server and streamed to Twitch.  In this case collaborators with limited CPU, might want to limit the amount of frames they are sharing.
 
 1. Go to Zoom Settings
 2. Click `Share Screen`
@@ -323,8 +366,6 @@ You will probably want to create pictures that you can use to display when you a
  - Entering a password
 
 <img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/StreamOffline.png" style="padding:20px;max-height:600px;display:inline-block"></img>
-
-You can also setup Twitch to preserve you videos for later viewing, so viewers don't always have to watch at the exact time that the stream is occurring.
 
 Come check out the resulting stream: https://www.twitch.tv/awalterschulze
 

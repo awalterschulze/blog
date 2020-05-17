@@ -59,7 +59,7 @@
   "headline": "Streaming Pair Programming from AWS (DRAFT)",
   "description" : "Why?  Why Streaming? One of the advantages of living in a big city, like London, is not just that you don\x26rsquo;t have to own a car. It also makes it easier to find like minded people. People who are interested in learning the same thing you are and who are at a similar level in their learning experience on that topic, people you can form a study group with.",
   "inLanguage" : "en",
-  "wordCount":  3247 ,
+  "wordCount":  3381 ,
   "datePublished" : "2020-05-12T09:22:08",
   "dateModified" : "2020-05-12T09:22:08",
   "image" : "https:\/\/awalterschulze.github.io\/blog\/avatar.png",
@@ -286,6 +286,7 @@ I thought it would be as easy as Ted&rsquo;s setup for <a href="https://www.tedm
 <p>My laptop couldn&rsquo;t handle it and this required me needing to rent an AWS Server, which in turn led to a longer than expected setup process.  I almost gave up when I was 90% done and needed some encouragement from a friend to push me over the finish line.</p>
 
 <ol>
+<li><a href="#Twitch">Setup Twitch</a></li>
 <li><a href="#AWSMachine">Find an appropriate AWS machine</a></li>
 <li><a href="#CPULimit">Ask amazon to lift CPU limit</a></li>
 <li><a href="#Security">Update security group to enable remote desktop</a></li>
@@ -300,6 +301,54 @@ I thought it would be as easy as Ted&rsquo;s setup for <a href="https://www.tedm
 <li><a href="#Collab">Choose a method of collaboration</a></li>
 <li><a href="#Stream">Stream</a></li>
 </ol>
+
+<h3 id="Twitch">Setup Twitch</h3>
+
+<p>Technically you can stream to Twitch or Youtube.
+I chose Twitch, since this is apparently more popular with coders.</p>
+
+<p>Go to <a href="https://www.twitch.tv/">twitch.tv</a> and create an account.</p>
+
+<p>Now we want to setup Twitch to preserve you videos for later viewing, so viewers don&rsquo;t always have to watch at the exact time that the stream is occurring.</p>
+
+<ul>
+<li>Go to you channel <a href="https://twitch.tv/">https://twitch.tv/</a><username></li>
+<li>Click on your profile in the top right corner and click on <code>Settings</code></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/TwitchProfile.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Click on <code>Channel and Videos</code></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/TwitchSettings.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<ul>
+<li>Enable <code>Store past broadcasts</code></li>
+</ul>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/TwitchStore.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<p>Next you need an image to display on your channel when you are offline.</p>
+
+<p>Scroll down to <code>Video Player Banner</code> and click <code>Update</code>.</p>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/VideoBanner.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<p>Next click on the hamburger on the top left and then click on <code>Stream Manager</code>.</p>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/Hamburger.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<p>Under <code>Quick Actions</code> click <code>Edit Stream Info</code></p>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/QuickActions.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<p>Finally set the Category as <code>Science &amp; Technology</code>.</p>
+
+<p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/EditStream.png" style="padding:20px;max-height:300px;display:inline-block"></img></p>
+
+<p>Unfortunately there is no coding category.  Apparently there was one, but it has been shutdown and grouped into the Science &amp; Technology category.</p>
 
 <h3 id="AWSMachine">Find an appropriate AWS machine</h3>
 
@@ -628,7 +677,7 @@ I needed to have Teamviewer&rsquo;s <code>Send key combinations</code> enabled, 
 <ul>
 <li>Teamviewer allows for multiple logins and that works great, since now your collaborators have full control.  You need to coordinate who is using the keyboard.  Also less obviously you are also sharing a copy and paste buffer.  So if one of you is doing something on their own computer and copies something, the other person can paste this into teamviewer onto your public stream, so be careful about copying passwords, etc.</li>
 <li>Alternatively you can install <a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare">Live Share</a>, but we couldn&rsquo;t get this working with Coq&rsquo;s Proof View.  I hope we are wrong, because this would solve a lot of problems.</li>
-<li>Screen share via Zoom allows multiple collaborators to switch between who is driving. Yes technically the server doesn&rsquo;t have to be the one that is sharing its screen with your collaborators.  Your collaborators can actually share their local screen and this shared screen can then be captured with OBS on the AWS server and streamed to twitch.  In this case collaborators with limited CPU, might want to limit the amount of frames they are sharing.</li>
+<li>Screen share via Zoom allows multiple collaborators to switch between who is driving. Yes technically the server doesn&rsquo;t have to be the one that is sharing its screen with your collaborators.  Your collaborators can actually share their local screen and this shared screen can then be captured with OBS on the AWS server and streamed to Twitch.  In this case collaborators with limited CPU, might want to limit the amount of frames they are sharing.</li>
 </ul>
 
 <ol>
@@ -655,8 +704,6 @@ I needed to have Teamviewer&rsquo;s <code>Send key combinations</code> enabled, 
 </ul>
 
 <p><img src="https://awalterschulze.github.io/blog/streaming-pair-programming-from-aws/StreamOffline.png" style="padding:20px;max-height:600px;display:inline-block"></img></p>
-
-<p>You can also setup Twitch to preserve you videos for later viewing, so viewers don&rsquo;t always have to watch at the exact time that the stream is occurring.</p>
 
 <p>Come check out the resulting stream: <a href="https://www.twitch.tv/awalterschulze">https://www.twitch.tv/awalterschulze</a></p>
 
@@ -784,7 +831,7 @@ I needed to have Teamviewer&rsquo;s <code>Send key combinations</code> enabled, 
         
         <p class="credits theme-by text-muted">
           <a href="https://gohugo.io">Hugo v0.59.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
-          &nbsp;&bull;&nbsp;[<a href="falsec91f60984b0c798c55d9357ac2640544b0307650">c91f6098</a>]
+          &nbsp;&bull;&nbsp;[<a href="false797c6ccd22c6c25e00315d87bec204c2192617f1">797c6ccd</a>]
         </p>
       </div>
     </div>
